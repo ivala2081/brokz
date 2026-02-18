@@ -31,13 +31,13 @@ import {
 	className as className2,
 	css as css2,
 	fonts as fonts2,
-} from "../chunks/chunk-XQSXAWYK.js";
+} from "../chunks/chunk-APDXW7PB.js";
 import {
 	className as className3,
 	css as css3,
 	fonts as fonts3,
-} from "../chunks/chunk-RNLECVQ7.js";
-import { className, css, fonts } from "../chunks/chunk-6VVD3LBA.js";
+} from "../chunks/chunk-QDGUO2RY.js";
+import { className, css, fonts } from "../chunks/chunk-5ETCZXGB.js";
 import { routes } from "../chunks/chunk-D65PBWLB.js";
 
 // virtual:testimonial/card

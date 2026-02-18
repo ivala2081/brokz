@@ -101,6 +101,7 @@ function usePageVisibility() {
 }
 
 // /:https://framerusercontent.com/modules/zvkTOpMSuRzRhLzZZIwG/3r1MOrsbGq47TYKOPcQV/SlideShow.js
+var __unframerWindow = typeof window !== "undefined" ? window : void 0;
 var OPACITY_0 = 1e-3;
 function awaitRefCallback(element, controller) {
 	let refCallbackResolve;
@@ -260,12 +261,12 @@ function Slideshow(props) {
 			const viewportLength = isHorizontal
 				? Math.max(
 						document.documentElement.clientWidth || 0,
-						window.innerWidth || 0,
+						__unframerWindow.innerWidth || 0,
 						parentRef.current.offsetWidth,
 					)
 				: Math.max(
 						document.documentElement.clientHeight || 0,
-						window.innerHeight || 0,
+						__unframerWindow.innerHeight || 0,
 						parentRef.current.offsetHeight,
 					);
 			startTransition(() =>

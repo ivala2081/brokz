@@ -26,7 +26,7 @@
 }} Props
 
  */
-import { className, css, fonts } from "./chunks/chunk-6VVD3LBA.js";
+import { className, css, fonts } from "./chunks/chunk-5ETCZXGB.js";
 import { routes } from "./chunks/chunk-D65PBWLB.js";
 
 // virtual:section-label

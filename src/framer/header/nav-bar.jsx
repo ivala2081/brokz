@@ -23,15 +23,15 @@
 }} Props
 
  */
-import { stdin_default as stdin_default3 } from "../chunks/chunk-PPNY3U2P.js";
-import { stdin_default as stdin_default2 } from "../chunks/chunk-G75PI62U.js";
-import "../chunks/chunk-SX3O2Z6T.js";
-import "../chunks/chunk-PN6QS23O.js";
-import { stdin_default } from "../chunks/chunk-TZEDWOFK.js";
-import "../chunks/chunk-C6V72NWO.js";
-import "../chunks/chunk-BPOUACNS.js";
-import "../chunks/chunk-XQSXAWYK.js";
-import "../chunks/chunk-RLQB44PM.js";
+import { stdin_default as stdin_default3 } from "../chunks/chunk-KNI5CLWY.js";
+import { stdin_default as stdin_default2 } from "../chunks/chunk-Y6AZG4OF.js";
+import "../chunks/chunk-H6F4KFPW.js";
+import "../chunks/chunk-KD6F3UC3.js";
+import { stdin_default } from "../chunks/chunk-J3562V4F.js";
+import "../chunks/chunk-NYXTUNPH.js";
+import "../chunks/chunk-HR56UER2.js";
+import "../chunks/chunk-APDXW7PB.js";
+import "../chunks/chunk-GZZPQ662.js";
 import { routes } from "../chunks/chunk-D65PBWLB.js";
 
 // virtual:header/nav-bar
@@ -62,7 +62,6 @@ import {
 import { LayoutGroup, motion, MotionConfigContext } from "unframer";
 import * as React from "react";
 import { useRef } from "react";
-import { BrokzLogoCompact } from "../../components/BrokzLogo";
 var HeaderMenuItemsFonts = getFonts(stdin_default2);
 var ButtonMainFonts = getFonts(stdin_default);
 var HeaderMenuIconFonts = getFonts(stdin_default3);
@@ -260,7 +259,61 @@ var Component = /* @__PURE__ */ React.forwardRef(function (props, ref) {
 									layoutDependency={layoutDependency}
 									layoutId={"rSGEc2j1T"}
 								>
-									<BrokzLogoCompact size={40} className="h-full" />
+									<SVG
+										className={"framer-19rb5g7"}
+										data-framer-name={"Icon"}
+										layout={"position"}
+										layoutDependency={layoutDependency}
+										layoutId={"FDaMFVMCG"}
+										opacity={1}
+										svg={
+											'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 40 40"><path d="M 25.093 1.054 L 21.16 0 L 17.845 12.37 L 14.853 1.202 L 10.92 2.256 L 14.153 14.322 L 6.1 6.269 L 3.22 9.149 L 12.054 17.981 L 1.054 15.034 L 0 18.967 L 12.019 22.187 C 11.261 18.919 12.584 15.52 15.353 13.625 C 18.122 11.73 21.77 11.728 24.542 13.619 C 27.313 15.509 28.642 18.907 27.888 22.176 L 38.81 25.102 L 39.864 21.169 L 27.798 17.936 L 38.798 14.989 L 37.744 11.055 L 25.678 14.289 L 33.731 6.236 L 30.851 3.356 L 22.141 12.067 Z" fill="var(--token-29ef2a11-253c-4767-833a-2416d745414f, rgb(255, 118, 18))"></path><path d="M 27.878 22.221 C 27.546 23.623 26.846 24.911 25.852 25.954 L 33.765 33.867 L 36.644 30.987 Z M 25.772 26.037 C 24.769 27.062 23.514 27.804 22.132 28.188 L 25.012 38.934 L 28.945 37.88 Z M 21.986 28.227 C 21.321 28.398 20.638 28.484 19.952 28.483 C 19.218 28.484 18.488 28.385 17.78 28.19 L 14.898 38.946 L 18.831 40 Z M 17.64 28.15 C 16.278 27.747 15.046 26.994 14.065 25.967 L 6.133 33.9 L 9.012 36.779 L 17.64 28.151 Z M 13.996 25.897 C 13.027 24.862 12.346 23.591 12.021 22.211 L 1.062 25.147 L 2.116 29.08 Z" fill="var(--token-29ef2a11-253c-4767-833a-2416d745414f, rgb(255, 118, 18))"></path></svg>'
+										}
+										svgContentId={12823893541}
+										withExternalLayout={true}
+									/>
+									<RichText
+										__fromCanvasComponent={true}
+										className={"framer-19xga5t"}
+										data-framer-name={"FINDAYS"}
+										fonts={["GF;Manrope-800"]}
+										layoutDependency={layoutDependency}
+										layoutId={"moE_TaEZf"}
+										style={{
+											"--extracted-1w3ko1f": "rgb(7, 115, 49)",
+											"--extracted-r6o4lv":
+												"var(--token-e745315f-252b-4bf3-849d-5e514c4f4704, rgb(14, 16, 15))",
+											"--framer-paragraph-spacing": "0px",
+										}}
+										verticalAlignment={"top"}
+										withExternalLayout={true}
+									>
+										<React.Fragment>
+											<motion.p
+												style={{
+													"--font-selector": "R0Y7TWFucm9wZS04MDA=",
+													"--framer-font-family":
+														'"Manrope", "Manrope Placeholder", sans-serif',
+													"--framer-font-size": "28px",
+													"--framer-font-weight": "800",
+													"--framer-letter-spacing": "-0.02em",
+													"--framer-line-height": "32px",
+													"--framer-text-color":
+														"var(--extracted-r6o4lv, var(--token-e745315f-252b-4bf3-849d-5e514c4f4704, rgb(14, 16, 15)))",
+												}}
+											>
+												{"BROK"}
+												<motion.span
+													style={{
+														"--framer-text-color":
+															"var(--extracted-1w3ko1f, rgb(7, 115, 49))",
+													}}
+												>
+													{"Z"}
+												</motion.span>
+											</motion.p>
+										</React.Fragment>
+									</RichText>
 								</motion.a>
 							</Link>
 							{isDisplayed() && (

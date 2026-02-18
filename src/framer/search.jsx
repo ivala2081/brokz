@@ -26,7 +26,7 @@ import {
 	NullState,
 	defaultEvents,
 	useIconSelection,
-} from "./chunks/chunk-BPOUACNS.js";
+} from "./chunks/chunk-HR56UER2.js";
 import { routes } from "./chunks/chunk-D65PBWLB.js";
 
 // virtual:search
@@ -160,9 +160,10 @@ import { clamp } from "unframer";
 import { useEffect, useMemo, useRef, useState, useTransition } from "react";
 
 // /:https://framerusercontent.com/modules/3Xi2AslpcDRhfyCVPmx3/d0Oobr5BHnVqZJQyMdGn/storage.js
+var __unframerWindow = typeof window !== "undefined" ? window : void 0;
 function Storage(name) {
 	this.ready = new Promise((resolve, reject) => {
-		var request = window.indexedDB.open(location.origin);
+		var request = __unframerWindow.indexedDB.open(location.origin);
 		request.onupgradeneeded = (e) => {
 			this.db = e.target["result"];
 			this.db.createObjectStore("store");
@@ -199,7 +200,7 @@ Storage.prototype.set = function (key, value) {
 	});
 };
 Storage.prototype.delete = function (key, value) {
-	window.indexedDB.deleteDatabase(location.origin);
+	__unframerWindow.indexedDB.deleteDatabase(location.origin);
 };
 
 // /:https://framerusercontent.com/modules/m2nL4qHNbqX9QCxsHsGL/b9aplVZjN51x28yfNK16/cache.js
@@ -445,9 +446,10 @@ var distance = (a, b) => {
 };
 
 // /:https://framerusercontent.com/modules/MWsEnYfRnoOQq31DN4ql/eyOLqz3EwodGKorNsdxm/utils.js
+var __unframerWindow2 = typeof window !== "undefined" ? window : void 0;
 var localStorageDebugFlag =
-	typeof window !== "undefined" &&
-	window.localStorage.getItem("__framerDebugSearch") === "true";
+	typeof __unframerWindow2 !== "undefined" &&
+	__unframerWindow2.localStorage.getItem("__framerDebugSearch") === "true";
 var groupsRegex = /[A-Z]{2,}|[A-Z][a-z]+|[a-z]+|[A-Z]\d*|\d+/gu;
 function capitalizeFirstLetter(value) {
 	return value.charAt(0).toUpperCase() + value.slice(1);
@@ -505,7 +507,8 @@ function animationKeyFromLayout(layout) {
 	return `${layout}Animation`;
 }
 var safeDocument = typeof document !== "undefined" ? document : null;
-var safeWindow = typeof window !== "undefined" ? window : null;
+var safeWindow =
+	typeof __unframerWindow2 !== "undefined" ? __unframerWindow2 : null;
 var metaTagSelector = 'meta[name="framer-search-index"]';
 function getMetaTagContent() {
 	const metaTag = safeDocument?.querySelector(metaTagSelector);
@@ -524,7 +527,7 @@ function stripLocaleSlugFromPath(url, localeSlug) {
 	}
 }
 function yieldToMain(isHighPriority) {
-	if ("scheduler" in window) {
+	if ("scheduler" in __unframerWindow2) {
 		const options = {
 			priority: isHighPriority ? "user-blocking" : "user-visible",
 		};
@@ -932,11 +935,14 @@ import React, {
 } from "react";
 
 // /:https://framerusercontent.com/modules/PJVBcBLmDteTEAZh3J9Z/keXJyjyE9VnzUcDMayjg/browser.js
-var __unframerNavigator = typeof window !== "undefined" ? navigator : void 0;
+var __unframerWindow3 = typeof window !== "undefined" ? window : void 0;
+var __unframerNavigator =
+	typeof __unframerWindow3 !== "undefined" ? navigator : void 0;
 var Browser;
 (function (Browser2) {
 	var isTouch = (Browser2.isTouch = () =>
-		"ontouchstart" in window || __unframerNavigator.maxTouchPoints > 0);
+		"ontouchstart" in __unframerWindow3 ||
+		__unframerNavigator.maxTouchPoints > 0);
 	var isChrome = (Browser2.isChrome = () =>
 		__unframerNavigator.userAgent.toLowerCase().includes("chrome/"));
 	var isWebKit = (Browser2.isWebKit = () =>
@@ -1008,6 +1014,7 @@ import {
 	useRouter,
 	inferInitialRouteFromPath,
 } from "unframer";
+var __unframerWindow4 = typeof window !== "undefined" ? window : void 0;
 var MAX_DESCRIPTION_LENGTH = 120;
 var MODAL_MAX_HEIGHT = 496;
 var VERTICAL_SPACING_MULTIPLIER = 0.6;
@@ -1744,7 +1751,7 @@ function SearchModal(props) {
 				await route?.page?.preload?.();
 				router.navigate?.(routeId, null, pathVariables, false);
 			} catch (error) {
-				window.location.href = url;
+				__unframerWindow4.location.href = url;
 			}
 		},
 		[status],
@@ -1907,31 +1914,33 @@ function SearchModal(props) {
 
 // /:https://framerusercontent.com/modules/hqEf5wXaAewP8VPuaZ98/5A0QGVeEr2cwheQpIuEG/useViewportSizeState.js
 import { useEffect as useEffect3, useState as useState3 } from "react";
+var __unframerWindow5 = typeof window !== "undefined" ? window : void 0;
 function getViewportSize() {
-	if (typeof window === "undefined") {
+	if (typeof __unframerWindow5 === "undefined") {
 		return {
 			width: 0,
 			height: 0,
 		};
 	}
 	return {
-		width: window.innerWidth,
-		height: window.innerHeight,
+		width: __unframerWindow5.innerWidth,
+		height: __unframerWindow5.innerHeight,
 	};
 }
 function useViewportSizeState(getState) {
 	const [state, setState] = useState3(() => getState(getViewportSize()));
 	useEffect3(() => {
 		const handleWindowResize = () => setState(getState(getViewportSize()));
-		window.addEventListener("resize", handleWindowResize);
+		__unframerWindow5.addEventListener("resize", handleWindowResize);
 		return () => {
-			window.removeEventListener("resize", handleWindowResize);
+			__unframerWindow5.removeEventListener("resize", handleWindowResize);
 		};
 	}, []);
 	return state;
 }
 
 // /:https://framerusercontent.com/modules/6wAE2eMb2Tl3zrU7u4UL/YEWVMBKmXJ83pATPgzu8/Search.js
+var __unframerWindow6 = typeof window !== "undefined" ? window : void 0;
 var EntryPointOptions;
 (function (EntryPointOptions2) {
 	EntryPointOptions2["icon"] = "Icon";
@@ -1962,14 +1971,14 @@ var Overlay = /* @__PURE__ */ forwardRef2(function Overlay2(props, ref) {
 				document.activeElement.blur();
 			}
 		};
-		window.addEventListener("keydown", handleKeyDown);
-		window.addEventListener("pointerdown", handlePointerDown, {
+		__unframerWindow6.addEventListener("keydown", handleKeyDown);
+		__unframerWindow6.addEventListener("pointerdown", handlePointerDown, {
 			capture: true,
 		});
 		document.body.classList.add(bodyOverflowHidden);
 		return () => {
-			window.removeEventListener("keydown", handleKeyDown);
-			window.removeEventListener("pointerdown", handlePointerDown, {
+			__unframerWindow6.removeEventListener("keydown", handleKeyDown);
+			__unframerWindow6.removeEventListener("pointerdown", handlePointerDown, {
 				capture: true,
 			});
 			document.body.classList.remove(bodyOverflowHidden);

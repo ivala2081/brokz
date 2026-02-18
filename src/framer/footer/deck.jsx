@@ -27,13 +27,13 @@ import {
 	className as className3,
 	css as css3,
 	fonts as fonts3,
-} from "../chunks/chunk-XQSXAWYK.js";
-import { className, css, fonts } from "../chunks/chunk-6VVD3LBA.js";
+} from "../chunks/chunk-APDXW7PB.js";
+import { className, css, fonts } from "../chunks/chunk-5ETCZXGB.js";
 import {
 	className as className2,
 	css as css2,
 	fonts as fonts2,
-} from "../chunks/chunk-2WRGSES2.js";
+} from "../chunks/chunk-XVXSSQMC.js";
 import { routes } from "../chunks/chunk-D65PBWLB.js";
 
 // virtual:footer/deck
@@ -769,7 +769,7 @@ var Component2 = /* @__PURE__ */ React2.forwardRef(function (props, ref) {
 																			"var(--extracted-r6o4lv, var(--token-8153aca1-f9be-44aa-9525-bc1f313343e2, rgb(255, 255, 255)))",
 																	}}
 																>
-																	{"BROKZ"}
+																	{"FINDAYS"}
 																</motion2.p>
 															</React2.Fragment>
 														),

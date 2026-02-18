@@ -23,7 +23,7 @@
 }} Props
 
  */
-import { className, css, fonts } from "../chunks/chunk-XQSXAWYK.js";
+import { className, css, fonts } from "../chunks/chunk-APDXW7PB.js";
 import { routes } from "../chunks/chunk-D65PBWLB.js";
 
 // virtual:button/subscribe

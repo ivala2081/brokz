@@ -32,8 +32,8 @@ import {
 	className as className2,
 	css as css2,
 	fonts as fonts2,
-} from "../chunks/chunk-MRSILDTJ.js";
-import { className, css, fonts } from "../chunks/chunk-6VVD3LBA.js";
+} from "../chunks/chunk-2TJ7YMZF.js";
+import { className, css, fonts } from "../chunks/chunk-5ETCZXGB.js";
 import { routes } from "../chunks/chunk-D65PBWLB.js";
 
 // virtual:feature/card-with-image

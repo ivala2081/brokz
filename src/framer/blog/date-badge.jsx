@@ -22,7 +22,7 @@
 }} Props
 
  */
-import { className, css, fonts } from "../chunks/chunk-RNLECVQ7.js";
+import { className, css, fonts } from "../chunks/chunk-QDGUO2RY.js";
 import { routes } from "../chunks/chunk-D65PBWLB.js";
 
 // virtual:blog/date-badge

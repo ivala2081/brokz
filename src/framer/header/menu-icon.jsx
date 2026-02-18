@@ -24,7 +24,7 @@
 }} Props
 
  */
-import { stdin_default } from "../chunks/chunk-PPNY3U2P.js";
+import { stdin_default } from "../chunks/chunk-KNI5CLWY.js";
 import { routes } from "../chunks/chunk-D65PBWLB.js";
 
 // virtual:header/menu-icon

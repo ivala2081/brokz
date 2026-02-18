@@ -25,12 +25,12 @@
 }} Props
 
  */
-import { className, css, fonts } from "./chunks/chunk-6VVD3LBA.js";
+import { className, css, fonts } from "./chunks/chunk-5ETCZXGB.js";
 import {
 	className as className2,
 	css as css2,
 	fonts as fonts2,
-} from "./chunks/chunk-2WRGSES2.js";
+} from "./chunks/chunk-XVXSSQMC.js";
 import { routes } from "./chunks/chunk-D65PBWLB.js";
 
 // virtual:list-text

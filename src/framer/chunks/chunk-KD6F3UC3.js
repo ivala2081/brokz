@@ -6,7 +6,7 @@ import {
   defaultEvents,
   getIconSelection,
   useIconSelection
-} from "./chunk-BPOUACNS.js";
+} from "./chunk-HR56UER2.js";
 
 // /:https://framerusercontent.com/modules/6Ldpz1V0DkD45gXvi67I/PCgBX5d6MdQT7E7nhdXn/Material.js
 import { jsx as _jsx } from "react/jsx-runtime";

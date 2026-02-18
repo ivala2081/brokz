@@ -26,14 +26,14 @@
 }} Props
 
  */
-import { Icon } from "./chunks/chunk-PN6QS23O.js";
-import "./chunks/chunk-BPOUACNS.js";
+import { Icon } from "./chunks/chunk-KD6F3UC3.js";
+import "./chunks/chunk-HR56UER2.js";
 import {
 	className as className2,
 	css as css2,
 	fonts as fonts2,
-} from "./chunks/chunk-XQSXAWYK.js";
-import { className, css, fonts } from "./chunks/chunk-2WRGSES2.js";
+} from "./chunks/chunk-APDXW7PB.js";
+import { className, css, fonts } from "./chunks/chunk-XVXSSQMC.js";
 import { routes } from "./chunks/chunk-D65PBWLB.js";
 
 // virtual:single-block
