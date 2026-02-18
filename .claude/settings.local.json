@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir:*)",
+      "Bash(npm run dev:*)",
+      "Bash(cmd /c \"dir /b \"\"c:\\\\Users\\\\ACER\\\\Documents\\\\GitHub\\\\brokz\\\\Brokz-Web\"\"\")",
+      "Bash(cmd /c \"dir \"\"c:\\\\Users\\\\ACER\\\\Documents\\\\GitHub\\\\brokz\"\"\")",
+      "Bash(powershell -Command \"Get-ChildItem ''c:\\\\Users\\\\ACER\\\\Documents\\\\GitHub\\\\brokz'' | Select-Object Name, PSIsContainer\")",
+      "Bash(powershell -Command \"Get-ChildItem ''c:\\\\Users\\\\ACER\\\\Documents\\\\GitHub\\\\brokz\\\\src'' -Recurse | Select-Object FullName\")",
+      "Bash(powershell -Command:*)",
+      "Bash(npm install:*)",
+      "Bash(npx tsc:*)",
+      "Bash(cmd /c \"dir /s /b C:\\\\Users\\\\ACER\\\\Documents\\\\GitHub\\\\brokz 2>&1 | findstr /v node_modules | findstr /v \\\\.git\")",
+      "Bash(cmd /c \"rmdir /s /q \"\"C:\\\\Users\\\\ACER\\\\Documents\\\\GitHub\\\\brokz\\\\Brokz-Web\"\"\")",
+      "Bash(bun add:*)",
+      "Bash(bun run build:*)",
+      "Bash(npm run build:*)",
+      "Bash(magick:*)",
+      "Bash(convert:*)",
+      "Bash(node -e:*)",
+      "Bash(python:*)",
+      "Bash(python3:*)"
+    ]
+  }
+}

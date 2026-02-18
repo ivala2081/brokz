@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  /* ---- Layout ---- */
+  .section-container {
+    @apply max-w-layout mx-auto px-6;
+  }
+
+  .section-padding {
+    @apply py-section-sm md:py-section;
+  }
+
+  /* ---- Section Labels ---- */
+  .section-label {
+    @apply text-brand text-xs font-bold tracking-widest uppercase mb-3;
+  }
+
+  .section-label-light {
+    @apply text-brand-accent text-xs font-bold tracking-widest uppercase mb-3;
+  }
+
+  /* ---- Cards ---- */
+  .card {
+    @apply bg-white border border-gray-100 rounded-card p-8 h-full;
+  }
+
+  .card-dark {
+    @apply bg-brand-dark border border-gray-800 rounded-card p-8 h-full;
+  }
+
+  .card-feature {
+    @apply bg-gray-50 border border-gray-100 rounded-card-sm p-5;
+  }
+
+  /* ---- Buttons ---- */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2
+           bg-brand text-white font-semibold px-8 py-3.5
+           rounded-pill hover:bg-brand-hover transition-colors text-sm;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2
+           border border-gray-200 text-gray-700 font-semibold px-8 py-3.5
+           rounded-pill hover:border-gray-400 transition-colors text-sm;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2
+           bg-white/10 text-white font-semibold px-8 py-3.5
+           rounded-pill hover:bg-white/20 transition-colors text-sm border border-white/20;
+  }
+
+  /* ---- Section Divider ---- */
+  .section-divider {
+    @apply w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent;
+  }
+
+  .section-divider-dark {
+    @apply w-full h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent;
+  }
+
+  /* ---- Accent Bar ---- */
+  .accent-bar {
+    @apply w-12 h-1 bg-brand rounded-full;
+  }
+
+  .accent-bar-light {
+    @apply w-12 h-1 bg-brand-accent rounded-full;
+  }
+}
