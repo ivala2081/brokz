@@ -1,90 +1,103 @@
-import '../framer/styles.css'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import NavBar from '../components/NavBar';
+import Footer from '../components/Footer';
+import SEO from '../components/SEO';
+import PageHero from '../components/PageHero';
+import AnimateIn, { Stagger, StaggerItem } from '../components/AnimateIn';
 
-import NavBarFramerComponent from '../framer/header/nav-bar'
-import FooterWithDisclaimer from '../components/FooterWithDisclaimer'
-import SectionLabelFramerComponent from '../framer/section-label'
+const legalDocuments = [
+  {
+    slug: 'terms',
+    title: 'Terms of Service',
+    description: 'Our terms and conditions for using Brokz services and platforms.',
+  },
+  {
+    slug: 'privacy',
+    title: 'Privacy Policy',
+    description: 'How we collect, use, and protect your personal information.',
+  },
+  {
+    slug: 'risk-disclosure',
+    title: 'Risk Disclosure',
+    description: 'Important information about trading and investment risks.',
+  },
+  {
+    slug: 'disclaimer',
+    title: 'Disclaimer',
+    description: 'Legal disclaimers regarding our services and technology.',
+  },
+];
 
 export default function LegalLandingPage() {
-    const legalDocuments = [
-        {
-            slug: 'terms',
-            title: 'Terms of Service',
-            description: 'Our terms and conditions for using Brokz services and platforms.',
-            icon: '📄'
-        },
-        {
-            slug: 'privacy',
-            title: 'Privacy Policy',
-            description: 'How we collect, use, and protect your personal information.',
-            icon: '🔒'
-        },
-        {
-            slug: 'risk-disclosure',
-            title: 'Risk Disclosure',
-            description: 'Important information about trading and investment risks.',
-            icon: '⚠️'
-        },
-        {
-            slug: 'disclaimer',
-            title: 'Disclaimer',
-            description: 'Legal disclaimers regarding our services and technology.',
-            icon: '⚖️'
-        }
-    ];
+  return (
+    <div className="min-h-screen bg-surface">
+      <SEO
+        title="Legal | Brokz — Terms, Privacy & Disclosures"
+        description="Review Brokz's legal documents — terms of service, privacy policy, risk disclosure, and disclaimers for our fintech infrastructure and trading technology services."
+        keywords="brokz legal, terms of service, privacy policy, risk disclosure, fintech disclaimer"
+      />
 
-    return (
-        <div className='flex flex-col items-center gap-12 md:gap-16 lg:gap-20 bg-[rgb(255,_255,_255)] pt-8 md:pt-12'>
-            <NavBarFramerComponent.Responsive />
+      <NavBar />
 
-            <div className="w-full max-w-[1200px] px-4">
-                <SectionLabelFramerComponent.Responsive
-                    CKwcsPGm9={"rgb(255, 255, 255)"}
-                    MdGap9160={"Legal Information"}
-                    xSKnoaFrm={"rgb(7, 115, 49)"}
-                />
+      <PageHero
+        label="Legal"
+        title="Legal Information"
+        description="Please review our legal documents to understand your rights and responsibilities when using Brokz services."
+      />
 
-                <p className="text-center text-gray-600 mt-6 mb-12 max-w-3xl mx-auto">
-                    Please review our legal documents to understand your rights and responsibilities when using Brokz services.
-                </p>
+      <section className="section-padding">
+        <div className="section-container">
+          <Stagger className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {legalDocuments.map(doc => (
+              <StaggerItem key={doc.slug}>
+                <Link
+                  to={`/legal/${doc.slug}`}
+                  className="card-interactive block group"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-brand-subtle flex items-center justify-center mb-5">
+                    <div className="w-4 h-4 rounded-sm bg-brand" />
+                  </div>
+                  <h3 className="heading-3 text-ink mb-3 group-hover:text-brand transition-colors">
+                    {doc.title}
+                  </h3>
+                  <p className="body-sm mb-5">{doc.description}</p>
+                  <span className="btn-link">
+                    Read Document
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                      <polyline points="12 5 19 12 12 19" />
+                    </svg>
+                  </span>
+                </Link>
+              </StaggerItem>
+            ))}
+          </Stagger>
 
-                {/* Legal Documents Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-                    {legalDocuments.map((doc) => (
-                        <Link
-                            key={doc.slug}
-                            to={`/legal/${doc.slug}`}
-                            className="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-[rgb(7,115,49)] hover:shadow-lg transition-all"
-                        >
-                            <div className="text-4xl mb-4">{doc.icon}</div>
-                            <h3 className="text-2xl font-bold mb-3 text-gray-900">{doc.title}</h3>
-                            <p className="text-gray-600">{doc.description}</p>
-                            <div className="mt-4 text-[rgb(7,115,49)] font-semibold flex items-center gap-2">
-                                Read Document
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                </svg>
-                            </div>
-                        </Link>
-                    ))}
-                </div>
-
-                {/* Important Notice */}
-                <div className="bg-red-50 border-l-4 border-red-400 p-6 rounded-lg">
-                    <h3 className="text-lg font-bold text-red-900 mb-2">Important Notice</h3>
-                    <p className="text-red-800 mb-4">
-                        <strong>Brokz is a technology and systems provider.</strong> We develop and provide fintech software, automation tools, and infrastructure solutions.
-                    </p>
-                    <ul className="list-disc list-inside text-red-800 space-y-2">
-                        <li>We do not provide investment advice or recommendations</li>
-                        <li>We do not manage funds or act as a broker</li>
-                        <li>All tools are for informational and technical purposes only</li>
-                        <li>Users are solely responsible for their trading and investment decisions</li>
-                    </ul>
-                </div>
+          <AnimateIn>
+            <div className="mt-14 card-muted border-l-4 border-l-status-warning">
+              <h3 className="heading-4 text-ink mb-3">Important Notice</h3>
+              <p className="body-sm text-ink-secondary mb-4">
+                <strong className="text-ink">Brokz is a technology and systems provider.</strong> We develop and provide fintech software, automation tools, and infrastructure solutions.
+              </p>
+              <ul className="space-y-2 text-sm text-ink-secondary">
+                {[
+                  'We do not provide investment advice or recommendations',
+                  'We do not manage funds or act as a broker',
+                  'All tools are for informational and technical purposes only',
+                  'Users are solely responsible for their trading and investment decisions',
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-status-warning flex-shrink-0 mt-2" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
-
-            <FooterWithDisclaimer />
+          </AnimateIn>
         </div>
-    );
+      </section>
+
+      <Footer />
+    </div>
+  );
 }

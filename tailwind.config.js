@@ -1,34 +1,155 @@
-
 /** @type {import('tailwindcss').Config} */
 export default {
-    content: [
-        "./index.html",
-        "./src/**/*.{js,ts,jsx,tsx}",
+    content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+    safelist: [
+        // DesignSystemPage renders the primitive scales dynamically
+        { pattern: /^bg-(green|neutral)-(0|50|100|200|300|400|500|600|700|800|900|950|1000)$/ },
     ],
     theme: {
         extend: {
+            // ─── Layer 1: Primitives (never use directly in components) ──────
             colors: {
-                brand: {
-                    DEFAULT: '#087331',
-                    hover: '#065a26',
-                    light: '#e8f5ed',
-                    accent: '#4ade80',
-                    dark: '#050a06',
+                // Brand scale (green)
+                green: {
+                    50:  '#e8f5ed',
+                    100: '#d0ebd9',
+                    200: '#a1d6b3',
+                    300: '#6fbf8b',
+                    400: '#3fa363',
+                    500: '#087331', // brand anchor
+                    600: '#065a26',
+                    700: '#04431c',
+                    800: '#042d13',
+                    900: '#02170a',
                 },
+                // Neutral scale (cool-tinted, institutional)
+                neutral: {
+                    0:    '#ffffff',
+                    50:   '#f9fafb',
+                    100:  '#f1f5f9',
+                    200:  '#e2e8f0',
+                    300:  '#cbd5e1',
+                    400:  '#94a3b8',
+                    500:  '#64748b',
+                    600:  '#475569',
+                    700:  '#334155',
+                    800:  '#1e293b',
+                    900:  '#0f172a',
+                    950:  '#050a06', // deep ink (brand.dark)
+                    1000: '#000000',
+                },
+                // Semantic status
+                status: {
+                    success: '#087331',
+                    warning: '#d97706',
+                    danger:  '#dc2626',
+                    info:    '#0369a1',
+                },
+
+                // ─── Layer 2: Semantic tokens (use these in components) ─────
+                brand:       { DEFAULT: '#087331', hover: '#065a26', subtle: '#e8f5ed', ring: 'rgba(8,115,49,0.35)', accent: '#4ade80' },
+                surface:     { DEFAULT: '#ffffff', muted: '#f9fafb', subtle: '#f1f5f9', inverse: '#050a06', elevated: '#ffffff' },
+                ink:         { DEFAULT: '#0f172a', secondary: '#475569', muted: '#64748b', subtle: '#94a3b8', inverse: '#ffffff' },
+                line:        { DEFAULT: '#e2e8f0', subtle: '#f1f5f9', strong: '#cbd5e1', inverse: '#1e293b' },
             },
+
+            fontFamily: {
+                sans: ['Geist', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+                mono: ['Geist Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+            },
+
+            fontSize: {
+                // Tight corporate scale
+                '2xs':   ['0.6875rem', { lineHeight: '1rem',      letterSpacing: '0.04em' }],
+                'xs':    ['0.75rem',   { lineHeight: '1.125rem',  letterSpacing: '0.01em' }],
+                'sm':    ['0.875rem',  { lineHeight: '1.375rem' }],
+                'base':  ['1rem',      { lineHeight: '1.625rem' }],
+                'lg':    ['1.125rem',  { lineHeight: '1.75rem' }],
+                'xl':    ['1.25rem',   { lineHeight: '1.875rem' }],
+                '2xl':   ['1.5rem',    { lineHeight: '2rem',      letterSpacing: '-0.01em' }],
+                '3xl':   ['1.875rem',  { lineHeight: '2.375rem',  letterSpacing: '-0.015em' }],
+                '4xl':   ['2.25rem',   { lineHeight: '2.625rem',  letterSpacing: '-0.02em' }],
+                '5xl':   ['3rem',      { lineHeight: '3.25rem',   letterSpacing: '-0.025em' }],
+                '6xl':   ['3.75rem',   { lineHeight: '4rem',      letterSpacing: '-0.03em' }],
+                '7xl':   ['4.5rem',    { lineHeight: '4.75rem',   letterSpacing: '-0.035em' }],
+            },
+
             borderRadius: {
-                'card': '1rem',
+                'none':    '0',
+                'xs':      '0.25rem',  // 4
+                'sm':      '0.375rem', // 6
+                'md':      '0.5rem',   // 8
+                'lg':      '0.75rem',  // 12
+                'xl':      '1rem',     // 16
+                '2xl':     '1.25rem',  // 20
+                '3xl':     '1.5rem',   // 24
+                'card':    '1rem',
                 'card-sm': '0.75rem',
-                'pill': '9999px',
+                'pill':    '9999px',
             },
+
             spacing: {
-                'section': '7rem',
+                'section':    '7rem',
                 'section-sm': '5rem',
+                'section-xs': '3rem',
             },
+
             maxWidth: {
-                'layout': '1200px',
+                'prose-narrow': '42rem',
+                'prose':        '65ch',
+                'content':      '1100px',
+                'layout':       '1200px',
+                'wide':         '1400px',
+            },
+
+            boxShadow: {
+                'xs':       '0 1px 2px rgba(15, 23, 42, 0.04)',
+                'sm':       '0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04)',
+                'md':       '0 4px 12px rgba(15, 23, 42, 0.06), 0 2px 4px rgba(15, 23, 42, 0.04)',
+                'lg':       '0 12px 28px rgba(15, 23, 42, 0.08), 0 4px 8px rgba(15, 23, 42, 0.04)',
+                'xl':       '0 24px 48px rgba(15, 23, 42, 0.10), 0 8px 16px rgba(15, 23, 42, 0.05)',
+                '2xl':      '0 32px 64px rgba(15, 23, 42, 0.14)',
+                'ring':     '0 0 0 4px rgba(8, 115, 49, 0.15)',
+                'ring-sm':  '0 0 0 2px rgba(8, 115, 49, 0.25)',
+                'inner-sm': 'inset 0 1px 2px rgba(15, 23, 42, 0.05)',
+            },
+
+            transitionDuration: {
+                'fast':   '120ms',
+                'base':   '200ms',
+                'slow':   '320ms',
+                'slower': '500ms',
+            },
+
+            transitionTimingFunction: {
+                'standard': 'cubic-bezier(0.4, 0, 0.2, 1)',
+                'enter':    'cubic-bezier(0, 0, 0.2, 1)',
+                'exit':     'cubic-bezier(0.4, 0, 1, 1)',
+                'emphasis': 'cubic-bezier(0.21, 0.47, 0.32, 0.98)',
+            },
+
+            zIndex: {
+                'base':     '0',
+                'raised':   '10',
+                'dropdown': '30',
+                'sticky':   '40',
+                'overlay':  '50',
+                'modal':    '60',
+                'toast':    '70',
+                'tooltip':  '80',
+            },
+
+            screens: {
+                'xs':  '480px',
+                // default sm/md/lg/xl/2xl
+            },
+
+            backgroundImage: {
+                'grid-light': 'linear-gradient(rgba(15,23,42,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,42,0.04) 1px, transparent 1px)',
+                'grid-dark':  'linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)',
+                'brand-radial': 'radial-gradient(ellipse 80% 50% at 50% -20%, rgba(8,115,49,0.15), transparent)',
             },
         },
     },
     plugins: [require('@tailwindcss/typography')],
-}
+};

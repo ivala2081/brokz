@@ -6,28 +6,29 @@ interface CTABannerProps {
   description: string;
   buttonText: string;
   buttonLink: string;
+  label?: string;
 }
 
-export default function CTABanner({ title, description, buttonText, buttonLink }: CTABannerProps) {
+export default function CTABanner({ title, description, buttonText, buttonLink, label = 'Start Here' }: CTABannerProps) {
   return (
-    <section className="py-20 bg-gray-50 border-t border-gray-100">
-      <div className="section-container">
+    <section className="section-padding bg-surface-inverse text-white relative overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none bg-grid-dark bg-[length:64px_64px]" />
+      <div className="absolute inset-0 bg-brand-radial pointer-events-none" />
+
+      <div className="relative section-container">
         <AnimateIn>
-          <div className="bg-brand-dark rounded-3xl p-10 md:p-16 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-            <div>
-              <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 max-w-lg leading-tight">
-                {title}
-              </h2>
-              <p className="text-gray-400 max-w-md leading-relaxed text-sm">
-                {description}
-              </p>
-            </div>
-            <Link
-              to={buttonLink}
-              className="btn-primary flex-shrink-0"
-            >
+          <div className="max-w-4xl">
+            <p className="section-label-light">{label}</p>
+            <h2 className="heading-hero-sm text-white mb-8 max-w-[20ch]">{title}</h2>
+            <p className="text-lg md:text-xl text-gray-300 max-w-2xl leading-relaxed mb-10">
+              {description}
+            </p>
+            <Link to={buttonLink} className="btn-primary">
               {buttonText}
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
             </Link>
           </div>
         </AnimateIn>

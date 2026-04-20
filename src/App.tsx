@@ -10,6 +10,8 @@ import BlogPostPage from './pages/BlogPostPage';
 import AdminBlogPage from './pages/AdminBlogPage';
 import LegalPage from './pages/LegalPage';
 import LegalLandingPage from './pages/LegalLandingPage';
+import DesignSystemPage from './pages/DesignSystemPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 export default function App() {
   return (
@@ -24,7 +26,8 @@ export default function App() {
       <Route path="/admin" element={<AdminBlogPage />} />
       <Route path="/legal" element={<LegalLandingPage />} />
       <Route path="/legal/:slug" element={<LegalPage />} />
-      <Route path="*" element={<HomePage />} />
+      <Route path="/design-system" element={<DesignSystemPage />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }

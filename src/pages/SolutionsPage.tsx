@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
@@ -77,44 +76,50 @@ const solutions = [
 
 export default function SolutionsPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-surface">
       <SEO
         title="Solutions | Brokz — Fintech Infrastructure"
         description="Brokerage infrastructure setup, trading system automation, risk and execution optimization, data-driven strategy engineering, and custom platform development."
         keywords="brokerage infrastructure, trading system automation, risk management systems, execution optimization, fintech platform development, broker back-office software"
-        ogTitle="Solutions — Brokz Fintech Infrastructure"
-        ogDescription="Five core solution areas covering the full spectrum of institutional trading technology."
+        canonical="/solutions"
       />
 
       <NavBar />
 
       <PageHero
         label="Solutions"
-        title="Fintech Infrastructure Solutions"
+        title="Infrastructure solutions, engineered."
+        highlight="engineered"
         description="Five core solution areas covering the full spectrum of institutional trading technology — from infrastructure setup to quantitative strategy systems."
       />
 
-      {/* Solutions List */}
-      <section className="section-padding">
+      {/* Solutions — massive typography, alternating layout */}
+      <section className="section-padding bg-surface">
         <div className="section-container">
-          <Stagger className="flex flex-col gap-0" staggerDelay={0.1}>
+          <Stagger className="flex flex-col divide-y divide-line">
             {solutions.map((sol, i) => (
-              <StaggerItem key={i}>
+              <StaggerItem key={sol.number}>
                 <motion.div
-                  className={`py-16 border-b border-gray-100 grid grid-cols-1 lg:grid-cols-12 gap-12 ${i === 0 ? 'pt-0' : ''}`}
-                  whileHover={{ backgroundColor: 'rgba(248,250,252,0.6)' }}
+                  className="py-16 md:py-24 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 group"
+                  whileHover={{ backgroundColor: 'rgba(249, 250, 251, 0.5)' }}
                   transition={{ duration: 0.2 }}
                 >
-                  <div className={`lg:col-span-4 ${i % 2 === 1 ? 'lg:order-last' : ''}`}>
-                    <span className="text-xs font-bold text-gray-300 tracking-widest block mb-3">{sol.number}</span>
-                    <div className="accent-bar mb-4" />
-                    <h2 className="text-xl md:text-2xl font-bold text-gray-900 leading-tight">{sol.title}</h2>
+                  <div className={`lg:col-span-5 ${i % 2 === 1 ? 'lg:order-last' : ''}`}>
+                    <div className="flex items-baseline gap-6 mb-6">
+                      <span className="font-mono tabular text-2xl md:text-3xl font-semibold text-brand">
+                        {sol.number}
+                      </span>
+                      <span className="h-px flex-1 bg-line" />
+                    </div>
+                    <h2 className="heading-hero-sm text-ink leading-[1.05] mb-0">
+                      {sol.title}
+                    </h2>
                   </div>
-                  <div className="lg:col-span-8">
-                    <p className="text-gray-500 leading-relaxed mb-8">{sol.description}</p>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="lg:col-span-7">
+                    <p className="body-lg mb-10 max-w-2xl">{sol.description}</p>
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
                       {sol.capabilities.map((cap, j) => (
-                        <li key={j} className="flex items-start gap-3 text-sm text-gray-600">
+                        <li key={j} className="flex items-start gap-3 text-sm text-ink-secondary leading-relaxed">
                           <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-brand flex-shrink-0" />
                           {cap}
                         </li>
@@ -129,8 +134,9 @@ export default function SolutionsPage() {
       </section>
 
       <CTABanner
-        title="Discuss Your Infrastructure Requirements"
-        description="We evaluate project scope, define architecture, and propose a structured delivery plan."
+        label="Start Here"
+        title="Discuss your infrastructure requirements."
+        description="We evaluate project scope, define architecture, and propose a structured delivery plan within one business day."
         buttonText="Get in Touch"
         buttonLink="/contact"
       />

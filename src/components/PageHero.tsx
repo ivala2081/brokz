@@ -1,60 +1,81 @@
 import { motion } from 'framer-motion';
 
-const ease = [0.21, 0.47, 0.32, 0.98];
+const EASE = [0.21, 0.47, 0.32, 0.98] as const;
 
 interface PageHeroProps {
   label: string;
   title: string;
-  description: string;
+  description?: string;
   children?: React.ReactNode;
+  /** Highlight substring — renders in brand-accent color */
+  highlight?: string;
+  /** Use smaller hero scale (for inner pages with long titles). Default: true */
+  compact?: boolean;
 }
 
-export default function PageHero({ label, title, description, children }: PageHeroProps) {
-  return (
-    <section className="relative bg-brand-dark text-white overflow-hidden">
-      {/* Grid background */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)',
-          backgroundSize: '48px 48px',
-        }}
-      />
-      {/* Radial fade */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_-10%,rgba(8,115,49,0.12),transparent)] pointer-events-none" />
+export default function PageHero({
+  label,
+  title,
+  description,
+  children,
+  highlight,
+  compact = true,
+}: PageHeroProps) {
+  const titleClass = compact ? 'heading-hero-sm' : 'heading-hero';
 
-      <div className="relative section-container py-24 md:py-32">
+  const renderTitle = () => {
+    if (!highlight) return title;
+    const parts = title.split(highlight);
+    return (
+      <>
+        {parts[0]}
+        <span className="text-brand-accent">{highlight}</span>
+        {parts.slice(1).join(highlight)}
+      </>
+    );
+  };
+
+  return (
+    <section className="relative bg-surface-inverse text-white overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none bg-grid-dark bg-[length:64px_64px]" />
+      <div className="absolute inset-0 bg-brand-radial pointer-events-none" />
+
+      <div className="relative section-container pt-24 md:pt-36 pb-20 md:pb-28">
         <motion.p
-          className="section-label-light mb-5"
-          initial={{ opacity: 0, y: 16 }}
+          className="section-label-light"
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1, ease }}
+          transition={{ duration: 0.5, delay: 0.05, ease: EASE }}
         >
           {label}
         </motion.p>
+
         <motion.h1
-          className="text-4xl md:text-5xl font-bold leading-tight max-w-2xl mb-5 tracking-tight"
-          initial={{ opacity: 0, y: 20 }}
+          className={`${titleClass} text-white mt-6 mb-8 max-w-[18ch]`}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2, ease }}
+          transition={{ duration: 0.7, delay: 0.15, ease: EASE }}
         >
-          {title}
+          {renderTitle()}
         </motion.h1>
-        <motion.p
-          className="text-gray-300 text-lg max-w-xl leading-relaxed"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3, ease }}
-        >
-          {description}
-        </motion.p>
+
+        {description && (
+          <motion.p
+            className="text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
+          >
+            {description}
+          </motion.p>
+        )}
+
         {children && (
           <motion.div
             className="mt-10"
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.44, ease }}
+            transition={{ duration: 0.5, delay: 0.42, ease: EASE }}
           >
             {children}
           </motion.div>

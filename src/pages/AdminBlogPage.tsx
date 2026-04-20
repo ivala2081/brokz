@@ -54,7 +54,7 @@ const categoryColors: Record<BlogCategory, string> = {
   industry: 'bg-blue-50 text-blue-700 border-blue-100',
   product: 'bg-purple-50 text-purple-700 border-purple-100',
   technical: 'bg-amber-50 text-amber-700 border-amber-100',
-  company: 'bg-green-50 text-[#087331] border-green-100',
+  company: 'bg-green-50 text-brand border-green-100',
 };
 
 const today = new Date().toISOString().split('T')[0];
@@ -86,7 +86,7 @@ function Input({
       value={value}
       onChange={e => onChange(e.target.value)}
       placeholder={placeholder}
-      className={`w-full bg-[#0e1810] border border-[#1e3a24] rounded-lg px-3 py-2 text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:border-[#087331] transition-colors ${className}`}
+      className={`w-full bg-[#0e1810] border border-[#1e3a24] rounded-lg px-3 py-2 text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:border-brand transition-colors ${className}`}
     />
   );
 }
@@ -155,11 +155,11 @@ export default function AdminBlogPage() {
 
         {/* Center: filename pill */}
         <div className="hidden md:flex items-center gap-2 bg-[#0e1810] border border-[#1e3a24] rounded-full px-4 py-1">
-          <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="text-brand-accent" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
           </svg>
           <span className="text-[11px] text-gray-400 font-mono">
-            content/blog/<span className="text-[#4ade80]">{filename}</span>
+            content/blog/<span className="text-brand-accent">{filename}</span>
           </span>
         </div>
 
@@ -171,10 +171,10 @@ export default function AdminBlogPage() {
           >
             {copied ? (
               <>
-                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="text-brand-accent" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="20 6 9 17 4 12"/>
                 </svg>
-                <span className="text-[#4ade80]">Copied</span>
+                <span className="text-brand-accent">Copied</span>
               </>
             ) : (
               <>
@@ -191,7 +191,7 @@ export default function AdminBlogPage() {
             disabled={!canDownload}
             className={`flex items-center gap-1.5 text-xs font-semibold rounded-lg px-3 py-1.5 transition-colors ${
               canDownload
-                ? 'bg-[#087331] text-white hover:bg-[#065a26]'
+                ? 'bg-brand text-white hover:bg-brand-hover'
                 : 'bg-[#0e1810] text-gray-600 cursor-not-allowed'
             }`}
           >
@@ -211,7 +211,7 @@ export default function AdminBlogPage() {
             onClick={() => setActiveTab(tab)}
             className={`flex-1 py-2.5 text-xs font-semibold capitalize transition-colors ${
               activeTab === tab
-                ? 'text-[#4ade80] border-b-2 border-[#4ade80]'
+                ? 'text-brand-accent border-b-2 border-brand-accent'
                 : 'text-gray-500'
             }`}
           >
@@ -237,7 +237,7 @@ export default function AdminBlogPage() {
                 value={fields.title}
                 onChange={e => set('title')(e.target.value)}
                 placeholder="Post title..."
-                className="w-full bg-transparent border-0 border-b border-[#1e3a24] pb-2 text-lg font-semibold text-white placeholder-gray-600 focus:outline-none focus:border-[#087331] transition-colors"
+                className="w-full bg-transparent border-0 border-b border-[#1e3a24] pb-2 text-lg font-semibold text-white placeholder-gray-600 focus:outline-none focus:border-brand transition-colors"
               />
               {slug && (
                 <p className="mt-1.5 text-[11px] text-gray-600 font-mono">
@@ -256,8 +256,8 @@ export default function AdminBlogPage() {
                     onClick={() => set('category')(k)}
                     className={`text-xs font-semibold px-2.5 py-1 rounded-full border transition-colors ${
                       fields.category === k
-                        ? 'bg-[#087331] text-white border-[#087331]'
-                        : 'bg-[#0e1810] text-gray-400 border-[#1e3a24] hover:border-[#087331]'
+                        ? 'bg-brand text-white border-brand'
+                        : 'bg-[#0e1810] text-gray-400 border-[#1e3a24] hover:border-brand'
                     }`}
                   >
                     {v}
@@ -274,7 +274,7 @@ export default function AdminBlogPage() {
                   type="date"
                   value={fields.date}
                   onChange={e => set('date')(e.target.value)}
-                  className="w-full bg-[#0e1810] border border-[#1e3a24] rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-[#087331] transition-colors [color-scheme:dark]"
+                  className="w-full bg-[#0e1810] border border-[#1e3a24] rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-brand transition-colors [color-scheme:dark]"
                 />
               </div>
               <div>
@@ -291,7 +291,7 @@ export default function AdminBlogPage() {
                 onChange={e => set('excerpt')(e.target.value)}
                 placeholder="One sentence summary shown on the listing card..."
                 rows={2}
-                className="w-full bg-[#0e1810] border border-[#1e3a24] rounded-lg px-3 py-2 text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:border-[#087331] transition-colors resize-none leading-relaxed"
+                className="w-full bg-[#0e1810] border border-[#1e3a24] rounded-lg px-3 py-2 text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:border-brand transition-colors resize-none leading-relaxed"
               />
             </div>
           </div>
@@ -322,7 +322,7 @@ export default function AdminBlogPage() {
             <>
               {/* Hero mock */}
               <div
-                className="relative bg-[#050a06] text-white overflow-hidden"
+                className="relative bg-surface-inverse text-white overflow-hidden"
                 style={{
                   backgroundImage:
                     'linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)',
@@ -365,10 +365,10 @@ export default function AdminBlogPage() {
                     prose-p:text-gray-600 prose-p:leading-relaxed prose-p:mb-5
                     prose-li:text-gray-600 prose-li:leading-relaxed
                     prose-strong:text-gray-900 prose-strong:font-semibold
-                    prose-a:text-[#087331] prose-a:no-underline hover:prose-a:underline
+                    prose-a:text-brand prose-a:no-underline hover:prose-a:underline
                     prose-code:bg-gray-50 prose-code:text-gray-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono
                     prose-pre:bg-gray-950 prose-pre:text-gray-100 prose-pre:rounded-xl prose-pre:p-6 prose-pre:overflow-x-auto
-                    prose-blockquote:border-l-[#087331] prose-blockquote:text-gray-500
+                    prose-blockquote:border-l-brand prose-blockquote:text-ink-muted
                     prose-hr:border-gray-100"
                   dangerouslySetInnerHTML={{ __html: renderedContent }}
                 />

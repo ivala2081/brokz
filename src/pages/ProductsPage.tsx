@@ -81,51 +81,48 @@ const products = [
 
 export default function ProductsPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-surface">
       <SEO
         title="Products | Brokz — Trading Technology"
         description="Custom web trader, broker management dashboard, algorithmic trading infrastructure, MT4/MT5 plugins, and custom data analytics. Institutional-grade fintech products."
         keywords="custom web trader, broker back-office software, algorithmic trading software, MT4 MT5 plugins, trading data analytics, fintech products"
-        ogTitle="Products — Brokz Trading Technology"
-        ogDescription="Institutional-grade fintech products engineered for brokerages and trading firms."
+        canonical="/products"
       />
 
       <NavBar />
 
       <PageHero
         label="Products"
-        title="Institutional Trading Technology Products"
-        description="Five purpose-built product lines covering every layer of the trading technology stack — from front-end terminals to quantitative analytics infrastructure."
+        title="Five products. One stack."
+        highlight="One stack"
+        description="Purpose-built product lines covering every layer of the trading technology stack — from front-end terminals to quantitative analytics infrastructure."
       />
 
       {/* Products */}
-      <section className="section-padding">
+      <section className="section-padding bg-surface">
         <div className="section-container">
-          <div className="flex flex-col gap-20">
+          <div className="flex flex-col divide-y divide-line">
             {products.map((product, i) => (
-              <AnimateIn key={i} delay={0.05}>
-                <div className={`grid grid-cols-1 lg:grid-cols-12 gap-12 pb-20 ${i < products.length - 1 ? 'border-b border-gray-100' : ''}`}>
-                  <div className={`lg:col-span-4 ${i % 2 === 1 ? 'lg:order-last' : ''}`}>
-                    <span className="inline-block text-xs font-bold text-brand bg-brand-light px-3 py-1.5 rounded-full tracking-wide mb-4">
-                      {product.tag}
-                    </span>
-                    <div className="accent-bar mt-3 mb-4" />
-                    <h2 className="text-2xl md:text-3xl font-bold text-gray-900 leading-tight">
+              <AnimateIn key={product.name} delay={0.05}>
+                <div className="py-16 md:py-24 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+                  <div className={`lg:col-span-5 ${i % 2 === 1 ? 'lg:order-last' : ''}`}>
+                    <span className="badge-brand mb-6">{product.tag}</span>
+                    <h2 className="heading-hero-sm text-ink leading-[1.05]">
                       {product.name}
                     </h2>
                   </div>
-                  <div className="lg:col-span-8">
-                    <p className="text-gray-500 leading-relaxed mb-8 text-base">{product.description}</p>
-                    <Stagger className="grid grid-cols-1 sm:grid-cols-2 gap-4" staggerDelay={0.05}>
+                  <div className="lg:col-span-7">
+                    <p className="body-lg mb-10 max-w-2xl">{product.description}</p>
+                    <Stagger className="grid grid-cols-1 sm:grid-cols-2 gap-3" staggerDelay={0.04}>
                       {product.features.map((feat, j) => (
                         <StaggerItem key={j}>
                           <motion.div
-                            className="card-feature flex items-start gap-3"
-                            whileHover={{ y: -2, boxShadow: '0 4px 12px rgba(0,0,0,0.06)', borderColor: 'rgba(8,115,49,0.2)' }}
+                            className="flex items-start gap-3 p-4 rounded-card-sm bg-surface-muted border border-line"
+                            whileHover={{ borderColor: 'rgba(8,115,49,0.3)', backgroundColor: '#ffffff' }}
                             transition={{ duration: 0.15 }}
                           >
                             <span className="mt-1 w-1.5 h-1.5 rounded-full bg-brand flex-shrink-0" />
-                            <span className="text-sm text-gray-600 leading-relaxed">{feat}</span>
+                            <span className="text-sm text-ink-secondary leading-relaxed">{feat}</span>
                           </motion.div>
                         </StaggerItem>
                       ))}
@@ -139,8 +136,9 @@ export default function ProductsPage() {
       </section>
 
       <CTABanner
-        title="Request a Technical Overview"
-        description="We provide detailed architecture documentation and technical specifications on request."
+        label="Technical Overview"
+        title="Request architecture documentation."
+        description="We provide detailed technical specifications and integration guides for evaluated engagements. Reach out to request access."
         buttonText="Contact Us"
         buttonLink="/contact"
       />
