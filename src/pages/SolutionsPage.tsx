@@ -3,7 +3,6 @@ import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import PageHero from '../components/PageHero';
-import CTABanner from '../components/CTABanner';
 import { Stagger, StaggerItem } from '../components/AnimateIn';
 
 const solutions = [
@@ -132,14 +131,6 @@ export default function SolutionsPage() {
           </Stagger>
         </div>
       </section>
-
-      <CTABanner
-        label="Start Here"
-        title="Discuss your infrastructure requirements."
-        description="We evaluate project scope, define architecture, and propose a structured delivery plan within one business day."
-        buttonText="Get in Touch"
-        buttonLink="/contact"
-      />
 
       <Footer />
     </div>

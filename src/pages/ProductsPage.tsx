@@ -3,7 +3,6 @@ import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import PageHero from '../components/PageHero';
-import CTABanner from '../components/CTABanner';
 import AnimateIn, { Stagger, StaggerItem } from '../components/AnimateIn';
 
 const products = [
@@ -134,14 +133,6 @@ export default function ProductsPage() {
           </div>
         </div>
       </section>
-
-      <CTABanner
-        label="Technical Overview"
-        title="Request architecture documentation."
-        description="We provide detailed technical specifications and integration guides for evaluated engagements. Reach out to request access."
-        buttonText="Contact Us"
-        buttonLink="/contact"
-      />
 
       <Footer />
     </div>
