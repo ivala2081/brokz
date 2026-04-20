@@ -94,7 +94,7 @@ export default function ContactPage() {
 
             {/* Left: Info */}
             <div className="lg:col-span-4">
-              <h2 className="text-xl font-bold text-ink mb-6 tracking-tight">Partnership & Project Inquiries</h2>
+              <h2 className="heading-3 text-ink mb-6">Partnership & Project Inquiries</h2>
               <p className="body-sm mb-8">
                 We evaluate each engagement based on technical fit and project scope. We partner
                 with brokerages, proprietary trading firms, fintech startups, and liquidity

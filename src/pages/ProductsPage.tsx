@@ -102,17 +102,17 @@ export default function ProductsPage() {
       <section className="section-padding bg-surface">
         <div className="section-container">
           <div className="flex flex-col divide-y divide-line">
-            {products.map((product, i) => (
+            {products.map(product => (
               <AnimateIn key={product.name} delay={0.05}>
-                <div className="py-16 md:py-24 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
-                  <div className={`lg:col-span-5 ${i % 2 === 1 ? 'lg:order-last' : ''}`}>
-                    <span className="badge-brand mb-6">{product.tag}</span>
-                    <h2 className="heading-hero-sm text-ink leading-[1.05]">
+                <div className="py-14 md:py-20 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+                  <div className="lg:col-span-5">
+                    <span className="badge-brand mb-5">{product.tag}</span>
+                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-ink tracking-tight leading-[1.1] mt-1">
                       {product.name}
                     </h2>
                   </div>
                   <div className="lg:col-span-7">
-                    <p className="body-lg mb-10 max-w-2xl">{product.description}</p>
+                    <p className="body mb-8 max-w-2xl">{product.description}</p>
                     <Stagger className="grid grid-cols-1 sm:grid-cols-2 gap-3" staggerDelay={0.04}>
                       {product.features.map((feat, j) => (
                         <StaggerItem key={j}>
