@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { BrokzLogoCompact } from './BrokzLogo';
+import watermarkSrc from '../assets/logo/brokz-logo-on-dark.svg';
 
 const companyLinks = [
   { label: 'Solutions', path: '/solutions' },
@@ -26,19 +27,19 @@ export default function Footer() {
       {/* Brand radial ambient light */}
       <div className="absolute inset-0 bg-brand-radial pointer-events-none" />
 
-      {/* ─── Wordmark supergraphic — full-bleed background layer ─── */}
-      {/* Per-pair optical kerning: K-Z opened (diagonal collision), B-R slight. */}
+      {/* ─── Brand lockup supergraphic — full-bleed background layer ─── */}
+      {/* Uses the official full-lockup SVG (icon + wordmark) from the brand package.
+          Faded via CSS mask + opacity, green glow + breathing animation for depth. */}
       <div
-        className="absolute inset-x-0 bottom-0 pointer-events-none select-none flex items-end justify-center"
+        className="absolute inset-x-0 bottom-0 pointer-events-none select-none flex items-end justify-center overflow-hidden"
         aria-hidden="true"
       >
-        <div className="brand-wordmark brand-wordmark-bg">
-          <span>B</span>
-          <span style={{ marginLeft: '0.005em' }}>R</span>
-          <span>O</span>
-          <span>K</span>
-          <span style={{ marginLeft: '0.025em' }}>Z</span>
-        </div>
+        <img
+          src={watermarkSrc}
+          alt=""
+          draggable={false}
+          className="brand-watermark-svg"
+        />
       </div>
 
       {/* ─── Content layer ─── */}
@@ -69,7 +70,7 @@ export default function Footer() {
 
             {/* Brand */}
             <div className="lg:col-span-5">
-              <BrokzLogoCompact size={32} withWordmark variant="light" />
+              <BrokzLogoCompact size={80} withWordmark variant="light" />
               <p className="body-sm text-ink-subtle mt-6 max-w-sm">
                 Institutional-grade fintech infrastructure and trading technology.
                 Engineered for brokerages, prop firms, and liquidity providers.

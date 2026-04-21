@@ -129,7 +129,7 @@ export default function NavBar() {
             className="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-ring focus-visible:ring-offset-2 rounded-md -ml-1 px-1 py-1"
             aria-label="Brokz — Home"
           >
-            <BrokzLogoCompact size={32} withWordmark variant={logoVariant} />
+            <BrokzLogoCompact size={80} withWordmark variant={logoVariant} />
           </Link>
 
           {/* Desktop nav */}
