@@ -250,36 +250,6 @@ export default function HomePage() {
       {/* ═══ HOW WE ENGAGE — Process transparency ═══ */}
       <HowWeEngage />
 
-      {/* ═══ CTA — above-fold repeat at bottom ═══ */}
-      <section className="section-padding bg-surface-inverse text-white relative overflow-hidden">
-        <InteractiveGrid cellSize={64} />
-        <div className="absolute inset-0 bg-brand-radial pointer-events-none" />
-        <Spotlight size={600} />
-
-        <div className="relative section-container">
-          <AnimateIn>
-            <div className="max-w-4xl">
-              <p className="section-label-light">Start Here</p>
-              <h2 className="heading-hero-sm text-white mb-10">
-                Ready to build institutional-grade infrastructure?
-              </h2>
-              <p className="text-lg md:text-xl text-gray-300 max-w-2xl leading-relaxed mb-12">
-                Tell us about your technical requirements. We'll assess scope and propose a delivery architecture within one business day.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/contact" className="btn-primary">
-                  Start a Project
-                  {Icons.arrow}
-                </Link>
-                <Link to="/products" className="btn-ghost">
-                  View Products
-                </Link>
-              </div>
-            </div>
-          </AnimateIn>
-        </div>
-      </section>
-
       <Footer />
     </div>
   );
