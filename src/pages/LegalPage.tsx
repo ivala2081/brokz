@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
@@ -7,34 +7,39 @@ import PageHero from '../components/PageHero';
 import AnimateIn from '../components/AnimateIn';
 import LocalizedLink from '../i18n/LocalizedLink';
 import NotFoundPage from './NotFoundPage';
+import { ROUTES, type RouteKey } from '../i18n/routes';
 
 type DocKey = 'terms' | 'privacy' | 'risk' | 'disclaimer';
 
-/**
- * Both EN and TR localized URL slugs map to the same doc key here — so the
- * component can fetch the correct translated content regardless of which
- * language the URL is in.
- */
-const SLUG_TO_DOC_KEY: Record<string, DocKey> = {
-  // EN slugs
-  'terms':              'terms',
-  'privacy':            'privacy',
-  'risk-disclosure':    'risk',
-  'disclaimer':         'disclaimer',
-  // TR slugs
-  'kullanim-kosullari':  'terms',
-  'gizlilik-politikasi': 'privacy',
-  'risk-aciklamasi':     'risk',
-  'feragat-beyani':      'disclaimer',
-};
+/** Which legal route key corresponds to which translation doc key. */
+const ROUTE_TO_DOC_KEY = {
+  legalTerms:      'terms',
+  legalPrivacy:    'privacy',
+  legalRisk:       'risk',
+  legalDisclaimer: 'disclaimer',
+} as const satisfies Partial<Record<RouteKey, DocKey>>;
+
+type LegalRouteKey = keyof typeof ROUTE_TO_DOC_KEY;
+
+/** Reverse-lookup the current pathname against ROUTES to find its doc key.
+ *  Works for both EN and TR URLs since ROUTES holds both variants. */
+function docKeyForPath(pathname: string): DocKey | undefined {
+  for (const key of Object.keys(ROUTE_TO_DOC_KEY) as LegalRouteKey[]) {
+    const route = ROUTES[key];
+    if (route.en === pathname || route.tr === pathname) {
+      return ROUTE_TO_DOC_KEY[key];
+    }
+  }
+  return undefined;
+}
 
 type Section = { heading: string; body: string };
 
 export default function LegalPage() {
-  const { slug } = useParams<{ slug: string }>();
+  const { pathname } = useLocation();
   const { t } = useTranslation('legal');
 
-  const docKey = slug ? SLUG_TO_DOC_KEY[slug] : undefined;
+  const docKey = docKeyForPath(pathname);
   if (!docKey) return <NotFoundPage />;
 
   const sections = t(`docs.${docKey}.sections`, { returnObjects: true }) as Section[];
