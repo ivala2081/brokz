@@ -6,6 +6,7 @@ import SEO from '../components/SEO';
 import NotFoundPage from './NotFoundPage';
 import Spotlight from '../components/fx/Spotlight';
 import InteractiveGrid from '../components/fx/InteractiveGrid';
+import TracingBeam from '../components/fx/TracingBeam';
 import { getPostBySlug, categoryLabels, type BlogCategory } from '../lib/blog';
 
 const EASE = [0.21, 0.47, 0.32, 0.98] as const;
@@ -97,31 +98,33 @@ export default function BlogPostPage() {
       {/* Article content */}
       <section className="section-padding bg-surface">
         <div className="max-w-[760px] mx-auto px-6">
-          <article
-            className="prose prose-gray prose-base md:prose-lg max-w-none
-              prose-headings:font-bold prose-headings:text-ink prose-headings:tracking-tight
-              prose-h2:text-2xl md:prose-h2:text-3xl prose-h2:mt-14 prose-h2:mb-5
-              prose-h3:text-xl prose-h3:mt-10 prose-h3:mb-4
-              prose-p:text-ink-secondary prose-p:leading-relaxed prose-p:mb-6
-              prose-li:text-ink-secondary prose-li:leading-relaxed
-              prose-strong:text-ink prose-strong:font-semibold
-              prose-a:text-brand prose-a:no-underline hover:prose-a:underline
-              prose-code:bg-surface-muted prose-code:text-ink prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-code:before:content-none prose-code:after:content-none
-              prose-pre:bg-surface-inverse prose-pre:text-gray-100 prose-pre:rounded-xl prose-pre:p-6 prose-pre:overflow-x-auto prose-pre:font-mono
-              prose-blockquote:border-l-brand prose-blockquote:text-ink-muted prose-blockquote:font-normal prose-blockquote:not-italic
-              prose-hr:border-line"
-            dangerouslySetInnerHTML={{ __html: post.content }}
-          />
+          <TracingBeam>
+            <article
+              className="prose prose-gray prose-base md:prose-lg max-w-none
+                prose-headings:font-bold prose-headings:text-ink prose-headings:tracking-tight
+                prose-h2:text-2xl md:prose-h2:text-3xl prose-h2:mt-14 prose-h2:mb-5
+                prose-h3:text-xl prose-h3:mt-10 prose-h3:mb-4
+                prose-p:text-ink-secondary prose-p:leading-relaxed prose-p:mb-6
+                prose-li:text-ink-secondary prose-li:leading-relaxed
+                prose-strong:text-ink prose-strong:font-semibold
+                prose-a:text-brand prose-a:no-underline hover:prose-a:underline
+                prose-code:bg-surface-muted prose-code:text-ink prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-code:before:content-none prose-code:after:content-none
+                prose-pre:bg-surface-inverse prose-pre:text-gray-100 prose-pre:rounded-xl prose-pre:p-6 prose-pre:overflow-x-auto prose-pre:font-mono
+                prose-blockquote:border-l-brand prose-blockquote:text-ink-muted prose-blockquote:font-normal prose-blockquote:not-italic
+                prose-hr:border-line"
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            />
 
-          <div className="mt-20 pt-10 border-t border-line">
-            <Link to="/blog" className="inline-flex items-center gap-2 text-sm font-semibold text-ink-muted hover:text-brand transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="19" y1="12" x2="5" y2="12" />
-                <polyline points="12 19 5 12 12 5" />
-              </svg>
-              Back to Blog
-            </Link>
-          </div>
+            <div className="mt-20 pt-10 border-t border-line">
+              <Link to="/blog" className="inline-flex items-center gap-2 text-sm font-semibold text-ink-muted hover:text-brand transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="19" y1="12" x2="5" y2="12" />
+                  <polyline points="12 19 5 12 12 5" />
+                </svg>
+                Back to Blog
+              </Link>
+            </div>
+          </TracingBeam>
         </div>
       </section>
 

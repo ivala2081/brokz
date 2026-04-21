@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
@@ -6,6 +5,7 @@ import PageHero from '../components/PageHero';
 import AnimateIn, { Stagger, StaggerItem } from '../components/AnimateIn';
 import Spotlight from '../components/fx/Spotlight';
 import InteractiveGrid from '../components/fx/InteractiveGrid';
+import GlareCard from '../components/fx/GlareCard';
 
 const philosophy = [
   {
@@ -106,11 +106,7 @@ export default function AboutPage() {
           <Stagger className="grid grid-cols-1 md:grid-cols-2 gap-px bg-line rounded-card overflow-hidden border border-line">
             {philosophy.map((item, i) => (
               <StaggerItem key={item.title}>
-                <motion.div
-                  className="bg-surface p-10 md:p-12 h-full"
-                  whileHover={{ backgroundColor: '#F9FAFB' }}
-                  transition={{ duration: 0.2 }}
-                >
+                <GlareCard className="bg-surface p-10 md:p-12 h-full">
                   <div className="flex items-baseline gap-4 mb-5">
                     <span className="font-mono tabular text-sm font-semibold text-brand">
                       {String(i + 1).padStart(2, '0')}
@@ -119,7 +115,7 @@ export default function AboutPage() {
                   </div>
                   <h3 className="text-xl md:text-2xl font-bold text-ink mb-4 tracking-tight">{item.title}</h3>
                   <p className="body text-ink-secondary">{item.body}</p>
-                </motion.div>
+                </GlareCard>
               </StaggerItem>
             ))}
           </Stagger>
@@ -144,11 +140,7 @@ export default function AboutPage() {
           <Stagger className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {expertise.map((item, i) => (
               <StaggerItem key={item.label}>
-                <motion.div
-                  className="card-interactive h-full"
-                  whileHover={{ y: -4 }}
-                  transition={{ duration: 0.2 }}
-                >
+                <GlareCard className="card h-full transition-transform duration-base hover:-translate-y-1 hover:border-brand/30">
                   <div className="flex items-center gap-3 mb-5">
                     <span className="font-mono tabular text-xs font-semibold text-brand bg-brand-subtle px-2 py-1 rounded-md">
                       {String(i + 1).padStart(2, '0')}
@@ -156,7 +148,7 @@ export default function AboutPage() {
                   </div>
                   <h3 className="text-lg font-bold text-ink mb-2 tracking-tight">{item.label}</h3>
                   <p className="body-sm">{item.desc}</p>
-                </motion.div>
+                </GlareCard>
               </StaggerItem>
             ))}
           </Stagger>

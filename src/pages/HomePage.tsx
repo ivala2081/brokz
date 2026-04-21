@@ -7,6 +7,7 @@ import AnimateIn, { Stagger, StaggerItem } from '../components/AnimateIn';
 import Spotlight from '../components/fx/Spotlight';
 import InteractiveGrid from '../components/fx/InteractiveGrid';
 import NumberTicker from '../components/fx/NumberTicker';
+import GlareCard from '../components/fx/GlareCard';
 import ReferenceArchitecture from '../components/sections/ReferenceArchitecture';
 import HowWeEngage from '../components/sections/HowWeEngage';
 
@@ -140,7 +141,7 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.42, ease: EASE }}
           >
-            <Link to="/contact" className="btn-primary">
+            <Link to="/contact" className="btn-primary btn-shimmer">
               Start a Project
               {Icons.arrow}
             </Link>
@@ -188,11 +189,7 @@ export default function HomePage() {
           <Stagger className="grid grid-cols-1 md:grid-cols-2 gap-px bg-line rounded-card overflow-hidden border border-line">
             {capabilities.map(cap => (
               <StaggerItem key={cap.title}>
-                <motion.div
-                  className="bg-surface p-10 md:p-12 h-full group cursor-default"
-                  whileHover={{ backgroundColor: '#F9FAFB' }}
-                  transition={{ duration: 0.2 }}
-                >
+                <GlareCard className="bg-surface p-10 md:p-12 h-full group cursor-default">
                   <div className="text-brand mb-8 transition-transform duration-base group-hover:scale-110 origin-left w-fit">
                     {cap.icon}
                   </div>
@@ -200,7 +197,7 @@ export default function HomePage() {
                     {cap.title}
                   </h3>
                   <p className="body text-ink-secondary max-w-md">{cap.desc}</p>
-                </motion.div>
+                </GlareCard>
               </StaggerItem>
             ))}
           </Stagger>
