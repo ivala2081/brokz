@@ -5,9 +5,9 @@ import { BrokzLogoCompact } from './BrokzLogo';
 
 const EASE = [0.21, 0.47, 0.32, 0.98] as const;
 
-// Threshold (px): scroll past this = "scrolled" state (white bg, dark text)
-// Below = "at-top" state (transparent over dark hero, light text)
-const SCROLL_THRESHOLD = 80;
+// Scroll past this (px) → we're over light content. Below → over dark hero.
+// All page heroes are at least 400px tall, so this threshold works globally.
+const HERO_EXIT = 400;
 
 const navLinks = [
   { label: 'Home', path: '/' },
@@ -43,16 +43,17 @@ const itemVariants = {
 
 export default function NavBar() {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  // mode === 'over-dark' → header renders WHITE (contrasts with dark hero)
+  // mode === 'over-light' → header renders DARK (contrasts with white content)
+  const [mode, setMode] = useState<'over-dark' | 'over-light'>('over-dark');
   const [progress, setProgress] = useState(0);
   const location = useLocation();
 
   useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY;
-      setScrolled(y > SCROLL_THRESHOLD);
+      setMode(y < HERO_EXIT ? 'over-dark' : 'over-light');
 
-      // Scroll progress 0..1
       const doc = document.documentElement;
       const max = doc.scrollHeight - window.innerHeight;
       setProgress(max > 0 ? Math.min(1, Math.max(0, y / max)) : 0);
@@ -66,35 +67,48 @@ export default function NavBar() {
     };
   }, []);
 
-  // Reset progress when route changes (scrollTop happens after)
   useEffect(() => {
     setOpen(false);
-    setScrolled(window.scrollY > SCROLL_THRESHOLD);
+    const y = window.scrollY;
+    setMode(y < HERO_EXIT ? 'over-dark' : 'over-light');
   }, [location.pathname]);
 
-  // Lock body scroll + handle Escape when mobile menu open
   useEffect(() => {
     if (!open) return;
-
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setOpen(false);
     };
     window.addEventListener('keydown', onKey);
-
     return () => {
       document.body.style.overflow = prevOverflow;
       window.removeEventListener('keydown', onKey);
     };
   }, [open]);
 
-  // Navbar always in light mode — solid white bg, brand logo, dark text.
-  // Scrolled state only changes intensity (slight bg opacity + shadow).
-  const navClasses = scrolled
-    ? 'bg-white/98 backdrop-blur-md shadow-sm border-b border-line'
-    : 'bg-white backdrop-blur border-b border-line-subtle';
+  // ─── Mode-dependent classes ──────────────────────────────────────────
+
+  const overDark = mode === 'over-dark';
+
+  const navClasses = overDark
+    // WHITE header over dark hero — solid, no blur, sharp shadow
+    ? 'bg-white border-b border-line shadow-[0_1px_0_rgba(0,0,0,0.04)]'
+    // DARK header over light content
+    : 'bg-surface-inverse border-b border-line-inverse';
+
+  const linkIdle = overDark
+    ? 'text-ink-secondary hover:text-ink'
+    : 'text-gray-300 hover:text-white';
+  const linkActive = overDark ? 'text-brand' : 'text-brand-accent';
+  const activeBar = overDark ? 'bg-brand' : 'bg-brand-accent';
+
+  // CTA stays brand-green on both modes — brand color is context-independent
+  const ctaClasses = 'bg-brand text-white hover:bg-brand-hover';
+
+  const hamburger = overDark ? 'text-ink-secondary hover:text-ink' : 'text-white hover:text-gray-200';
+  const logoVariant = overDark ? 'brand' : 'light';
+  const progressColor = overDark ? 'bg-brand' : 'bg-brand-accent';
 
   return (
     <>
@@ -107,7 +121,7 @@ export default function NavBar() {
       </a>
 
       <nav
-        className={`w-full sticky top-0 z-sticky transition-all duration-base ease-standard ${navClasses}`}
+        className={`w-full sticky top-0 z-sticky transition-colors duration-base ease-standard ${navClasses}`}
       >
         <div className="max-w-layout mx-auto px-6 h-16 flex items-center justify-between">
           <Link
@@ -115,7 +129,7 @@ export default function NavBar() {
             className="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-ring focus-visible:ring-offset-2 rounded-md -ml-1 px-1 py-1"
             aria-label="Brokz — Home"
           >
-            <BrokzLogoCompact size={32} withWordmark variant="brand" />
+            <BrokzLogoCompact size={32} withWordmark variant={logoVariant} />
           </Link>
 
           {/* Desktop nav */}
@@ -125,14 +139,12 @@ export default function NavBar() {
                 key={link.path}
                 to={link.path}
                 className={`text-sm font-medium transition-colors duration-base relative focus-visible:outline-none ${
-                  location.pathname === link.path
-                    ? 'text-brand'
-                    : 'text-ink-secondary hover:text-ink'
+                  location.pathname === link.path ? linkActive : linkIdle
                 }`}
               >
                 {link.label}
                 {location.pathname === link.path && (
-                  <span className="absolute -bottom-[22px] left-0 right-0 h-[2px] bg-brand rounded-pill" />
+                  <span className={`absolute -bottom-[22px] left-0 right-0 h-[2px] rounded-pill ${activeBar}`} />
                 )}
               </Link>
             ))}
@@ -140,7 +152,7 @@ export default function NavBar() {
 
           <Link
             to="/contact"
-            className="hidden md:inline-flex items-center gap-2 text-sm font-semibold bg-brand text-white px-5 py-2.5 rounded-pill hover:bg-brand-hover transition-colors duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-ring focus-visible:ring-offset-2"
+            className={`hidden md:inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-pill transition-colors duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-ring focus-visible:ring-offset-2 ${ctaClasses}`}
           >
             Start a Project
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -152,7 +164,7 @@ export default function NavBar() {
           {/* Mobile menu button */}
           <button
             type="button"
-            className="md:hidden p-2 text-ink-secondary hover:text-ink transition-colors duration-base rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-ring relative z-modal"
+            className={`md:hidden p-2 transition-colors duration-base rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-ring relative z-modal ${hamburger}`}
             onClick={() => setOpen(!open)}
             aria-label={open ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={open}
@@ -176,7 +188,7 @@ export default function NavBar() {
         {/* ─── Scroll progress bar ─── */}
         <div className="absolute inset-x-0 bottom-0 h-[2px] overflow-hidden pointer-events-none" aria-hidden="true">
           <div
-            className="h-full bg-brand origin-left"
+            className={`h-full origin-left ${progressColor}`}
             style={{
               transform: `scaleX(${progress})`,
               transition: 'transform 120ms linear',
