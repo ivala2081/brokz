@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion';
+import Spotlight from './fx/Spotlight';
+import InteractiveGrid from './fx/InteractiveGrid';
 
 const EASE = [0.21, 0.47, 0.32, 0.98] as const;
 
@@ -37,8 +39,9 @@ export default function PageHero({
 
   return (
     <section className="relative bg-surface-inverse text-white overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none bg-grid-dark bg-[length:64px_64px]" />
+      <InteractiveGrid cellSize={64} />
       <div className="absolute inset-0 bg-brand-radial pointer-events-none" />
+      <Spotlight size={600} />
 
       <div className="relative section-container pt-24 md:pt-36 pb-20 md:pb-28">
         <motion.p

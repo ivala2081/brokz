@@ -4,6 +4,8 @@ import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import PageHero from '../components/PageHero';
 import AnimateIn, { Stagger, StaggerItem } from '../components/AnimateIn';
+import Spotlight from '../components/fx/Spotlight';
+import InteractiveGrid from '../components/fx/InteractiveGrid';
 
 const philosophy = [
   {
@@ -163,7 +165,8 @@ export default function AboutPage() {
 
       {/* Infrastructure */}
       <section className="section-padding bg-surface-inverse text-white relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none bg-grid-dark bg-[length:64px_64px]" />
+        <InteractiveGrid cellSize={64} />
+        <Spotlight size={600} />
 
         <div className="relative section-container">
           <AnimateIn>

@@ -4,6 +4,8 @@ import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import NotFoundPage from './NotFoundPage';
+import Spotlight from '../components/fx/Spotlight';
+import InteractiveGrid from '../components/fx/InteractiveGrid';
 import { getPostBySlug, categoryLabels, type BlogCategory } from '../lib/blog';
 
 const EASE = [0.21, 0.47, 0.32, 0.98] as const;
@@ -44,8 +46,9 @@ export default function BlogPostPage() {
 
       {/* Hero */}
       <section className="relative bg-surface-inverse text-white overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none bg-grid-dark bg-[length:64px_64px]" />
+        <InteractiveGrid cellSize={64} />
         <div className="absolute inset-0 bg-brand-radial pointer-events-none" />
+        <Spotlight size={600} />
 
         <div className="relative max-w-[820px] mx-auto px-6 pt-24 md:pt-32 pb-20 md:pb-28">
           <motion.div

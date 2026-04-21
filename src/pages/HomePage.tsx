@@ -4,6 +4,9 @@ import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import AnimateIn, { Stagger, StaggerItem } from '../components/AnimateIn';
+import Spotlight from '../components/fx/Spotlight';
+import InteractiveGrid from '../components/fx/InteractiveGrid';
+import NumberTicker from '../components/fx/NumberTicker';
 
 const EASE = [0.21, 0.47, 0.32, 0.98] as const;
 
@@ -73,9 +76,9 @@ const capabilities = [
 ];
 
 const metrics = [
-  { value: '<1ms', label: 'Execution Latency' },
-  { value: '99.99%', label: 'Infrastructure Uptime' },
-  { value: '24/7', label: 'Operational Monitoring' },
+  { value: '5', label: 'Product Lines' },
+  { value: '4', label: 'Industry Verticals' },
+  { value: 'B2B', label: 'Exclusive Focus' },
 ];
 
 // ─── page ────────────────────────────────────────────────────────────────
@@ -94,8 +97,9 @@ export default function HomePage() {
 
       {/* ═══ HERO — Exaggerated Minimalism ═══ */}
       <section className="relative bg-surface-inverse text-white overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none bg-grid-dark bg-[length:64px_64px]" />
+        <InteractiveGrid cellSize={64} />
         <div className="absolute inset-0 bg-brand-radial pointer-events-none" />
+        <Spotlight size={700} />
 
         <div className="relative section-container pt-28 md:pt-40 pb-24 md:pb-36">
           <motion.p
@@ -153,7 +157,7 @@ export default function HomePage() {
             {metrics.map(m => (
               <div key={m.label}>
                 <div className="font-mono tabular text-4xl md:text-5xl font-semibold text-white mb-2">
-                  {m.value}
+                  <NumberTicker value={m.value} />
                 </div>
                 <div className="eyebrow text-ink-subtle">{m.label}</div>
               </div>
@@ -243,8 +247,9 @@ export default function HomePage() {
 
       {/* ═══ CTA — above-fold repeat at bottom ═══ */}
       <section className="section-padding bg-surface-inverse text-white relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none bg-grid-dark bg-[length:64px_64px]" />
+        <InteractiveGrid cellSize={64} />
         <div className="absolute inset-0 bg-brand-radial pointer-events-none" />
+        <Spotlight size={600} />
 
         <div className="relative section-container">
           <AnimateIn>

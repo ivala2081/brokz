@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
+import Spotlight from '../components/fx/Spotlight';
+import InteractiveGrid from '../components/fx/InteractiveGrid';
 
 const suggestions = [
   { label: 'Home', path: '/', description: 'Overview of Brokz infrastructure & services.' },
@@ -27,8 +29,9 @@ export default function NotFoundPage() {
 
       {/* Hero */}
       <section className="relative bg-surface-inverse text-white overflow-hidden flex-1 flex items-center">
-        <div className="absolute inset-0 pointer-events-none bg-grid-dark bg-[length:48px_48px]" />
+        <InteractiveGrid cellSize={48} />
         <div className="absolute inset-0 bg-brand-radial pointer-events-none" />
+        <Spotlight size={600} />
 
         <div className="relative section-container py-24 md:py-32 w-full">
           <div className="max-w-3xl">
