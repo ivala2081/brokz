@@ -117,7 +117,7 @@ export default function ProductsPage() {
                         <StaggerItem key={j}>
                           <motion.div
                             className="flex items-start gap-3 p-4 rounded-card-sm bg-surface-muted border border-line"
-                            whileHover={{ borderColor: 'rgba(8,115,49,0.3)', backgroundColor: '#ffffff' }}
+                            whileHover={{ borderColor: 'rgba(0, 192, 51,0.3)', backgroundColor: '#ffffff' }}
                             transition={{ duration: 0.15 }}
                           >
                             <span className="mt-1 w-1.5 h-1.5 rounded-full bg-brand flex-shrink-0" />

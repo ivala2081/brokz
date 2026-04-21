@@ -19,7 +19,7 @@ interface InteractiveGridProps {
 export default function InteractiveGrid({
   cellSize = 48,
   lineColor = 'rgba(255, 255, 255, 0.04)',
-  highlightColor = 'rgba(8, 115, 49, 0.18)',
+  highlightColor = 'rgba(0, 192, 51, 0.18)',
   highlightRadius = 240,
 }: InteractiveGridProps) {
   const ref = useRef<HTMLDivElement>(null);

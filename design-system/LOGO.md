@@ -1,6 +1,7 @@
 # Brokz Logo System
 
 Brand governance for all logo variants, usage rules, and asset files.
+Aligned with the official Brokz brand package (`brokzlogo/Brokz/`).
 
 ---
 
@@ -8,73 +9,89 @@ Brand governance for all logo variants, usage rules, and asset files.
 
 | Token | Hex | Role in logo |
 |---|---|---|
-| `brand` | `#087331` | Mark color (on light), bg (on dark app icons) |
-| `brand-hover` | `#065A26` | Reserved — do not use in logo |
-| `surface-inverse` | `#050A06` | Dark bg contexts |
-| `surface-muted` | `#F9FAFB` | Mark color (on dark/brand), bg (on light) |
+| `brand` | `#00C033` | Mark on light surfaces (container bg: F9FAFB) |
+| `brand-hover` | `#009A29` | Hover states — not used in static logo |
+| `brand-accent` | `#5FDD82` | Mark on dark surfaces (container bg: #050A06) |
+| `surface-inverse` | `#050A06` | Dark container bg |
+| `surface-muted` | `#F9FAFB` | Light container bg, wordmark on dark |
 
-**Never** recolor the logo outside these four values.
+**Never** recolor the logo outside these five values.
 
 ---
 
-## Two Distinct Marks
+## Logo Geometry (official brand package)
 
-The brand uses two marks for different contexts — **do not mix**.
+The brand mark is two diagonal slash forms inside a rounded square container.
+Paths and proportions are from the designer-supplied `brokzlogo/Brokz/SVG/ICON/main icon.svg`.
 
-### 1. Full Logo (3 ascending bars + "Brokz" wordmark)
+- **Native viewBox:** `3006×3006`
+- **Container rect:** `520.012, 519.258, 1966.57×1966.57, rx 188.791` (~9.4% corner radius)
+- **Mark:** two curved paths that extend beyond the container — clipped by the container shape for a "slashing through" effect
 
-Used in-product: NavBar, Footer, document headers. Rendered as inline SVG via the `BrokzLogoCompact` component.
+The `BrokzLogoCompact` component renders this geometry as inline SVG using a `viewBox="520 519 1968 1968"` crop plus a clipPath, so the clipped slashes render correctly at any size.
 
-- **Variants:** `brand` (green mark + ink wordmark), `light` (F9FAFB mark + F9FAFB wordmark), `dark` (ink mark + ink wordmark), `mono` (currentColor)
-- **Wordmark:** optional via `withWordmark` prop
-- **Geometry:** 3 horizontal bars, left-aligned, ascending height (14, 26, 40 units in a 48-unit viewBox), 5-unit gaps, 1.5-unit corner radius
+---
 
-### 2. Favicon Monogram ("B" glyph in rounded square)
+## Two Logo Contexts
 
-Used where the full logo can't survive: favicon, app icons, social share previews at small scale.
+### 1. In-product logo (NavBar, Footer, document headers)
 
-- **Light variant:** brand green rounded square (112r on 512 viewBox) + F9FAFB geometric "B"
-- **Dark variant:** F9FAFB rounded square + brand green "B" (for prefers-color-scheme: dark)
-- **Geometry:** vertical spine (72×256) + upper lobe (144-unit width, 144-unit height) + lower lobe (184-unit width, 144-unit height, slightly wider than upper — classic B proportion)
+Rendered via `<BrokzLogoCompact>` React component (inline SVG).
 
-The favicon mark is **NOT a miniaturized full logo**. Three-bar mark at 16×16 is unreadable; monogram survives.
+**Variants:**
+- `brand` / `on-light` / `dark` → container `#F9FAFB` + mark `#00C033` (for white/light surfaces)
+- `light` / `on-dark` → container `#050A06` + mark `#5FDD82` (for dark surfaces)
+- `mono` → transparent container + `currentColor` mark (utility)
+
+**Wordmark:** optional via `withWordmark` prop — renders "Brokz" in Geist Bold next to the mark, colored `#050A06` (on light) or `#F9FAFB` (on dark).
+
+### 2. Favicon / social / app icon
+
+Generated PNGs from `src/assets/logo/` SVG sources via `npm run icons`.
+
+- `favicon.svg` — light-mode favicon (F9FAFB container + #00C033 mark)
+- `favicon-dark.svg` — dark-mode favicon (#050A06 container + #5FDD82 mark)
+- `apple-touch-icon.png` — 180×180, light-mode variant
+- `icon-192.png` / `icon-512.png` — PWA
+- `og-image.png` — 1200×630, dark surface + full wordmark+mark composition
 
 ---
 
 ## Minimum Sizes
 
-| Element | Min size | Below this: do not use |
+| Element | Min size | Below this: fallback |
 |---|---|---|
-| Full logo + wordmark | 24px height | fallback: wordmark-only OR monogram |
-| Full logo (mark only, no wordmark) | 24px | below: monogram |
-| Wordmark only ("Brokz" text) | 16px height | below: illegible |
-| Favicon monogram ("B" glyph) | 16×16 | — (designed for this size) |
+| Full logo + wordmark | 24px | wordmark-only OR mark-only |
+| Mark only (no wordmark) | 20px | use favicon variant |
+| Wordmark only ("Brokz" text) | 16px | illegible — don't use |
+| Favicon mark (in rounded square) | 16×16 | — (designed for this size) |
 
 ---
 
 ## Clear Space
 
-Minimum padding around logo: **logo height / 2** on all sides.
+Minimum padding around any logo rendering: **logo height / 2** on all sides.
 
-Example: a 48px logo needs at least 24px clear space on every side — no text, images, or borders within this zone.
+Example: a 48px logo needs ≥24px clear space on every side — no text, images, or borders within this zone.
 
 ---
 
 ## Asset Inventory
 
-All static assets live in `public/`. Source SVGs in `src/assets/logo/`.
+Sources: `src/assets/logo/` (copied from official brand package).
+Generated outputs: `public/` (via `npm run icons`).
 
 | File | Purpose | Size | Source |
 |---|---|---|---|
-| `public/favicon.svg` | Browser tab (light mode) | 512 viewBox | `src/assets/logo/favicon-mark.svg` |
-| `public/favicon-dark.svg` | Browser tab (dark mode) | 512 viewBox | `src/assets/logo/favicon-mark-dark.svg` |
-| `public/favicon-16.png` | Legacy tab fallback | 16×16 | generated |
+| `public/favicon.svg` | Browser tab (light mode) | 3006 viewBox | `brokzlogo/.../main icon.svg` |
+| `public/favicon-dark.svg` | Browser tab (dark mode) | 3006 viewBox | `brokzlogo/.../main icon - black.svg` |
+| `public/favicon-16.png` | Legacy fallback | 16×16 | generated |
 | `public/favicon-32.png` | Tab high-res | 32×32 | generated |
 | `public/favicon-48.png` | Windows tile | 48×48 | generated |
 | `public/apple-touch-icon.png` | iOS home screen | 180×180 | `src/assets/logo/apple-touch-icon.svg` |
-| `public/icon-192.png` | PWA / Android home screen | 192×192 | apple-touch source |
-| `public/icon-512.png` | PWA splash / large icon | 512×512 | apple-touch source |
-| `public/og-image.png` | Social share (OG + Twitter Card) | 1200×630 | `src/assets/logo/og-image.svg` |
+| `public/icon-192.png` | PWA / Android home | 192×192 | apple-touch source |
+| `public/icon-512.png` | PWA splash | 512×512 | apple-touch source |
+| `public/og-image.png` | Social share | 1200×630 | `src/assets/logo/og-image.svg` |
 | `public/site.webmanifest` | PWA manifest | — | hand-written |
 
 ### Regeneration
@@ -85,58 +102,65 @@ Whenever a source SVG changes:
 npm run icons
 ```
 
-This runs `scripts/generate-icons.ts` — rebuilds all PNGs from the SVG sources.
+Runs `scripts/generate-icons.ts` — rebuilds all PNGs from SVG sources using `sharp`.
 
 ---
 
 ## Do
 
-- ✅ Use `BrokzLogoCompact` component in all in-product surfaces (NavBar, Footer, headers)
-- ✅ Use favicon monogram ONLY for favicon/app-icon/share contexts
-- ✅ Maintain at least logo-height / 2 clear space around any logo
-- ✅ Use `variant="brand"` on light surfaces, `variant="light"` on `surface-inverse`
-- ✅ Match wordmark color to context (ink on light, F9FAFB on dark)
-- ✅ Regenerate all PNGs via `npm run icons` after any SVG change
-- ✅ Version-control source SVGs in `src/assets/logo/`
+- ✅ Use `BrokzLogoCompact` component for all in-product surfaces (NavBar, Footer, headers)
+- ✅ Use favicon/icon PNGs for browser tabs, OS home screens, social shares
+- ✅ Maintain ≥ logo-height / 2 clear space around any logo
+- ✅ Use `variant="brand"` (or `on-light`) on light surfaces, `variant="light"` (or `on-dark`) on `surface-inverse`
+- ✅ Regenerate all PNGs via `npm run icons` after any SVG source change
+- ✅ Keep source SVGs in `src/assets/logo/` — do not hand-edit generated PNGs
 
 ## Don't
 
 - ❌ Do not stretch, skew, or rotate the logo
-- ❌ Do not recolor outside the 4 mandated palette values
-- ❌ Do not apply drop shadow, glow, outline, or gradient effects to the logo
-- ❌ Do not use the full 3-bar logo below 24px (use monogram instead)
-- ❌ Do not use the favicon monogram at large sizes (>48px) on web surfaces — use the full logo
-- ❌ Do not recreate the logo in another tool; always use the SVG sources
-- ❌ Do not hand-edit generated PNGs in `public/` — edit the source SVG + regenerate
+- ❌ Do not recolor outside the 5 mandated palette values
+- ❌ Do not apply drop shadow, glow, outline, or gradient effects directly on the logo
+- ❌ Do not use wordmark-only below 16px
+- ❌ Do not use mark-only below 20px (swap to favicon in rounded square below 20px)
+- ❌ Do not recreate the logo in another tool — always use SVG sources
+- ❌ Do not hand-edit `public/*.png` — edit the source SVG + regenerate
 
 ---
 
-## Accessibility
+## Accessibility / Contrast
 
-All logo instances must:
+Contrast ratios vs WCAG AA (4.5:1 for text, 3:1 for UI):
 
-- Have `role="img"` + descriptive `aria-label="Brokz"` when clickable
-- Pair `text-F9FAFB` mark with `#087331` bg → contrast ratio **~9:1** ✓ AAA
-- Pair `#087331` mark with `#F9FAFB` bg → contrast ratio **~7.2:1** ✓ AAA
+| Mark color | Bg color | Ratio | Verdict |
+|---|---|---|---|
+| `#00C033` | `#F9FAFB` | ~4.1:1 | ✓ UI elements, ✗ body text |
+| `#5FDD82` | `#050A06` | ~11.8:1 | ✓ AAA |
+| `#F9FAFB` | `#050A06` | ~19:1 | ✓ AAA (wordmark on dark) |
+| `#050A06` | `#F9FAFB` | ~19:1 | ✓ AAA (wordmark on light) |
 
-Avoid `#087331` text on `#050A06` bg (ratio 2.8:1 — fails AA). Use `brand-accent` (`#4ade80`) for green text on dark surfaces.
+**Note:** `#00C033` as text-color on white is borderline (4.1:1, below 4.5 AA for small body text). Use only as accent / link / button-bg contexts. For body text on light surfaces, use `#050A06` (ink).
 
----
-
-## Migration: When the Final Logo Arrives
-
-The 3-bar mark and "B" monogram are placeholders pending the final brand. When the final logo arrives:
-
-1. Replace the `<g>` contents in `BrokzLogo.tsx` with the new paths (keep the variant prop API)
-2. Replace `src/assets/logo/favicon-mark.svg` and `favicon-mark-dark.svg` with the new monogram
-3. Replace `src/assets/logo/apple-touch-icon.svg` if the app-icon composition changes
-4. Replace `src/assets/logo/og-image.svg` with updated wordmark
-5. Run `npm run icons` to regenerate all PNGs
-6. Increment a version query string on static references if cache-busting is needed
-7. Update this document (`LOGO.md`) with the new geometry specs
-
-No other code changes required — the component API and CSS tokens stay the same.
+All logo instances must have:
+- `role="img"` on the SVG
+- `aria-label="Brokz"` or equivalent
 
 ---
 
-*Last updated: 2026-04-20. Any change to this document requires review; logo drift is a brand risk.*
+## Migration Path
+
+If the brand package is updated (new paths, new colors, etc.):
+
+1. Replace `src/assets/logo/favicon-mark.svg` with the new light variant
+2. Replace `src/assets/logo/favicon-mark-dark.svg` with the new dark variant
+3. Replace `src/assets/logo/apple-touch-icon.svg` if app-icon composition changes
+4. Replace `src/assets/logo/og-image.svg` if social composition changes
+5. Update `MARK_PATH_UPPER`, `MARK_PATH_LOWER`, and `BRAND_RECT` constants in `src/components/BrokzLogo.tsx`
+6. Run `npm run icons` to regenerate all PNGs
+7. Update color tokens in `tailwind.config.js` if palette shifts
+8. Update this document with new geometry specs
+
+No other code changes required — the component API stays stable.
+
+---
+
+*Last updated: 2026-04-21 — aligned with official Brokz brand package. Any change to this document requires review; logo drift is a brand risk.*

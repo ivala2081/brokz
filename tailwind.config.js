@@ -9,18 +9,19 @@ export default {
         extend: {
             // ─── Layer 1: Primitives (never use directly in components) ──────
             colors: {
-                // Brand scale (green)
+                // Brand scale (green) — derived from Brokz brand package
+                // 500 = #00C033 (primary brand green from logo)
                 green: {
-                    50:  '#e8f5ed',
-                    100: '#d0ebd9',
-                    200: '#a1d6b3',
-                    300: '#6fbf8b',
-                    400: '#3fa363',
-                    500: '#087331', // brand anchor
-                    600: '#065a26',
-                    700: '#04431c',
-                    800: '#042d13',
-                    900: '#02170a',
+                    50:  '#E6FBEC',
+                    100: '#C6F5D6',
+                    200: '#8FECB0',
+                    300: '#58E389',
+                    400: '#2FD663',
+                    500: '#00C033', // brand anchor
+                    600: '#009A29',
+                    700: '#00761F',
+                    800: '#005315',
+                    900: '#002F0B',
                 },
                 // Neutral scale (cool-tinted, institutional)
                 neutral: {
@@ -40,14 +41,15 @@ export default {
                 },
                 // Semantic status
                 status: {
-                    success: '#087331',
+                    success: '#00C033',
                     warning: '#d97706',
                     danger:  '#dc2626',
                     info:    '#0369a1',
                 },
 
                 // ─── Layer 2: Semantic tokens (use these in components) ─────
-                brand:       { DEFAULT: '#087331', hover: '#065a26', subtle: '#e8f5ed', ring: 'rgba(8,115,49,0.35)', accent: '#4ade80' },
+                // brand.DEFAULT matches Brokz logo #00C033. accent = #5FDD82 (logo dark-bg variant).
+                brand:       { DEFAULT: '#00C033', hover: '#009A29', subtle: '#E6FBEC', ring: 'rgba(0,192,51,0.35)', accent: '#5FDD82' },
                 surface:     { DEFAULT: '#ffffff', muted: '#f9fafb', subtle: '#f1f5f9', inverse: '#050a06', elevated: '#ffffff' },
                 ink:         { DEFAULT: '#0f172a', secondary: '#475569', muted: '#64748b', subtle: '#94a3b8', inverse: '#ffffff' },
                 line:        { DEFAULT: '#e2e8f0', subtle: '#f1f5f9', strong: '#cbd5e1', inverse: '#1e293b' },
@@ -109,7 +111,7 @@ export default {
                 'lg':       '0 12px 28px rgba(15, 23, 42, 0.08), 0 4px 8px rgba(15, 23, 42, 0.04)',
                 'xl':       '0 24px 48px rgba(15, 23, 42, 0.10), 0 8px 16px rgba(15, 23, 42, 0.05)',
                 '2xl':      '0 32px 64px rgba(15, 23, 42, 0.14)',
-                'ring':     '0 0 0 4px rgba(8, 115, 49, 0.15)',
+                'ring':     '0 0 0 4px rgba(0, 192, 51, 0.15)',
                 'ring-sm':  '0 0 0 2px rgba(8, 115, 49, 0.25)',
                 'inner-sm': 'inset 0 1px 2px rgba(15, 23, 42, 0.05)',
             },

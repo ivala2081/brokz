@@ -38,8 +38,8 @@ export default function AnimatedBeam({
   delay = 0,
   strokeWidth = 1.5,
   pathColor = 'rgba(255, 255, 255, 0.08)',
-  gradientStart = 'rgba(74, 222, 128, 0)',
-  gradientStop = '#087331',
+  gradientStart = 'rgba(95, 221, 130, 0)',
+  gradientStop = '#00C033',
   reverse = false,
 }: AnimatedBeamProps) {
   const id = useId();

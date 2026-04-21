@@ -5,10 +5,10 @@ import SEO from '../components/SEO';
 // ─── data ─────────────────────────────────────────────────────────────────
 
 const brandTokens = [
-  { token: 'brand', hex: '#087331', className: 'bg-brand' },
-  { token: 'brand-hover', hex: '#065a26', className: 'bg-brand-hover' },
+  { token: 'brand', hex: '#00C033', className: 'bg-brand' },
+  { token: 'brand-hover', hex: '#009A29', className: 'bg-brand-hover' },
   { token: 'brand-subtle', hex: '#e8f5ed', className: 'bg-brand-subtle' },
-  { token: 'brand-accent', hex: '#4ade80', className: 'bg-brand-accent' },
+  { token: 'brand-accent', hex: '#5FDD82', className: 'bg-brand-accent' },
 ];
 
 const surfaceTokens = [
@@ -19,8 +19,8 @@ const surfaceTokens = [
 ];
 
 const coreBrandColors = [
-  { token: 'brand', hex: '#087331', className: 'bg-brand', note: 'Primary — CTAs, links, accent' },
-  { token: 'brand-hover', hex: '#065a26', className: 'bg-brand-hover', note: 'Hover state, deeper tone' },
+  { token: 'brand', hex: '#00C033', className: 'bg-brand', note: 'Primary — CTAs, links, accent' },
+  { token: 'brand-hover', hex: '#009A29', className: 'bg-brand-hover', note: 'Hover state, deeper tone' },
   { token: 'surface-inverse', hex: '#050A06', className: 'bg-surface-inverse', note: 'Dark sections, footer, inverse surfaces' },
   { token: 'surface-muted', hex: '#F9FAFB', className: 'bg-surface-muted border border-line', note: 'Soft section background' },
 ];
@@ -40,7 +40,7 @@ const lineTokens = [
 ];
 
 const statusTokens = [
-  { token: 'status-success', hex: '#087331', className: 'bg-status-success' },
+  { token: 'status-success', hex: '#00C033', className: 'bg-status-success' },
   { token: 'status-warning', hex: '#d97706', className: 'bg-status-warning' },
   { token: 'status-danger', hex: '#dc2626', className: 'bg-status-danger' },
   { token: 'status-info', hex: '#0369a1', className: 'bg-status-info' },

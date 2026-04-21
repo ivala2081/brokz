@@ -14,7 +14,7 @@ interface SpotlightProps {
  */
 export default function Spotlight({
   size = 600,
-  color = 'rgba(8, 115, 49, 0.25)',
+  color = 'rgba(0, 192, 51, 0.25)',
 }: SpotlightProps) {
   const ref = useRef<HTMLDivElement>(null);
 

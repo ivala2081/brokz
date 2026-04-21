@@ -329,7 +329,7 @@ export default function AdminBlogPage() {
                   backgroundSize: '48px 48px',
                 }}
               >
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_-10%,rgba(8,115,49,0.12),transparent)] pointer-events-none" />
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_-10%,rgba(0, 192, 51,0.12),transparent)] pointer-events-none" />
                 <div className="relative max-w-[800px] mx-auto px-8 py-14">
                   <div className="flex items-center gap-3 mb-5">
                     <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${categoryColors[fields.category]}`}>

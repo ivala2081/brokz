@@ -15,12 +15,12 @@ interface GlareCardProps extends HTMLAttributes<HTMLDivElement> {
  *
  * Usage:
  *   <GlareCard className="card">...</GlareCard>
- *   <GlareCard className="card-muted" color="rgba(8,115,49,0.16)">...</GlareCard>
+ *   <GlareCard className="card-muted" color="rgba(0, 192, 51,0.16)">...</GlareCard>
  */
 export default function GlareCard({
   children,
   radius = 420,
-  color = 'rgba(8, 115, 49, 0.12)',
+  color = 'rgba(0, 192, 51, 0.12)',
   className = '',
   style,
   ...rest
@@ -62,7 +62,7 @@ export default function GlareCard({
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 rounded-[inherit] motion-reduce:hidden"
         style={{
-          background: `radial-gradient(var(--glare-radius, 420px) circle at var(--glare-x, 50%) var(--glare-y, 50%), var(--glare-color, rgba(8,115,49,0.12)), transparent 45%)`,
+          background: `radial-gradient(var(--glare-radius, 420px) circle at var(--glare-x, 50%) var(--glare-y, 50%), var(--glare-color, rgba(0, 192, 51,0.12)), transparent 45%)`,
           opacity: 'var(--glare-opacity, 0)',
           transition: 'opacity 280ms ease',
         }}

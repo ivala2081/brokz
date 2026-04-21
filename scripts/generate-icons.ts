@@ -32,7 +32,10 @@ if (!existsSync(outDir)) mkdirSync(outDir, { recursive: true });
 
 async function svgToPng(svgPath: string, outPath: string, size: number) {
   const svg = readFileSync(svgPath);
-  await sharp(svg, { density: Math.max(300, size * 2) })
+  // Density capped to avoid exceeding sharp's pixel limit on large source SVGs.
+  // Target density: enough to cleanly render at `size`. Max 600 dpi avoids blowups.
+  const density = Math.min(600, Math.max(150, size * 2));
+  await sharp(svg, { density, limitInputPixels: false })
     .resize(size, size, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
     .png({ compressionLevel: 9, quality: 95 })
     .toFile(outPath);
@@ -41,7 +44,7 @@ async function svgToPng(svgPath: string, outPath: string, size: number) {
 
 async function svgToRectPng(svgPath: string, outPath: string, width: number, height: number) {
   const svg = readFileSync(svgPath);
-  await sharp(svg, { density: 300 })
+  await sharp(svg, { density: 300, limitInputPixels: false })
     .resize(width, height, { fit: 'fill' })
     .png({ compressionLevel: 9, quality: 95 })
     .toFile(outPath);

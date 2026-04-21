@@ -14,12 +14,13 @@ Mode Support: Light ✓ | Dark ✓
 
 **Audience:** Institutional B2B — brokerages, prop firms, fintech startups, liquidity providers.
 
-## Colors (MANDATED — do not change)
+## Colors (MANDATED — aligned with official brand package, 2026-04-21)
 
 | Role | Hex | Token |
 |---|---|---|
-| Primary / Brand | `#087331` | `brand` |
-| Brand hover | `#065A26` | `brand-hover` |
+| Primary / Brand | `#00C033` | `brand` |
+| Brand hover | `#009A29` | `brand-hover` |
+| Brand accent (on dark) | `#5FDD82` | `brand-accent` |
 | Dark surface | `#050A06` | `surface-inverse` |
 | Soft background | `#F9FAFB` | `surface-muted` |
 | Foreground (ink) | `#0F172A` | `ink` |
@@ -27,7 +28,7 @@ Mode Support: Light ✓ | Dark ✓
 | Border | `#E2E8F0` | `line` |
 | Destructive | `#DC2626` | `status-danger` |
 
-Brand green is the single accent. No blue, no purple, no navy primary.
+Brand green is the single accent. `brand` on light surfaces, `brand-accent` on dark. No blue, no purple, no navy primary.
 
 ## Typography
 

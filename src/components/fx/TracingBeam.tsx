@@ -51,7 +51,7 @@ export default function TracingBeam({ children, className = '' }: TracingBeamPro
         />
         {/* Leading accent dot */}
         <motion.div
-          className="absolute -left-[3px] w-[7px] h-[7px] rounded-full bg-brand-accent shadow-[0_0_12px_rgba(74,222,128,0.6)]"
+          className="absolute -left-[3px] w-[7px] h-[7px] rounded-full bg-brand-accent shadow-[0_0_12px_rgba(95, 221, 130,0.6)]"
           style={{ top: dotY, translateY: '-50%' }}
         />
       </div>
