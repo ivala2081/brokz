@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- Background: Brokz dark surface with subtle grid + brand radial -->
+  <defs>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M 48 0 L 0 0 0 48" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="brandGlow" cx="50%" cy="5%" r="60%">
+      <stop offset="0%" stop-color="rgba(8,115,49,0.28)"/>
+      <stop offset="60%" stop-color="rgba(8,115,49,0.06)"/>
+      <stop offset="100%" stop-color="rgba(8,115,49,0)"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Dark base -->
+  <rect width="1200" height="630" fill="#050A06"/>
+  <!-- Grid overlay -->
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <!-- Brand radial glow at top -->
+  <rect width="1200" height="630" fill="url(#brandGlow)"/>
+
+  <!-- MEGA WORDMARK: "Brokz" -->
+  <text
+    x="600"
+    y="330"
+    text-anchor="middle"
+    font-family="Helvetica, Arial, sans-serif"
+    font-size="240"
+    font-weight="900"
+    fill="#F9FAFB"
+    letter-spacing="-10"
+  >Brokz</text>
+
+  <!-- Small URL below -->
+  <text
+    x="600"
+    y="430"
+    text-anchor="middle"
+    font-family="'Courier New', Courier, monospace"
+    font-size="26"
+    font-weight="500"
+    fill="#9ca3af"
+    letter-spacing="4"
+  >brokz.io</text>
+
+  <!-- Accent: small brand-green line above wordmark (brand signature) -->
+  <rect x="570" y="200" width="60" height="4" rx="2" fill="#087331"/>
+</svg>

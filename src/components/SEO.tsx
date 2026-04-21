@@ -12,7 +12,7 @@ interface SEOProps {
 }
 
 const BASE_URL = 'https://brokz.io';
-const DEFAULT_OG_IMAGE = `${BASE_URL}/logo.png`;
+const DEFAULT_OG_IMAGE = `${BASE_URL}/og-image.png`;
 
 export default function SEO({
     title,

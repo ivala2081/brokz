@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- Apple Touch Icon: brand green bg + F9FAFB mark. iOS applies its own rounded corners. -->
+  <rect width="1024" height="1024" fill="#087331"/>
+  <g fill="#F9FAFB">
+    <rect x="288" y="256" width="144" height="512" rx="12"/>
+    <path d="M432 256 H592 a144 144 0 0 1 0 288 H432 Z"/>
+    <path d="M432 480 H656 a144 144 0 0 1 0 288 H432 Z"/>
+  </g>
+</svg>

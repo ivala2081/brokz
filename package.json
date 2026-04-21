@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "icons": "tsx scripts/generate-icons.ts"
   },
   "dependencies": {
     "@motionone/dom": "^10.13.1",
@@ -25,7 +26,9 @@
     "@vitejs/plugin-react": "latest",
     "autoprefixer": "^10.4.0",
     "postcss": "^8.4.0",
+    "sharp": "^0.34.5",
     "tailwindcss": "^3.4.0",
+    "tsx": "^4.21.0",
     "typescript": "latest",
     "vite": "latest"
   }
