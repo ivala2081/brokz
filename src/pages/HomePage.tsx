@@ -1,15 +1,15 @@
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import AnimateIn, { Stagger, StaggerItem } from '../components/AnimateIn';
 import Spotlight from '../components/fx/Spotlight';
 import InteractiveGrid from '../components/fx/InteractiveGrid';
-import NumberTicker from '../components/fx/NumberTicker';
 import GlareCard from '../components/fx/GlareCard';
 import ReferenceArchitecture from '../components/sections/ReferenceArchitecture';
 import HowWeEngage from '../components/sections/HowWeEngage';
+import LocalizedLink from '../i18n/LocalizedLink';
 
 const EASE = [0.21, 0.47, 0.32, 0.98] as const;
 
@@ -53,47 +53,28 @@ const Icons = {
   ),
 };
 
-// ─── content ─────────────────────────────────────────────────────────────
+// ─── content (icons stay here, copy comes from i18n) ─────────────────────
 
-const capabilities = [
-  {
-    icon: Icons.layers,
-    title: 'Trading Platforms',
-    desc: 'Custom web traders, management dashboards, and broker back-office systems engineered for real-time execution.',
-  },
-  {
-    icon: Icons.cpu,
-    title: 'Algorithmic Systems',
-    desc: 'Execution engines, backtesting frameworks, and quantitative strategy infrastructure for systematic traders.',
-  },
-  {
-    icon: Icons.network,
-    title: 'MT4 / MT5 Extensions',
-    desc: 'Manager tools, risk plugins, bridge systems, and execution optimization for MetaTrader environments.',
-  },
-  {
-    icon: Icons.activity,
-    title: 'Data Infrastructure',
-    desc: 'Quantitative modeling pipelines, tick-level market data, and trading analytics at institutional scale.',
-  },
-];
+const CAPABILITY_KEYS = [
+  { key: 'platforms', icon: Icons.layers },
+  { key: 'algo',      icon: Icons.cpu },
+  { key: 'mt',        icon: Icons.network },
+  { key: 'data',      icon: Icons.activity },
+] as const;
 
-const metrics = [
-  { value: '5', label: 'Product Lines' },
-  { value: '4', label: 'Industry Verticals' },
-  { value: 'B2B', label: 'Exclusive Focus' },
-];
+const TRUST_KEYS = ['brokerages', 'prop', 'fintech', 'lp'] as const;
 
 // ─── page ────────────────────────────────────────────────────────────────
 
 export default function HomePage() {
+  const { t } = useTranslation(['home', 'common']);
+
   return (
     <div className="min-h-screen bg-surface">
       <SEO
-        title="Brokz | Fintech Infrastructure & Trading Technology"
-        description="Institutional-grade fintech infrastructure for brokerages, prop firms, and liquidity providers. Custom web traders, MT4/MT5 plugins, algorithmic trading systems."
-        keywords="fintech infrastructure, trading platform development, brokerage technology, MT4 MT5 plugins, algorithmic trading software, web trader development"
-        canonical="/"
+        title={t('home:seo.title')}
+        description={t('home:seo.description')}
+        keywords={t('home:seo.keywords')}
       />
 
       <NavBar />
@@ -104,14 +85,14 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-brand-radial pointer-events-none" />
         <Spotlight size={700} />
 
-        <div className="relative section-container pt-28 md:pt-40 pb-24 md:pb-36">
+        <div className="relative section-container pt-20 md:pt-28 pb-16 md:pb-20">
           <motion.p
             className="section-label-light"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.05, ease: EASE }}
           >
-            B2B Fintech Engineering
+            {t('home:hero.eyebrow')}
           </motion.p>
 
           <motion.h1
@@ -120,9 +101,9 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.15, ease: EASE }}
           >
-            Infrastructure{' '}
-            <span className="text-brand-accent">for modern</span>{' '}
-            trading.
+            {t('home:hero.titleLead')}{' '}
+            <span className="text-brand-accent">{t('home:hero.titleAccent')}</span>{' '}
+            {t('home:hero.titleTail')}
           </motion.h1>
 
           <motion.p
@@ -131,8 +112,7 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
           >
-            We engineer institutional-grade systems for brokerages, proprietary trading firms,
-            and liquidity providers. Built for reliability, latency, and scale.
+            {t('home:hero.body')}
           </motion.p>
 
           <motion.div
@@ -141,30 +121,13 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.42, ease: EASE }}
           >
-            <Link to="/contact" className="btn-primary btn-shimmer">
-              Start a Project
+            <LocalizedLink to="contact" className="btn-primary btn-shimmer">
+              {t('common:cta.startProject')}
               {Icons.arrow}
-            </Link>
-            <Link to="/solutions" className="btn-ghost">
-              Explore Solutions
-            </Link>
-          </motion.div>
-
-          {/* Metric strip — minimal, mono, tabular */}
-          <motion.div
-            className="mt-24 md:mt-32 grid grid-cols-1 sm:grid-cols-3 gap-10 md:gap-16 pt-10 border-t border-line-inverse"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.55, ease: EASE }}
-          >
-            {metrics.map(m => (
-              <div key={m.label}>
-                <div className="font-mono tabular text-4xl md:text-5xl font-semibold text-white mb-2">
-                  <NumberTicker value={m.value} />
-                </div>
-                <div className="eyebrow text-ink-subtle">{m.label}</div>
-              </div>
-            ))}
+            </LocalizedLink>
+            <LocalizedLink to="solutions" className="btn-ghost">
+              {t('common:cta.exploreSolutions')}
+            </LocalizedLink>
           </motion.div>
         </div>
       </section>
@@ -174,29 +137,31 @@ export default function HomePage() {
         <div className="section-container">
           <div className="max-w-3xl mb-20 md:mb-28">
             <AnimateIn>
-              <p className="section-label">What We Build</p>
+              <p className="section-label">{t('home:capabilities.eyebrow')}</p>
               <h2 className="heading-hero-sm text-ink mb-8">
-                Engineered for the systems that <span className="text-brand">move markets</span>.
+                {t('home:capabilities.titleLead')}{' '}
+                <span className="text-brand">{t('home:capabilities.titleAccent')}</span>{' '}
+                {t('home:capabilities.titleTail')}
               </h2>
               <p className="body-lg max-w-2xl">
-                Four capability areas. Each one built from first principles — order routing,
-                risk management, and regulatory constraints handled by engineers who understand
-                trading infrastructure.
+                {t('home:capabilities.body')}
               </p>
             </AnimateIn>
           </div>
 
           <Stagger className="grid grid-cols-1 md:grid-cols-2 gap-px bg-line rounded-card overflow-hidden border border-line">
-            {capabilities.map(cap => (
-              <StaggerItem key={cap.title}>
+            {CAPABILITY_KEYS.map(cap => (
+              <StaggerItem key={cap.key}>
                 <GlareCard className="bg-surface p-10 md:p-12 h-full group cursor-default">
                   <div className="text-brand mb-8 transition-transform duration-base group-hover:scale-110 origin-left w-fit">
                     {cap.icon}
                   </div>
                   <h3 className="text-2xl md:text-3xl font-bold text-ink mb-4 tracking-tight leading-tight">
-                    {cap.title}
+                    {t(`home:capabilities.items.${cap.key}.title`)}
                   </h3>
-                  <p className="body text-ink-secondary max-w-md">{cap.desc}</p>
+                  <p className="body text-ink-secondary max-w-md">
+                    {t(`home:capabilities.items.${cap.key}.desc`)}
+                  </p>
                 </GlareCard>
               </StaggerItem>
             ))}
@@ -205,12 +170,12 @@ export default function HomePage() {
           <AnimateIn>
             <div className="mt-12 flex items-center justify-between gap-6 flex-wrap">
               <p className="body text-ink-muted max-w-md">
-                Need a custom solution outside these categories? We build bespoke trading infrastructure.
+                {t('home:capabilities.footer')}
               </p>
-              <Link to="/products" className="btn-link">
-                View all products
+              <LocalizedLink to="products" className="btn-link">
+                {t('home:capabilities.viewAll')}
                 {Icons.arrow}
-              </Link>
+              </LocalizedLink>
             </div>
           </AnimateIn>
         </div>
@@ -223,23 +188,22 @@ export default function HomePage() {
       <section className="section-padding bg-surface-muted border-y border-line">
         <div className="section-container">
           <AnimateIn>
-            <p className="section-label">Who We Work With</p>
+            <p className="section-label">{t('home:trust.eyebrow')}</p>
             <h2 className="heading-2 text-ink max-w-3xl mb-14">
-              Brokerages, prop firms, fintech startups, and liquidity providers.
+              {t('home:trust.title')}
             </h2>
           </AnimateIn>
 
           <Stagger className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
-            {[
-              { label: 'Brokerages', desc: 'Multi-asset execution and back-office.' },
-              { label: 'Prop Firms', desc: 'Risk monitoring and strategy deployment.' },
-              { label: 'Fintech Startups', desc: 'Institutional components, faster TTM.' },
-              { label: 'Liquidity Providers', desc: 'Bridges, aggregation, execution.' },
-            ].map(item => (
-              <StaggerItem key={item.label}>
+            {TRUST_KEYS.map(key => (
+              <StaggerItem key={key}>
                 <div className="border-t-2 border-brand pt-5">
-                  <p className="text-lg font-semibold text-ink mb-2 tracking-tight">{item.label}</p>
-                  <p className="text-sm text-ink-secondary leading-relaxed">{item.desc}</p>
+                  <p className="text-lg font-semibold text-ink mb-2 tracking-tight">
+                    {t(`home:trust.items.${key}.label`)}
+                  </p>
+                  <p className="text-sm text-ink-secondary leading-relaxed">
+                    {t(`home:trust.items.${key}.desc`)}
+                  </p>
                 </div>
               </StaggerItem>
             ))}

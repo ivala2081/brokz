@@ -1,0 +1,170 @@
+{
+  "seo": {
+    "title": "Yasal | Brokz — Koşullar, Gizlilik ve Uyarılar",
+    "description": "Brokz yasal bilgileri — hizmet kapsamımızı, gizlilik uygulamalarımızı, risk açıklamalarını ve genel uyarıları tanımlayan geçici belgeler.",
+    "keywords": "brokz yasal, kullanım koşulları, gizlilik politikası, risk açıklaması, fintech feragat beyanı"
+  },
+  "landing": {
+    "hero": {
+      "label": "Yasal",
+      "title": "Yasal Bilgiler",
+      "description": "Brokz hizmetlerinin kapsamını ve tarafların yükümlülüklerini anlamak için yasal belgelerimizi inceleyin."
+    },
+    "cardCta": "Belgeyi oku",
+    "docSummaries": {
+      "terms":      "Brokz web sitesini ve ilgili materyalleri kullanma koşulları.",
+      "privacy":    "Kişisel bilgileri nasıl topluyor, kullanıyor ve koruyoruz.",
+      "risk":       "İşlem ve teknoloji riskleri hakkında önemli bilgiler.",
+      "disclaimer": "Teknoloji sağlayıcısı olarak rolümüz — neyi yapar, neyi yapmayız."
+    },
+    "noticeHeading": "Önemli Bildirim",
+    "noticeLead": "Brokz bir teknoloji ve sistem sağlayıcısıdır.",
+    "noticeBody": "Fintech yazılım, otomasyon araçları ve altyapı çözümleri geliştirir ve sunarız.",
+    "noticeItems": [
+      "Yatırım tavsiyesi veya önerisi vermiyoruz",
+      "Fon yönetmiyor, aracı kurum olarak faaliyet göstermiyoruz",
+      "Tüm araçlar yalnızca bilgilendirme ve teknik amaçlıdır",
+      "İşlem ve yatırım kararlarından yalnızca kullanıcılar sorumludur"
+    ]
+  },
+  "preIncorporation": {
+    "title": "Kuruluş Öncesi Bildirim",
+    "body": "Brokz, Estonya'da tüzel kişilik kuruluş sürecindedir. Bu süreç tamamlanana kadar web sitesi, geçici veri sorumlusu olarak Brokz kurucu ekibi tarafından işletilmektedir. Bu belgeler geçici sürüm (v0.1) olup tüzel kişilik kurulduktan sonra şirket tarafından yayınlanan sürümlerle değiştirilecektir. Hukuken bağlayıcı herhangi bir taahhüt için, Brokz ile imzalanmış proje sözleşmesini esas alın.",
+    "contactLabel": "Yasal iletişim:"
+  },
+  "metadata": {
+    "lastUpdated": "Nisan 2026",
+    "version": "v0.1 · Geçici",
+    "versionLabel": "Sürüm",
+    "lastUpdatedLabel": "Son güncelleme",
+    "backToDocs": "Yasal Belgelere Dön"
+  },
+  "docs": {
+    "terms": {
+      "title": "Kullanım Koşulları",
+      "sections": [
+        {
+          "heading": "1. Kapsam",
+          "body": "Bu Koşullar, Brokz web sitesine ve sitede sunulan bilgilendirici materyallere erişim ve kullanım koşullarını tanımlar. Bu Koşullar, Brokz ile ayrıca müzakere edilerek imzalanan proje sözleşmelerinin yerine geçmez; bu tür sözleşmelerle çelişmesi halinde imzalanan sözleşme esas alınır."
+        },
+        {
+          "heading": "2. Brokz Ne Yapar",
+          "body": "Brokz; fintech yazılım, otomasyon araçları ve teknoloji altyapısı geliştirir. Brokz bir teknoloji sağlayıcısıdır. Brokz bir aracı kurum, yatırım danışmanı, portföy yöneticisi veya düzenlenmiş finansal kuruluş değildir."
+        },
+        {
+          "heading": "3. Kullanıcı Sorumlulukları",
+          "body": "Brokz teknolojisini kendi operasyonlarınızda kullanıyorsanız, bu teknolojinin nasıl dağıtıldığı, yapılandırıldığı ve kullanıldığından yalnızca siz sorumlusunuz. İşlem, yatırım ve operasyonel kararlar tamamen size aittir."
+        },
+        {
+          "heading": "4. Fikri Mülkiyet",
+          "body": "Bu web sitesinde sunulan içerik, yazılım ve materyaller Brokz veya lisans verenlerine aittir ve yürürlükteki fikri mülkiyet yasalarıyla korunur."
+        },
+        {
+          "heading": "5. Web Sitesi İçeriği",
+          "body": "Bu web sitesindeki bilgiler yalnızca genel bilgilendirme amaçlı olup doğruluk veya eksiksizlik garantisi verilmeden sunulur. Brokz ile herhangi bir iş ilişkisi için bağlayıcı koşullar, ayrıca imzalanan sözleşmede belirtilir."
+        },
+        {
+          "heading": "6. Güncellemeler",
+          "body": "Bu Koşullar, Brokz kuruluş sürecini tamamlayıp hukuk danışmanlığı sürecine girdikçe güncellenebilir. Güncelliği için aşağıdaki sürüm etiketini ve son güncelleme tarihini kontrol edin."
+        }
+      ]
+    },
+    "privacy": {
+      "title": "Gizlilik Politikası",
+      "sections": [
+        {
+          "heading": "1. Veri Sorumlusu",
+          "body": "Brokz'un tüzel kişilik kuruluşu tamamlanana kadar geçici veri sorumlusu Brokz kurucu ekibidir; legal@brokz.io üzerinden ulaşılabilir. Estonya'da kuruluş tamamlandıktan sonra veri sorumlusu yeni kurulan şirket olacak ve bu bölüm buna göre güncellenecektir."
+        },
+        {
+          "heading": "2. Topladığımız Bilgiler",
+          "body": "İletişim formumuz aracılığıyla gönüllü olarak sağladığınız bilgileri toplarız: şirket adı, adınız, kurumsal e-posta adresiniz, talep kategorisi ve mesaj içeriği. Bu web sitesinde şu an reklam pikseli veya üçüncü taraf analitik aracı çalıştırmıyoruz."
+        },
+        {
+          "heading": "3. Bilgilerinizi Nasıl Kullanıyoruz",
+          "body": "Sağladığınız bilgileri yalnızca talebinize yanıt vermek ve olası iş ilişkilerini değerlendirmek için kullanırız. Verilerinizi üçüncü taraflara satmayız, kiralamayız."
+        },
+        {
+          "heading": "4. KVKK Kapsamındaki İşleme Bilgileri",
+          "body": "Türkiye'de bulunan veri sahipleri için işleme faaliyeti 6698 sayılı Kişisel Verilerin Korunması Kanunu (KVKK) kapsamında yürütülür. İşleme hukuki sebepleri; KVKK Madde 5/2 çerçevesinde sözleşme görüşmesi için veri talep edilmesi ve veri sahibinin açık rızası (iletişim formunu onaylı gönderme) olarak belirlenmiştir."
+        },
+        {
+          "heading": "5. GDPR Kapsamındaki İşleme Bilgileri",
+          "body": "GDPR'nin size uygulanabildiği durumlarda işleme, iletişim formunu gönderme yoluyla verdiğiniz rızaya ve iş taleplerine yanıt vermekteki meşru menfaatimize dayanır."
+        },
+        {
+          "heading": "6. Veri Saklama",
+          "body": "İletişim formu kayıtları yalnızca talebinize yanıt vermek ve makul bir takip süresi için saklanır. legal@brokz.io adresine yazarak her zaman silme talep edebilirsiniz."
+        },
+        {
+          "heading": "7. Veri Paylaşımı",
+          "body": "Kişisel verilerinizi; yalnızca web sitemiz ve e-posta altyapımızın işletilmesi için gerekli olan ve gizlilik yükümlülüğüne tabi hizmet sağlayıcılar dışında hiçbir üçüncü tarafla paylaşmayız."
+        },
+        {
+          "heading": "8. Yurt Dışı Aktarım",
+          "body": "Bazı hizmet sağlayıcılar verileri ikamet ülkeniz dışında işleyebilir. Böyle bir aktarımın gerçekleştiği durumlarda hizmet sağlayıcının beyan ettiği güvencelere dayanılır. Veri işleyenlerin tam listesi ve aktarım güvenceleri, kuruluş sonrası v1.0 sürümde yayımlanacaktır."
+        },
+        {
+          "heading": "9. Veri Sahibinin Hakları (KVKK Madde 11 / GDPR)",
+          "body": "Yürürlükteki mevzuat çerçevesinde (Türkiye için KVKK Madde 11; AB için GDPR), aşağıdaki haklara sahipsiniz: verilerinize erişim, hatalı verilerin düzeltilmesi, silinmesi, işlemenin kısıtlanması ve uygun olduğu durumlarda veri taşınabilirliği ile işlemeye itiraz. Haklarınızı kullanmak için legal@brokz.io adresine yazabilirsiniz."
+        },
+        {
+          "heading": "10. Güvenlik",
+          "body": "Bilgileri korumak için ticari olarak makul önlemler alıyoruz (aktarım sırasında şifreleme dahil). Hiçbir sistem tamamen güvenli değildir; e-posta kullanımı, Brokz'un veya başka bir tarafın tamamen ortadan kaldıramayacağı riskler taşır."
+        }
+      ]
+    },
+    "risk": {
+      "title": "Risk Açıklaması",
+      "notice": "İşlem ve yatırım faaliyetleri önemli kayıp riski içerir. Geçmiş performans gelecekteki sonuçların garantisi değildir.",
+      "sections": [
+        {
+          "heading": "1. Genel Risk",
+          "body": "Tüm işlem ve yatırım faaliyetleri doğası gereği risk içerir. Yatırdığınız sermayenin bir kısmını veya tamamını kaybedebilirsiniz. Yalnızca kaybetmeyi göze alabileceğiniz tutarlarla işlem yapın."
+        },
+        {
+          "heading": "2. Piyasa Riski",
+          "body": "Finansal piyasalar değişken ve öngörülemezdir. Piyasa koşulları hızla değişebilir ve kayıplara yol açabilir."
+        },
+        {
+          "heading": "3. Teknoloji Riski",
+          "body": "Yazılım, bağlantı ve altyapı hata verebilir. Sistem sorunları hizmeti kesintiye uğratabilir veya execution'ı etkileyebilir. Brokz, operasyonlarınızın bağlı olabileceği hiçbir üçüncü taraf sistemin kesintisiz kullanılabilirliğini garanti etmez."
+        },
+        {
+          "heading": "4. Yatırım Tavsiyesi Yoktur",
+          "body": "Brokz teknik araçlar ve platformlar sunar. Brokz yatırım tavsiyesi, öneri veya garanti vermez. Hangi araçla, ne zaman, nasıl işlem yapılacağına ilişkin kararlar tamamen size aittir."
+        },
+        {
+          "heading": "5. Düzenleyici Bağlam",
+          "body": "İşlem ve finansal düzenlemeler ülkeden ülkeye değişir. Brokz'dan edindiğiniz bir işlem teknolojisini kullanmadan önce faaliyetlerinizin size ve müşterilerinize uygulanan düzenlemelere uygun olduğundan emin olun."
+        }
+      ]
+    },
+    "disclaimer": {
+      "title": "Feragat Beyanı",
+      "notice": "Brokz yatırım tavsiyesi vermez, fon yönetmez ve aracı kurum olarak faaliyet göstermez. Brokz bir teknoloji ve sistem sağlayıcısıdır.",
+      "sections": [
+        {
+          "heading": "1. Teknoloji Sağlayıcısı",
+          "body": "Brokz bir fintech yazılım ve otomasyon şirketidir. Brokz teknoloji araçları, platformları ve altyapı geliştirir, sunar. Brokz bir aracı kurum, yatırım danışmanı, portföy yöneticisi veya düzenlenmiş finansal kuruluş değildir."
+        },
+        {
+          "heading": "2. Yatırım Tavsiyesi Yoktur",
+          "body": "Brokz tarafından sunulan bilgiler, araçlar ve analitikler yalnızca bilgilendirme ve teknik amaçlıdır. Yatırım tavsiyesi, öneri veya herhangi bir finansal enstrümanın alım-satımına yönelik bir davet niteliği taşımaz."
+        },
+        {
+          "heading": "3. Kullanıcı Sorumluluğu",
+          "body": "İşlem ve yatırım kararlarından yalnızca kullanıcılar sorumludur. Brokz teknolojisi kullanılarak gerçekleştirilen tüm işlemler kullanıcının kendi risk ve takdiriyle yapılır."
+        },
+        {
+          "heading": "4. Garanti Yoktur",
+          "body": "Brokz, araçlarının herhangi bir belirli amaca uygunluğu veya getiri, performans ya da sonuçlar hakkında garanti vermez. Geçmiş performans gelecekteki sonuçların garantisi değildir."
+        },
+        {
+          "heading": "5. Üçüncü Taraf Hizmetleri",
+          "body": "Brokz teknolojisi üçüncü taraf hizmetlerle entegre olabilir. Brokz, bu tür üçüncü taraf hizmetlerinin kullanılabilirliğinden, doğruluğundan veya koşullarından sorumlu değildir."
+        }
+      ]
+    }
+  }
+}

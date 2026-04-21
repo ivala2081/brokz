@@ -1,0 +1,166 @@
+{
+  "seo": {
+    "title": "Legal | Brokz — Terms, Privacy & Disclosures",
+    "description": "Brokz legal information — interim documents describing our scope, privacy practices, risk disclosure, and general disclaimers.",
+    "keywords": "brokz legal, terms, privacy policy, risk disclosure, fintech disclaimer"
+  },
+  "landing": {
+    "hero": {
+      "label": "Legal",
+      "title": "Legal Information",
+      "description": "Review our legal documents to understand the scope of Brokz services and the obligations of all parties."
+    },
+    "cardCta": "Read document",
+    "docSummaries": {
+      "terms":      "Scope and conditions of using the Brokz website and related materials.",
+      "privacy":    "How we collect, use, and safeguard personal information.",
+      "risk":       "Important information about trading and technology risks.",
+      "disclaimer": "Our role as a technology provider — what we do and do not do."
+    },
+    "noticeHeading": "Important Notice",
+    "noticeLead": "Brokz is a technology and systems provider.",
+    "noticeBody": "We develop and provide fintech software, automation tools, and infrastructure solutions.",
+    "noticeItems": [
+      "We do not provide investment advice or recommendations",
+      "We do not manage funds or act as a broker",
+      "All tools are for informational and technical purposes only",
+      "Users are solely responsible for their trading and investment decisions"
+    ]
+  },
+  "preIncorporation": {
+    "title": "Pre-Incorporation Notice",
+    "body": "Brokz is currently being structured for incorporation in Estonia. Until that process is complete, this website is operated by the Brokz founding team as the interim data controller. These documents are interim (v0.1) and will be replaced by company-issued versions after incorporation. For any legally binding commitment, refer to the signed engagement agreement in place with Brokz.",
+    "contactLabel": "Legal contact:"
+  },
+  "metadata": {
+    "lastUpdated": "April 2026",
+    "version": "v0.1 · Interim",
+    "versionLabel": "Version",
+    "lastUpdatedLabel": "Last updated",
+    "backToDocs": "Back to Legal Documents"
+  },
+  "docs": {
+    "terms": {
+      "title": "Terms of Service",
+      "sections": [
+        {
+          "heading": "1. Scope",
+          "body": "These Terms describe the conditions under which you may access and use the Brokz website and any informational materials made available through it. These Terms do not replace, and are subordinate to, any individually negotiated engagement agreement you may sign with Brokz."
+        },
+        {
+          "heading": "2. What Brokz Does",
+          "body": "Brokz develops fintech software, automation tools, and technology infrastructure. Brokz is a technology provider. Brokz is not a broker-dealer, investment advisor, fund manager, or regulated financial institution."
+        },
+        {
+          "heading": "3. User Responsibilities",
+          "body": "If you use Brokz technology in your own operations, you remain responsible for how that technology is deployed, configured, and used. Trading, investment, and operational decisions are yours alone."
+        },
+        {
+          "heading": "4. Intellectual Property",
+          "body": "Content, software, and materials provided on this website are owned by Brokz or its licensors and are protected by applicable intellectual property laws."
+        },
+        {
+          "heading": "5. Website Content",
+          "body": "Information on this website is provided for general informational purposes only, without warranty as to accuracy or completeness. For any engagement with Brokz, binding terms are set out in a separately signed agreement."
+        },
+        {
+          "heading": "6. Updates",
+          "body": "These Terms may be updated as Brokz completes its incorporation and onboards legal counsel. Check the version tag and last-updated date below for currency."
+        }
+      ]
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "sections": [
+        {
+          "heading": "1. Data Controller",
+          "body": "Until Brokz completes incorporation, the interim data controller is the Brokz founding team, reachable at legal@brokz.io. After incorporation in Estonia, the controller will be the newly incorporated company and this section will be updated accordingly."
+        },
+        {
+          "heading": "2. Information We Collect",
+          "body": "We collect information you provide voluntarily through our contact form: company name, your name, business email address, inquiry category, and the content of your message. We do not run advertising pixels or third-party analytics on this website at this time."
+        },
+        {
+          "heading": "3. How We Use Your Information",
+          "body": "We use the information you provide only to respond to your inquiry and to evaluate potential engagements. We do not sell or rent your data to third parties."
+        },
+        {
+          "heading": "4. Legal Basis for Processing",
+          "body": "Where the GDPR applies to you, processing is based on your consent (submitting the contact form) and on our legitimate interest in responding to business inquiries. Where Turkish data protection law (KVKK) applies, the same processing is based on your explicit consent and on our legitimate interest under KVKK Article 5."
+        },
+        {
+          "heading": "5. Data Retention",
+          "body": "Contact-form submissions are retained only for as long as necessary to respond to your inquiry and for a reasonable follow-up period. You may request deletion at any time by writing to legal@brokz.io."
+        },
+        {
+          "heading": "6. Data Sharing",
+          "body": "We do not share your personal data with third parties except service providers strictly required to operate our website and email infrastructure, each bound by confidentiality obligations."
+        },
+        {
+          "heading": "7. International Transfers",
+          "body": "Some service providers may process data outside your country of residence. Where such transfers occur, we rely on the service provider's stated safeguards. A full list of processors and transfer safeguards will be published in v1.0 after incorporation."
+        },
+        {
+          "heading": "8. Your Rights",
+          "body": "Subject to applicable law (including the GDPR where it applies to you, and KVKK for data subjects in Türkiye), you may request access to your data, correction of inaccurate data, deletion, restriction of processing, and — where applicable — portability or objection to processing. Write to legal@brokz.io to exercise these rights."
+        },
+        {
+          "heading": "9. Security",
+          "body": "We apply commercially reasonable measures to protect information, including encryption in transit. No system is fully secure; use of email carries inherent risks that neither Brokz nor any party can entirely eliminate."
+        }
+      ]
+    },
+    "risk": {
+      "title": "Risk Disclosure",
+      "notice": "Trading and investing involve substantial risk of loss. Past performance does not guarantee future results.",
+      "sections": [
+        {
+          "heading": "1. General Risk",
+          "body": "All trading and investment activities carry inherent risk. You may lose some or all of your invested capital. Only trade with funds you can afford to lose."
+        },
+        {
+          "heading": "2. Market Risk",
+          "body": "Financial markets are volatile and unpredictable. Market conditions can change rapidly, resulting in losses."
+        },
+        {
+          "heading": "3. Technology Risk",
+          "body": "Software, connectivity, and infrastructure can fail. System issues may interrupt service or affect execution. Brokz does not guarantee uninterrupted availability of any third-party systems your operations may depend on."
+        },
+        {
+          "heading": "4. No Investment Advice",
+          "body": "Brokz provides technical tools and platforms. Brokz does not provide investment advice, recommendations, or guarantees. All decisions about whether, when, and how to trade are yours."
+        },
+        {
+          "heading": "5. Regulatory Context",
+          "body": "Trading and financial regulations vary by jurisdiction. Before operating any trading technology you obtain from Brokz, ensure your activities comply with the regulations applicable to you and your customers."
+        }
+      ]
+    },
+    "disclaimer": {
+      "title": "Disclaimer",
+      "notice": "Brokz does not provide investment advice, manage funds, or act as a broker. Brokz is a technology and systems provider.",
+      "sections": [
+        {
+          "heading": "1. Technology Provider",
+          "body": "Brokz is a fintech software and automation company. Brokz develops and provides technology tools, platforms, and infrastructure. Brokz is not a broker, investment advisor, fund manager, or regulated financial institution."
+        },
+        {
+          "heading": "2. No Investment Advice",
+          "body": "Information, tools, and analytics provided by Brokz are for informational and technical purposes only. They do not constitute investment advice, recommendations, or solicitations to buy or sell any financial instruments."
+        },
+        {
+          "heading": "3. User Responsibility",
+          "body": "Users are solely responsible for their trading and investment decisions. All actions taken using Brokz technology are at the user's own risk and discretion."
+        },
+        {
+          "heading": "4. No Guarantees",
+          "body": "Brokz makes no guarantees or warranties regarding the suitability of its tools for any particular use, or regarding returns, performance, or outcomes. Past performance does not guarantee future results."
+        },
+        {
+          "heading": "5. Third-Party Services",
+          "body": "Brokz technology may integrate with third-party services. Brokz is not responsible for the availability, accuracy, or terms of such third-party services."
+        }
+      ]
+    }
+  }
+}

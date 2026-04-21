@@ -1,0 +1,75 @@
+{
+  "nav": {
+    "home": "Ana Sayfa",
+    "solutions": "Çözümler",
+    "products": "Ürünler",
+    "about": "Hakkımızda",
+    "blog": "Blog",
+    "contact": "İletişim"
+  },
+  "cta": {
+    "startProject": "Projeye Başla",
+    "exploreSolutions": "Çözümleri Keşfet",
+    "learnMore": "Daha fazlası",
+    "readMore": "Devamını oku"
+  },
+  "a11y": {
+    "skipToMain": "Ana içeriğe geç",
+    "mainContent": "Ana içerik",
+    "openMenu": "Menüyü aç",
+    "closeMenu": "Menüyü kapat",
+    "brokzHome": "Brokz — Ana Sayfa",
+    "switchLanguage": "Dili değiştir"
+  },
+  "status": {
+    "operational": "Tüm sistemler çalışıyor"
+  },
+  "language": {
+    "en": "English",
+    "tr": "Türkçe",
+    "label": "Dil"
+  },
+  "notFound": {
+    "seoTitle": "Sayfa Bulunamadı | Brokz",
+    "seoDescription": "Aradığınız sayfa mevcut değil ya da taşınmış.",
+    "eyebrow": "Hata 404",
+    "subtitle": "Bu rota sistemimizde bulunamadı.",
+    "body": "Talep ettiğiniz sayfa mevcut değil, taşınmış veya bağlantı eksik olabilir.",
+    "requestedLabel": "İstenen:",
+    "ctaReturnHome": "Ana Sayfaya Dön",
+    "ctaReportLink": "Kırık Bağlantıyı Bildir",
+    "suggestionsLabel": "Önerilen Sayfalar",
+    "suggestionsTitle": "Şunları arıyor olabilirsiniz",
+    "visitPrefix": "Git:",
+    "suggestions": {
+      "home":      { "label": "Ana Sayfa", "description": "Brokz altyapısı ve hizmetlerine genel bakış." },
+      "solutions": { "label": "Çözümler",  "description": "Mühendislik yaklaşımı ve yetenekleri." },
+      "products":  { "label": "Ürünler",   "description": "Çekirdek ürün hatları ve platformlar." },
+      "blog":      { "label": "Blog",      "description": "Teknik içerik ve sektör analizi." },
+      "contact":   { "label": "İletişim",  "description": "Ekibimizle bir görüşme başlatın." }
+    }
+  },
+  "footer": {
+    "eyebrow": "Brokz · B2B Fintech Mühendisliği",
+    "heading": "Tek mühendislik ortağı. Uçtan uca çözüm.",
+    "body": "Aracı kurumlar, prop trading firmaları ve likidite sağlayıcıları için. Bir iş günü içinde dönüş.",
+    "brandDescription": "Kurumsal düzeyde fintech altyapısı ve işlem teknolojisi. Aracı kurumlar, prop firmaları ve likidite sağlayıcıları için mühendislik yapıyoruz.",
+    "columns": {
+      "company": "Kurumsal",
+      "legal": "Yasal"
+    },
+    "legalLinks": {
+      "terms": "Kullanım Koşulları",
+      "privacy": "Gizlilik Politikası",
+      "risk": "Risk Açıklaması",
+      "disclaimer": "Feragat Beyanı"
+    },
+    "regulatory": {
+      "label": "Yasal Uyarı",
+      "leadStrong": "Brokz bir teknoloji ve sistem sağlayıcısıdır.",
+      "body": "Yatırım danışmanlığı vermez, müşteri fonlarını yönetmez; aracı kurum, bayi ya da finansal danışman olarak faaliyet göstermez. İşlem önemli kayıp riski içerir."
+    },
+    "copyright": "© {{year}} Brokz · 2025'te kuruldu · Tüm hakları saklıdır",
+    "legalShort": "Yasal"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "seo": {
+    "title": "Contact | Brokz — Fintech Infrastructure",
+    "description": "Contact Brokz for brokerage infrastructure, trading platform development, MT4/MT5 plugins, algorithmic trading systems, and fintech engineering partnerships.",
+    "keywords": "contact fintech company, brokerage technology contact, trading platform inquiry, B2B fintech partnership"
+  },
+  "hero": {
+    "label": "Contact",
+    "title": "Start a conversation.",
+    "highlight": "conversation",
+    "description": "We work with organizations that have specific, technical infrastructure requirements. Tell us about your project and we'll respond within one business day."
+  },
+  "info": {
+    "heading": "Partnership & Project Inquiries",
+    "body": "We evaluate each engagement based on technical fit and project scope. We partner with brokerages, proprietary trading firms, fintech startups, and liquidity providers at any stage of infrastructure maturity.",
+    "emailLabel": "Email",
+    "responseLabel": "Response Time",
+    "responseValue": "Within 1 business day",
+    "engagementsLabel": "Engagements",
+    "engagementsValue": "B2B only — no retail services",
+    "helpLabel": "We can help with",
+    "helpItems": [
+      "Brokerage infrastructure setup",
+      "Custom trading platform development",
+      "MT4/MT5 plugins and extensions",
+      "Algorithmic trading systems",
+      "Risk and execution optimization",
+      "Data analytics infrastructure"
+    ]
+  },
+  "form": {
+    "company": {
+      "label": "Company Name",
+      "placeholder": "Acme Brokerage Ltd."
+    },
+    "name": {
+      "label": "Your Name",
+      "placeholder": "John Smith"
+    },
+    "email": {
+      "label": "Business Email",
+      "placeholder": "j.smith@company.com"
+    },
+    "type": {
+      "label": "Inquiry Type",
+      "placeholder": "Select a category",
+      "options": {
+        "brokerage":    "Brokerage Infrastructure",
+        "platform":     "Trading Platform Development",
+        "mt":           "MT4/MT5 Plugins",
+        "algo":         "Algorithmic Trading Systems",
+        "risk":         "Risk & Execution Optimization",
+        "data":         "Data Analytics",
+        "partnership":  "Partnership",
+        "other":        "Other"
+      }
+    },
+    "message": {
+      "label": "Project Description",
+      "placeholder": "Describe your infrastructure requirements, current tech stack, and what you're looking to build or improve..."
+    },
+    "required": "Required",
+    "consent": {
+      "lead": "I consent to Brokz processing the information above to respond to this inquiry, as described in the",
+      "link": "Privacy Policy",
+      "tail": "."
+    },
+    "consentError": "Please confirm the consent checkbox to submit.",
+    "submit": "Send Inquiry",
+    "submitting": "Sending…",
+    "success": {
+      "title": "Message Sent",
+      "body": "Your inquiry has been submitted. We'll review your requirements and respond within one business day."
+    },
+    "errors": {
+      "generic": "Something went wrong. Please try again or email contact@brokz.io directly.",
+      "network": "Network error. Please check your connection and try again."
+    }
+  }
+}

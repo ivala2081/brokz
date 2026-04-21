@@ -1,30 +1,18 @@
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import AnimateIn from '../AnimateIn';
 import AnimatedBeam from '../fx/AnimatedBeam';
 
-// ─── architecture model ──────────────────────────────────────────────────
+// ─── architecture model — structural keys only; copy comes from i18n ─────
 
-const upstream = [
-  { id: 'lp',   label: 'Liquidity Providers',  desc: 'Multi-venue aggregation' },
-  { id: 'md',   label: 'Market Data Feeds',    desc: 'Tick-level, normalized' },
-  { id: 'pb',   label: 'Prime Brokers',        desc: 'Settlement & clearing' },
-  { id: 'reg',  label: 'KYC / Regulatory',     desc: 'Compliance feeds' },
-];
+type NodeKey = 'lp' | 'md' | 'pb' | 'reg' | 'gw' | 'risk' | 'bridge' | 'term' | 'dash' | 'analytics';
 
-const core = [
-  { id: 'gw',     label: 'Execution Gateway',         desc: 'Order routing, FIX/REST/WS' },
-  { id: 'risk',   label: 'Risk Engine',               desc: 'Pre/post-trade risk, limits' },
-  { id: 'bridge', label: 'Bridge & Normalization',    desc: 'Multi-broker, data pipelines' },
-];
-
-const downstream = [
-  { id: 'term',     label: 'Trading Terminal',        desc: 'Web / institutional' },
-  { id: 'dash',     label: 'Management Dashboard',    desc: 'Back-office, ops' },
-  { id: 'analytics',label: 'Analytics & Reporting',   desc: 'P&L, execution quality, compliance' },
-];
+const UPSTREAM: NodeKey[]   = ['lp', 'md', 'pb', 'reg'];
+const CORE: NodeKey[]       = ['gw', 'risk', 'bridge'];
+const DOWNSTREAM: NodeKey[] = ['term', 'dash', 'analytics'];
 
 // Beam connections — selective primary flows, not all-to-all
-const connections: Array<{ from: string; to: string; delay: number }> = [
+const connections: Array<{ from: NodeKey; to: NodeKey; delay: number }> = [
   // upstream → core
   { from: 'lp',   to: 'gw',        delay: 0.0 },
   { from: 'md',   to: 'gw',        delay: 0.6 },
@@ -74,14 +62,25 @@ function ColumnLabel({ children }: { children: React.ReactNode }) {
 // ─── section ─────────────────────────────────────────────────────────────
 
 export default function ReferenceArchitecture() {
+  const { t } = useTranslation('home');
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Refs for every node, keyed by id
-  const refs: Record<string, React.RefObject<HTMLDivElement | null>> = {
+  const refs: Record<NodeKey, React.RefObject<HTMLDivElement | null>> = {
     lp: useRef(null), md: useRef(null), pb: useRef(null), reg: useRef(null),
     gw: useRef(null), risk: useRef(null), bridge: useRef(null),
     term: useRef(null), dash: useRef(null), analytics: useRef(null),
   };
+
+  const renderNodes = (keys: NodeKey[]) =>
+    keys.map(k => (
+      <Node
+        key={k}
+        label={t(`referenceArch.nodes.${k}.label`)}
+        desc={t(`referenceArch.nodes.${k}.desc`)}
+        nodeRef={refs[k]}
+      />
+    ));
 
   return (
     <section className="section-padding bg-surface-inverse text-white relative overflow-hidden">
@@ -91,14 +90,14 @@ export default function ReferenceArchitecture() {
       <div className="relative section-container">
         <AnimateIn>
           <div className="max-w-3xl mb-16 md:mb-20">
-            <p className="section-label-light">Reference Architecture</p>
+            <p className="section-label-light">{t('referenceArch.eyebrow')}</p>
             <h2 className="heading-hero-sm text-white mb-8 max-w-[16ch]">
-              From market data to <span className="text-brand-accent">execution</span>.
+              {t('referenceArch.titleLead')}{' '}
+              <span className="text-brand-accent">{t('referenceArch.titleAccent')}</span>
+              {t('referenceArch.titleTail')}
             </h2>
             <p className="text-lg text-gray-300 max-w-2xl leading-relaxed">
-              A composable three-layer stack. We build upstream connectivity, the
-              institutional core, and client-facing surfaces — end to end,
-              fully owned by the client.
+              {t('referenceArch.body')}
             </p>
           </div>
         </AnimateIn>
@@ -110,33 +109,27 @@ export default function ReferenceArchitecture() {
         >
           {/* UPSTREAM */}
           <div className="flex flex-col">
-            <ColumnLabel>Upstream</ColumnLabel>
+            <ColumnLabel>{t('referenceArch.columns.upstream')}</ColumnLabel>
             <div className="flex flex-col gap-3 md:gap-4">
-              {upstream.map(n => (
-                <Node key={n.id} label={n.label} desc={n.desc} nodeRef={refs[n.id]} />
-              ))}
+              {renderNodes(UPSTREAM)}
             </div>
           </div>
 
           {/* CORE */}
           <div className="flex flex-col">
             <ColumnLabel>
-              <span className="text-brand-accent">Brokz Core</span>
+              <span className="text-brand-accent">{t('referenceArch.columns.core')}</span>
             </ColumnLabel>
             <div className="flex flex-col gap-3 md:gap-4 justify-center h-full">
-              {core.map(n => (
-                <Node key={n.id} label={n.label} desc={n.desc} nodeRef={refs[n.id]} />
-              ))}
+              {renderNodes(CORE)}
             </div>
           </div>
 
           {/* DOWNSTREAM */}
           <div className="flex flex-col">
-            <ColumnLabel>Client Surfaces</ColumnLabel>
+            <ColumnLabel>{t('referenceArch.columns.downstream')}</ColumnLabel>
             <div className="flex flex-col gap-3 md:gap-4 justify-center h-full">
-              {downstream.map(n => (
-                <Node key={n.id} label={n.label} desc={n.desc} nodeRef={refs[n.id]} />
-              ))}
+              {renderNodes(DOWNSTREAM)}
             </div>
           </div>
 
@@ -158,7 +151,7 @@ export default function ReferenceArchitecture() {
 
         {/* Footnote */}
         <p className="mt-12 md:mt-16 text-sm text-ink-subtle font-mono tabular text-center">
-          Every engagement delivered end-to-end. Documented. Unlocked.
+          {t('referenceArch.footnote')}
         </p>
       </div>
     </section>

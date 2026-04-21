@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { BrokzLogoCompact } from './BrokzLogo';
+import LocalizedLink from '../i18n/LocalizedLink';
+import LanguageSwitcher from '../i18n/LanguageSwitcher';
+import { useCurrentLocale, useLocalePath } from '../i18n/useLocale';
+import type { RouteKey } from '../i18n/routes';
 
 const EASE = [0.21, 0.47, 0.32, 0.98] as const;
 
@@ -9,12 +14,12 @@ const EASE = [0.21, 0.47, 0.32, 0.98] as const;
 // All page heroes are at least 400px tall, so this threshold works globally.
 const HERO_EXIT = 400;
 
-const navLinks = [
-  { label: 'Home', path: '/' },
-  { label: 'Solutions', path: '/solutions' },
-  { label: 'Products', path: '/products' },
-  { label: 'About', path: '/about' },
-  { label: 'Blog', path: '/blog' },
+const NAV_ITEMS: { key: RouteKey; label: string }[] = [
+  { key: 'home',      label: 'nav.home' },
+  { key: 'solutions', label: 'nav.solutions' },
+  { key: 'products',  label: 'nav.products' },
+  { key: 'about',     label: 'nav.about' },
+  { key: 'blog',      label: 'nav.blog' },
 ];
 
 // ─── Animation variants ───────────────────────────────────────────────
@@ -42,6 +47,9 @@ const itemVariants = {
 };
 
 export default function NavBar() {
+  const { t } = useTranslation();
+  const locale = useCurrentLocale();
+  const localePath = useLocalePath();
   const [open, setOpen] = useState(false);
   // mode === 'over-dark' → header renders WHITE (contrasts with dark hero)
   // mode === 'over-light' → header renders DARK (contrasts with white content)
@@ -110,6 +118,9 @@ export default function NavBar() {
   const logoVariant = overDark ? 'brand' : 'light';
   const progressColor = overDark ? 'bg-brand' : 'bg-brand-accent';
 
+  // Active-link detection — compare against the current-locale path for each item.
+  const isActiveKey = (key: RouteKey) => location.pathname === localePath(key);
+
   return (
     <>
       {/* ─── Skip link (visible on keyboard focus) ─── */}
@@ -117,56 +128,62 @@ export default function NavBar() {
         href="#main"
         className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-4 focus-visible:left-4 focus-visible:z-tooltip focus-visible:bg-brand focus-visible:text-white focus-visible:px-4 focus-visible:py-2 focus-visible:rounded-pill focus-visible:text-sm focus-visible:font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-ring focus-visible:ring-offset-2"
       >
-        Skip to main content
+        {t('a11y.skipToMain')}
       </a>
 
       <nav
         className={`w-full sticky top-0 z-sticky transition-colors duration-base ease-standard ${navClasses}`}
       >
-        <div className="max-w-layout mx-auto px-6 h-16 flex items-center justify-between">
-          <Link
-            to="/"
-            className="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-ring focus-visible:ring-offset-2 rounded-md -ml-1 px-1 py-1"
-            aria-label="Brokz — Home"
+        <div className="max-w-layout mx-auto px-6 md:px-8 h-20 flex items-center justify-between gap-6">
+          <LocalizedLink
+            to="home"
+            className="flex items-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-ring focus-visible:ring-offset-4 rounded-md"
+            aria-label={t('a11y.brokzHome')}
           >
-            <BrokzLogoCompact size={80} withWordmark variant={logoVariant} />
-          </Link>
+            <BrokzLogoCompact size={56} withWordmark variant={logoVariant} />
+          </LocalizedLink>
 
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-8">
-            {navLinks.map(link => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={`text-sm font-medium transition-colors duration-base relative focus-visible:outline-none ${
-                  location.pathname === link.path ? linkActive : linkIdle
-                }`}
-              >
-                {link.label}
-                {location.pathname === link.path && (
-                  <span className={`absolute -bottom-[22px] left-0 right-0 h-[2px] rounded-pill ${activeBar}`} />
-                )}
-              </Link>
-            ))}
+            {NAV_ITEMS.map(item => {
+              const active = isActiveKey(item.key);
+              return (
+                <LocalizedLink
+                  key={item.key}
+                  to={item.key}
+                  className={`text-sm font-medium transition-colors duration-base relative focus-visible:outline-none ${
+                    active ? linkActive : linkIdle
+                  }`}
+                >
+                  {t(item.label)}
+                  {active && (
+                    <span className={`absolute -bottom-[30px] left-0 right-0 h-[2px] rounded-pill ${activeBar}`} />
+                  )}
+                </LocalizedLink>
+              );
+            })}
           </div>
 
-          <Link
-            to="/contact"
-            className={`hidden md:inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-pill transition-colors duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-ring focus-visible:ring-offset-2 ${ctaClasses}`}
-          >
-            Start a Project
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg>
-          </Link>
+          <div className="hidden md:flex items-center gap-5">
+            <LanguageSwitcher tone={overDark ? 'on-light' : 'on-dark'} />
+            <LocalizedLink
+              to="contact"
+              className={`inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-pill transition-colors duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-ring focus-visible:ring-offset-2 ${ctaClasses}`}
+            >
+              {t('cta.startProject')}
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </LocalizedLink>
+          </div>
 
           {/* Mobile menu button */}
           <button
             type="button"
             className={`md:hidden p-2 transition-colors duration-base rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-ring relative z-modal ${hamburger}`}
             onClick={() => setOpen(!open)}
-            aria-label={open ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-label={open ? t('a11y.closeMenu') : t('a11y.openMenu')}
             aria-expanded={open}
             aria-controls="mobile-navigation"
           >
@@ -199,7 +216,7 @@ export default function NavBar() {
 
       {/* Skip-link target — focused when user activates "Skip to main content" */}
       <span id="main" tabIndex={-1} className="sr-only" aria-hidden="true">
-        Main content
+        {t('a11y.mainContent')}
       </span>
 
       {/* ═══ Mobile Menu — Exaggerated Minimalism Full-Screen ═══ */}
@@ -214,7 +231,8 @@ export default function NavBar() {
             transition={{ duration: 0.3, ease: EASE }}
             role="dialog"
             aria-modal="true"
-            aria-label="Navigation menu"
+            aria-label={t('a11y.openMenu')}
+            lang={locale}
           >
             <div className="absolute inset-0 pointer-events-none bg-grid-dark bg-[length:48px_48px]" />
             <div className="absolute inset-0 bg-brand-radial pointer-events-none" />
@@ -227,16 +245,16 @@ export default function NavBar() {
                 exit="closed"
                 className="flex flex-col"
               >
-                {navLinks.map((link, i) => {
-                  const active = location.pathname === link.path;
+                {NAV_ITEMS.map((item, i) => {
+                  const active = isActiveKey(item.key);
                   return (
                     <motion.div
-                      key={link.path}
+                      key={item.key}
                       variants={itemVariants}
                       className="border-b border-line-inverse"
                     >
-                      <Link
-                        to={link.path}
+                      <LocalizedLink
+                        to={item.key}
                         className="flex items-baseline justify-between py-6 group focus-visible:outline-none"
                       >
                         <div className="flex items-baseline gap-5">
@@ -249,7 +267,7 @@ export default function NavBar() {
                             }`}
                             style={{ letterSpacing: '-0.04em' }}
                           >
-                            {link.label}
+                            {t(item.label)}
                           </span>
                         </div>
                         <svg
@@ -268,7 +286,7 @@ export default function NavBar() {
                           <line x1="5" y1="12" x2="19" y2="12" />
                           <polyline points="12 5 19 12 12 19" />
                         </svg>
-                      </Link>
+                      </LocalizedLink>
                     </motion.div>
                   );
                 })}
@@ -280,13 +298,13 @@ export default function NavBar() {
                 animate={{ opacity: 1, y: 0, transition: { delay: 0.55, duration: 0.5, ease: EASE } }}
                 exit={{ opacity: 0, transition: { duration: 0.15 } }}
               >
-                <Link to="/contact" className="btn-primary w-full justify-center">
-                  Start a Project
+                <LocalizedLink to="contact" className="btn-primary w-full justify-center">
+                  {t('cta.startProject')}
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <line x1="5" y1="12" x2="19" y2="12" />
                     <polyline points="12 5 19 12 12 19" />
                   </svg>
-                </Link>
+                </LocalizedLink>
 
                 <div className="flex flex-col gap-4 pt-6 border-t border-line-inverse">
                   <div className="flex items-center gap-2.5">
@@ -295,7 +313,7 @@ export default function NavBar() {
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-accent" />
                     </span>
                     <span className="text-xs font-mono tabular text-ink-subtle">
-                      All systems operational
+                      {t('status.operational')}
                     </span>
                   </div>
                   <a
@@ -304,6 +322,9 @@ export default function NavBar() {
                   >
                     contact@brokz.io
                   </a>
+                  <div className="pt-2">
+                    <LanguageSwitcher tone="on-dark" />
+                  </div>
                 </div>
               </motion.div>
             </div>

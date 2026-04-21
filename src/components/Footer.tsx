@@ -1,23 +1,26 @@
-import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { BrokzLogoCompact } from './BrokzLogo';
+import LocalizedLink from '../i18n/LocalizedLink';
+import type { RouteKey } from '../i18n/routes';
 import watermarkSrc from '../assets/logo/brokz-logo-on-dark.svg';
 
-const companyLinks = [
-  { label: 'Solutions', path: '/solutions' },
-  { label: 'Products', path: '/products' },
-  { label: 'About', path: '/about' },
-  { label: 'Blog', path: '/blog' },
-  { label: 'Contact', path: '/contact' },
+const COMPANY_LINKS: { key: RouteKey; i18n: string }[] = [
+  { key: 'solutions', i18n: 'nav.solutions' },
+  { key: 'products',  i18n: 'nav.products' },
+  { key: 'about',     i18n: 'nav.about' },
+  { key: 'blog',      i18n: 'nav.blog' },
+  { key: 'contact',   i18n: 'nav.contact' },
 ];
 
-const legalLinks = [
-  { label: 'Terms of Service', path: '/legal/terms' },
-  { label: 'Privacy Policy', path: '/legal/privacy' },
-  { label: 'Risk Disclosure', path: '/legal/risk-disclosure' },
-  { label: 'Disclaimer', path: '/legal/disclaimer' },
+const LEGAL_LINKS: { key: RouteKey; i18n: string }[] = [
+  { key: 'legalTerms',      i18n: 'footer.legalLinks.terms' },
+  { key: 'legalPrivacy',    i18n: 'footer.legalLinks.privacy' },
+  { key: 'legalRisk',       i18n: 'footer.legalLinks.risk' },
+  { key: 'legalDisclaimer', i18n: 'footer.legalLinks.disclaimer' },
 ];
 
 export default function Footer() {
+  const { t } = useTranslation();
   const year = new Date().getFullYear();
 
   return (
@@ -28,8 +31,6 @@ export default function Footer() {
       <div className="absolute inset-0 bg-brand-radial pointer-events-none" />
 
       {/* ─── Brand lockup supergraphic — full-bleed background layer ─── */}
-      {/* Uses the official full-lockup SVG (icon + wordmark) from the brand package.
-          Faded via CSS mask + opacity, green glow + breathing animation for depth. */}
       <div
         className="absolute inset-x-0 bottom-0 pointer-events-none select-none flex items-end justify-center overflow-hidden"
         aria-hidden="true"
@@ -45,35 +46,37 @@ export default function Footer() {
       {/* ─── Content layer ─── */}
       <div className="relative max-w-layout mx-auto px-6">
 
-        {/* ═══ STATEMENT — Footer close, smaller than page CTA ═══ */}
-        <section className="pt-24 md:pt-32 pb-16 md:pb-20">
-          <p className="section-label-light mb-5">Brokz · B2B Fintech Engineering</p>
-          <h2 className="heading-2 text-white mb-8 max-w-[20ch]">
-            One engineering partner. The full stack.
-          </h2>
-          <p className="body-lg text-gray-300 max-w-2xl mb-10">
-            Brokerages, proprietary trading firms, and liquidity providers.
-            Response within one business day.
-          </p>
-          <Link to="/contact" className="btn-primary btn-shimmer">
-            Start a Project
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg>
-          </Link>
+        {/* ═══ STATEMENT ═══ */}
+        <section className="pt-16 md:pt-20 pb-8 md:pb-10">
+          <p className="section-label-light mb-4">{t('footer.eyebrow')}</p>
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 lg:gap-12">
+            <div className="max-w-2xl">
+              <h2 className="text-2xl md:text-3xl font-bold tracking-tight leading-tight text-white mb-5 max-w-[20ch]">
+                {t('footer.heading')}
+              </h2>
+              <p className="body text-gray-300">
+                {t('footer.body')}
+              </p>
+            </div>
+            <LocalizedLink to="contact" className="btn-primary btn-shimmer shrink-0 self-start lg:self-end">
+              {t('cta.startProject')}
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </LocalizedLink>
+          </div>
         </section>
 
         {/* ═══ INFO GRID ═══ */}
-        <section className="pt-14 pb-14 border-t border-line-inverse">
+        <section className="pt-10 pb-10 border-t border-line-inverse">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-10">
 
             {/* Brand */}
             <div className="lg:col-span-5">
               <BrokzLogoCompact size={80} withWordmark variant="light" />
               <p className="body-sm text-ink-subtle mt-6 max-w-sm">
-                Institutional-grade fintech infrastructure and trading technology.
-                Engineered for brokerages, prop firms, and liquidity providers.
+                {t('footer.brandDescription')}
               </p>
 
               {/* Operational status — B2B trust signal */}
@@ -83,23 +86,23 @@ export default function Footer() {
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-accent" />
                 </span>
                 <span className="text-xs font-mono tabular text-ink-subtle">
-                  All systems operational
+                  {t('status.operational')}
                 </span>
               </div>
             </div>
 
             {/* Company column */}
             <div className="lg:col-span-3 lg:col-start-7">
-              <p className="eyebrow text-ink-muted mb-6">Company</p>
+              <p className="eyebrow text-ink-muted mb-6">{t('footer.columns.company')}</p>
               <ul className="flex flex-col gap-3.5 text-sm">
-                {companyLinks.map(link => (
-                  <li key={link.path}>
-                    <Link
-                      to={link.path}
+                {COMPANY_LINKS.map(link => (
+                  <li key={link.key}>
+                    <LocalizedLink
+                      to={link.key}
                       className="text-ink-subtle hover:text-white transition-colors duration-base focus-visible:outline-none focus-visible:text-white"
                     >
-                      {link.label}
-                    </Link>
+                      {t(link.i18n)}
+                    </LocalizedLink>
                   </li>
                 ))}
               </ul>
@@ -107,16 +110,16 @@ export default function Footer() {
 
             {/* Legal column */}
             <div className="lg:col-span-3">
-              <p className="eyebrow text-ink-muted mb-6">Legal</p>
+              <p className="eyebrow text-ink-muted mb-6">{t('footer.columns.legal')}</p>
               <ul className="flex flex-col gap-3.5 text-sm">
-                {legalLinks.map(link => (
-                  <li key={link.path}>
-                    <Link
-                      to={link.path}
+                {LEGAL_LINKS.map(link => (
+                  <li key={link.key}>
+                    <LocalizedLink
+                      to={link.key}
                       className="text-ink-subtle hover:text-white transition-colors duration-base focus-visible:outline-none focus-visible:text-white"
                     >
-                      {link.label}
-                    </Link>
+                      {t(link.i18n)}
+                    </LocalizedLink>
                   </li>
                 ))}
               </ul>
@@ -125,37 +128,31 @@ export default function Footer() {
           </div>
         </section>
 
-        {/* ═══ REGULATORY NOTICE ═══ */}
-        <section className="pt-12 pb-12 border-t border-line-inverse">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+        {/* ═══ REGULATORY + BOTTOM BAR — merged compact tail ═══ */}
+        <section className="pt-8 pb-8 border-t border-line-inverse">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10">
             <div className="lg:col-span-3">
-              <p className="eyebrow text-ink-muted">Regulatory Notice</p>
+              <p className="eyebrow text-ink-muted">{t('footer.regulatory.label')}</p>
             </div>
             <div className="lg:col-span-9">
-              <p className="text-sm text-ink-subtle leading-relaxed max-w-3xl">
-                <strong className="text-gray-300 font-semibold">Brokz is a technology and systems provider.</strong>{' '}
-                We do not provide investment advice, manage client funds, or operate as a broker, dealer,
-                or financial advisor. All products are informational and technical in nature. Trading
-                involves substantial risk of loss. Ensure compliance with applicable local regulations
-                before deploying any financial technology.
+              <p className="text-xs text-ink-subtle leading-relaxed max-w-3xl">
+                <strong className="text-gray-300 font-semibold">{t('footer.regulatory.leadStrong')}</strong>{' '}
+                {t('footer.regulatory.body')}
               </p>
             </div>
           </div>
-        </section>
 
-        {/* ═══ BOTTOM BAR ═══ */}
-        <section className="pt-8 pb-10 border-t border-line-inverse mb-24 md:mb-32">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mt-6 pt-6 border-t border-line-inverse">
             <p className="text-xs font-mono tabular text-ink-muted">
-              © {year} Brokz · Founded 2025 · All rights reserved
+              {t('footer.copyright', { year })}
             </p>
             <div className="flex items-center gap-5">
-              <Link
-                to="/legal"
+              <LocalizedLink
+                to="legal"
                 className="text-xs font-mono tabular text-ink-subtle hover:text-white transition-colors focus-visible:outline-none focus-visible:text-white"
               >
-                Legal
-              </Link>
+                {t('footer.legalShort')}
+              </LocalizedLink>
               <span className="text-ink-muted" aria-hidden="true">·</span>
               <a
                 href="mailto:contact@brokz.io"

@@ -1,0 +1,85 @@
+{
+  "seo": {
+    "title": "Ürünler | Brokz — İşlem Teknolojisi",
+    "description": "Özel web trader, aracı kurum yönetim dashboard'u, algoritmik işlem altyapısı, MT4/MT5 plug-in'leri ve özel veri analitiği. Kurumsal düzeyde fintech ürünleri.",
+    "keywords": "özel web trader, aracı kurum arka ofis yazılımı, algoritmik işlem yazılımı, MT4 MT5 plug-in, işlem veri analitiği, fintech ürünler"
+  },
+  "hero": {
+    "label": "Ürünler",
+    "title": "Beş ürün. Tek yığın.",
+    "highlight": "Tek yığın",
+    "description": "Ön yüz terminallerinden kantitatif analitik altyapısına kadar işlem teknoloji yığınının her katmanını kapsayan amaca yönelik ürün hatları."
+  },
+  "items": [
+    {
+      "key": "webTrader",
+      "name": "Özel Web Trader",
+      "tag": "İşlem Platformu",
+      "description": "Performans ve özelleştirilebilirlik için mühendislik ürünü, tarayıcı tabanlı kurumsal işlem terminali. Gerçek zamanlı execution katmanı, konfigüre edilebilir UI bileşenleri ve çoklu varlık, çoklu broker ortamlarına uygun ölçeklenebilir arka uç mimarisi ile geliştirildi.",
+      "features": [
+        "WebSocket ile gerçek zamanlı emir defteri ve execution beslemesi",
+        "Çoklu varlık desteği: FX, hisse senedi, türev, kripto",
+        "Konfigüre edilebilir grafik ve analitik widget'ları",
+        "Tek tıkla ve algoritmik emir girişi modları",
+        "Çoklu hesap ve alt hesap yönetimi",
+        "White-label ve tam markalı dağıtım seçenekleri"
+      ]
+    },
+    {
+      "key": "dashboard",
+      "name": "Kurum İçi Yönetim Dashboard'u",
+      "tag": "Arka Ofis Sistemi",
+      "description": "Tüm müşteri hesapları, pozisyonları ve risk pozisyonlarında operasyonel görünürlük sağlayan kapsamlı bir aracı kurum arka ofis platformu. Gerçek zamanlı veri ve denetim kalitesinde kayıt tutmayı gerektiren uyum ekipleri, risk yöneticileri ve operasyon personeli için tasarlandı.",
+      "features": [
+        "Canlı müşteri hesabı ve pozisyon izleme",
+        "Konfigüre edilebilir uyarılarla risk pozisyonu dashboard'ları",
+        "K/Z takibi ve atribüsyon raporlaması",
+        "İşlem tutarlama ve takas iş akışları",
+        "Yasal rapor üretimi ve denetim kayıtları",
+        "Dahili ekipler için rol tabanlı erişim kontrolü"
+      ]
+    },
+    {
+      "key": "algo",
+      "name": "Algoritmik Trading ve Strateji Testi",
+      "tag": "Kantitatif Altyapı",
+      "description": "Tarihsel veri alımından canlı strateji dağıtımına kadar sistematik trading için eksiksiz bir altyapı yığını. Yüksek sadakatli bir backtesting motoru, walk-forward analiz araçları ve gerçek zamanlı izleme ile canlı execution çerçevesi içerir.",
+      "features": [
+        "Tarihsel tick ve OHLCV veri normalizasyon boru hattı",
+        "Gerçekçi emir gerçekleşmeleriyle olay güdümlü backtesting motoru",
+        "Walk-forward, Monte Carlo ve hassasiyet analizi",
+        "Strateji parametresi optimizasyonu (grid, genetik, Bayesci)",
+        "Pozisyon takibi ile canlı strateji execution'ı",
+        "Performans dashboard'ları: Sharpe, drawdown, Calmar oranı"
+      ]
+    },
+    {
+      "key": "mt",
+      "name": "MT4 / MT5 Plug-in ve Eklentileri",
+      "tag": "MetaTrader Entegrasyonu",
+      "description": "MetaTrader 4 ve MetaTrader 5 ortamları için özel plug-in geliştirme. Risk yönetimi katmanları, execution optimizasyon modülleri, bridge sistemleri ve manager araç genişletmeleriyle yerel MT4/MT5 yeteneklerini büyütüyoruz.",
+      "features": [
+        "Özel MT4/MT5 Expert Advisor (EA) ve göstergeleri",
+        "Gerçek zamanlı uygulamalı risk yönetim plug-in'leri",
+        "Execution optimizasyonu ve latency düşürme modülleri",
+        "Harici likidite bağlantısı için bridge sistemleri",
+        "Arka ofis iş akışları için Manager API entegrasyonları",
+        "Sembol konfigürasyonu ve swap hesaplama eklentileri"
+      ]
+    },
+    {
+      "key": "data",
+      "name": "Özel Veri Analizi ve Optimizasyonu",
+      "tag": "Analitik Mühendisliği",
+      "description": "Verilerinden operasyonel istihbarat çıkarması gereken trading organizasyonları için kantitatif analitik ve veri mühendisliği. Boru hatları tasarlar, görselleştirme katmanları inşa eder; performans atribüsyonu ve strateji optimizasyonu için modeller kurarız.",
+      "features": [
+        "İşlem verisi alımı, temizliği ve depolanması",
+        "Execution kalitesi analizi: slippage, doluluk oranları, zamanlama",
+        "Müşteri ve portföy performans atribüsyon modelleri",
+        "Risk faktörü ayrıştırma ve senaryo analizi",
+        "Yönetim ve uyum için özel raporlama dashboard'ları",
+        "Patern tespiti için makine öğrenmesi uygulamaları"
+      ]
+    }
+  ]
+}

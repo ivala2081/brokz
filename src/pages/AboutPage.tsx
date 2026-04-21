@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
@@ -7,63 +8,31 @@ import Spotlight from '../components/fx/Spotlight';
 import InteractiveGrid from '../components/fx/InteractiveGrid';
 import GlareCard from '../components/fx/GlareCard';
 
-const philosophy = [
-  {
-    title: 'Systems Thinking Over Feature Shipping',
-    body: 'We design cohesive systems before we write code. Every architecture decision considers downstream operational impact, failure modes, and long-term maintainability.',
-  },
-  {
-    title: 'Ownership Without Lock-In',
-    body: 'Every deliverable is production-ready, fully documented, and accompanied by knowledge transfer. Our clients own their codebase, their infrastructure, and their independence.',
-  },
-  {
-    title: 'Domain-Specific Precision',
-    body: 'Fintech infrastructure is not general software. Our engineers understand the regulatory context, execution semantics, and operational constraints of financial markets.',
-  },
-  {
-    title: 'Reliability as a Hard Requirement',
-    body: 'In trading environments, uptime is not a preference — it is a contractual and financial obligation. We engineer for fault tolerance and observable failure from day one.',
-  },
-];
-
-const expertise = [
-  { label: 'Trading System Architecture', desc: 'Low-latency, fault-tolerant order management and execution systems.' },
-  { label: 'Quantitative Engineering', desc: 'Backtesting infrastructure, strategy optimization, and live execution frameworks.' },
-  { label: 'Brokerage Operations', desc: 'Back-office systems, risk engines, and regulatory compliance tooling.' },
-  { label: 'MT4 / MT5 Ecosystem', desc: 'Plugin development, bridge systems, and MetaTrader environment extensions.' },
-  { label: 'Data Infrastructure', desc: 'Real-time market data pipelines, historical warehousing, and analytics tooling.' },
-  { label: 'Platform Development', desc: 'Custom trading terminals, client portals, and internal operational tools.' },
-];
-
-const infrastructure = [
-  'Cloud-native deployment (AWS, GCP, Azure)',
-  'On-premise and bare-metal configurations',
-  'Colocation and proximity hosting for HFT',
-  'Kubernetes orchestration and container infrastructure',
-  'CI/CD pipelines and automated deployment',
-  'Infrastructure-as-code (Terraform, Ansible)',
-  'Monitoring, observability, and alerting stacks',
-  'Disaster recovery and multi-region failover',
-  'Security hardening and penetration test readiness',
-];
+type PhilosophyItem = { key: string; title: string; body: string };
+type ExpertiseItem  = { key: string; label: string; desc: string };
 
 export default function AboutPage() {
+  const { t } = useTranslation('about');
+
+  const philosophyItems = t('philosophy.items', { returnObjects: true }) as PhilosophyItem[];
+  const expertiseItems  = t('expertise.items',  { returnObjects: true }) as ExpertiseItem[];
+  const infraItems      = t('infrastructure.items', { returnObjects: true }) as string[];
+
   return (
     <div className="min-h-screen bg-surface">
       <SEO
-        title="About | Brokz — B2B Fintech Engineering"
-        description="Brokz is a B2B fintech engineering firm founded in 2025. We build institutional-grade trading infrastructure, brokerage systems, and quantitative technology for financial organizations."
-        keywords="fintech engineering firm, trading technology company, brokerage technology provider, institutional fintech, B2B fintech"
-        canonical="/about"
+        title={t('seo.title')}
+        description={t('seo.description')}
+        keywords={t('seo.keywords')}
       />
 
       <NavBar />
 
       <PageHero
-        label="About"
-        title="A fintech firm for institutional markets."
-        highlight="institutional"
-        description="Founded in 2025, Brokz provides engineering services and infrastructure to brokerages, proprietary trading firms, fintech startups, and liquidity providers."
+        label={t('hero.label')}
+        title={t('hero.title')}
+        highlight={t('hero.highlight')}
+        description={t('hero.description')}
       />
 
       {/* Mission */}
@@ -72,18 +41,16 @@ export default function AboutPage() {
           <AnimateIn>
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
               <div className="lg:col-span-4">
-                <p className="section-label">Mission</p>
+                <p className="section-label">{t('mission.label')}</p>
               </div>
               <div className="lg:col-span-8">
                 <h2 className="heading-hero-sm text-ink mb-10 max-w-[18ch]">
-                  <span className="text-brand">Democratizing</span> institutional-grade infrastructure.
+                  {t('mission.titleLead')}{' '}
+                  <span className="text-brand">{t('mission.titleAccent')}</span>
+                  {t('mission.titleTail')}
                 </h2>
                 <p className="body-lg max-w-2xl">
-                  Our mission is to make institutional-quality trading technology accessible to
-                  organizations of every size — without the multi-year development cycles or
-                  nine-figure budgets historically required. We deliver production-ready
-                  infrastructure that meets the reliability, latency, and compliance standards
-                  of major financial institutions.
+                  {t('mission.body')}
                 </p>
               </div>
             </div>
@@ -96,16 +63,16 @@ export default function AboutPage() {
         <div className="section-container">
           <AnimateIn>
             <div className="max-w-3xl mb-16">
-              <p className="section-label">Philosophy</p>
+              <p className="section-label">{t('philosophy.label')}</p>
               <h2 className="heading-hero-sm text-ink max-w-[14ch]">
-                Four engineering principles.
+                {t('philosophy.title')}
               </h2>
             </div>
           </AnimateIn>
 
           <Stagger className="grid grid-cols-1 md:grid-cols-2 gap-px bg-line rounded-card overflow-hidden border border-line">
-            {philosophy.map((item, i) => (
-              <StaggerItem key={item.title}>
+            {philosophyItems.map((item, i) => (
+              <StaggerItem key={item.key}>
                 <GlareCard className="bg-surface p-10 md:p-12 h-full">
                   <div className="flex items-baseline gap-4 mb-5">
                     <span className="font-mono tabular text-sm font-semibold text-brand">
@@ -127,19 +94,20 @@ export default function AboutPage() {
         <div className="section-container">
           <AnimateIn>
             <div className="max-w-3xl mb-16">
-              <p className="section-label">Expertise</p>
+              <p className="section-label">{t('expertise.label')}</p>
               <h2 className="heading-hero-sm text-ink mb-8 max-w-[16ch]">
-                Six disciplines. One stack.
+                {t('expertise.titleLead')}{' '}
+                <span className="text-brand">{t('expertise.titleAccent')}</span>
               </h2>
               <p className="body-lg max-w-2xl">
-                Deep domain expertise across the core disciplines of institutional trading technology.
+                {t('expertise.body')}
               </p>
             </div>
           </AnimateIn>
 
           <Stagger className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {expertise.map((item, i) => (
-              <StaggerItem key={item.label}>
+            {expertiseItems.map((item, i) => (
+              <StaggerItem key={item.key}>
                 <GlareCard className="card h-full transition-transform duration-base hover:-translate-y-1 hover:border-brand/30">
                   <div className="flex items-center gap-3 mb-5">
                     <span className="font-mono tabular text-xs font-semibold text-brand bg-brand-subtle px-2 py-1 rounded-md">
@@ -163,19 +131,18 @@ export default function AboutPage() {
         <div className="relative section-container">
           <AnimateIn>
             <div className="max-w-3xl mb-16">
-              <p className="section-label-light">Infrastructure</p>
+              <p className="section-label-light">{t('infrastructure.label')}</p>
               <h2 className="heading-hero-sm text-white mb-8 max-w-[16ch]">
-                Deploy anywhere. Latency matters.
+                {t('infrastructure.title')}
               </h2>
               <p className="text-lg text-gray-300 max-w-2xl leading-relaxed">
-                We design for cloud-native, on-premise, and hybrid deployment environments — with
-                colocation support for latency-sensitive applications.
+                {t('infrastructure.body')}
               </p>
             </div>
           </AnimateIn>
 
           <Stagger className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {infrastructure.map(cap => (
+            {infraItems.map(cap => (
               <StaggerItem key={cap}>
                 <div className="flex items-start gap-3 border border-line-inverse rounded-card-sm p-5 h-full">
                   <svg className="mt-0.5 w-4 h-4 text-brand-accent flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

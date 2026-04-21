@@ -1,0 +1,76 @@
+{
+  "seo": {
+    "title": "Hakkımızda | Brokz — B2B Fintech Mühendisliği",
+    "description": "Brokz, 2025'te kurulmuş bir B2B fintech mühendislik firmasıdır. Finans kuruluşları için kurumsal düzeyde işlem altyapısı, aracı kurum sistemleri ve kantitatif teknoloji inşa ederiz.",
+    "keywords": "fintech mühendislik firması, işlem teknolojisi şirketi, aracı kurum teknoloji sağlayıcısı, kurumsal fintech, B2B fintech"
+  },
+  "hero": {
+    "label": "Hakkımızda",
+    "title": "Kurumsal piyasalar için bir fintech firması.",
+    "highlight": "Kurumsal",
+    "description": "2025'te kurulan Brokz; aracı kurumlar, prop trading firmaları, fintech girişimleri ve likidite sağlayıcıları için mühendislik hizmetleri ve altyapı sunar."
+  },
+  "mission": {
+    "label": "Misyon",
+    "titleLead": "Kurumsal düzey altyapıyı",
+    "titleAccent": "demokratikleştirmek",
+    "titleTail": ".",
+    "body": "Misyonumuz, kurumsal kalitede işlem teknolojisini her ölçekteki kuruluş için erişilebilir kılmak — tarihsel olarak gereken çok yıllık geliştirme döngüleri veya dokuz haneli bütçeler olmadan. Büyük finans kuruluşlarının güvenilirlik, latency ve uyum standartlarını karşılayan, production'a hazır altyapıyı teslim ederiz."
+  },
+  "philosophy": {
+    "label": "Felsefe",
+    "title": "Dört mühendislik ilkesi.",
+    "items": [
+      {
+        "key": "systems",
+        "title": "Özellik Sevkiyatı Yerine Sistem Düşüncesi",
+        "body": "Kod yazmadan önce tutarlı sistemler tasarlarız. Her mimari karar; alt akış operasyonel etkisini, hata modlarını ve uzun vadeli bakım yapılabilirliği gözetir."
+      },
+      {
+        "key": "ownership",
+        "title": "Bağımlılık Olmadan Sahiplik",
+        "body": "Her teslimat production'a hazır, tam belgelendirilmiş ve bilgi aktarımıyla birlikte gelir. Müşterilerimiz kendi kod tabanının, altyapısının ve bağımsızlığının sahibidir."
+      },
+      {
+        "key": "domain",
+        "title": "Alana Özgü Hassasiyet",
+        "body": "Fintech altyapısı genel amaçlı yazılım değildir. Mühendislerimiz finansal piyasaların düzenleyici bağlamını, execution semantiğini ve operasyonel kısıtlarını bilir."
+      },
+      {
+        "key": "reliability",
+        "title": "Katı Gereksinim Olarak Güvenilirlik",
+        "body": "Trading ortamlarında uptime bir tercih değildir — sözleşmesel ve finansal bir yükümlülüktür. İlk günden itibaren hata toleransı ve gözlemlenebilir hata yönetimi için mühendislik yaparız."
+      }
+    ]
+  },
+  "expertise": {
+    "label": "Uzmanlık",
+    "titleLead": "Altı disiplin.",
+    "titleAccent": "Tek yığın.",
+    "body": "Kurumsal işlem teknolojisinin çekirdek disiplinlerinde derin alan uzmanlığı.",
+    "items": [
+      { "key": "arch",      "label": "İşlem Sistemi Mimarisi",  "desc": "Düşük latency, hata toleranslı emir yönetimi ve execution sistemleri." },
+      { "key": "quant",     "label": "Kantitatif Mühendislik",  "desc": "Backtesting altyapısı, strateji optimizasyonu ve canlı execution çerçeveleri." },
+      { "key": "ops",       "label": "Aracı Kurum Operasyonları","desc": "Arka ofis sistemleri, risk motorları ve düzenleyici uyum araçları." },
+      { "key": "mt",        "label": "MT4 / MT5 Ekosistemi",    "desc": "Plug-in geliştirme, bridge sistemleri ve MetaTrader ortam genişletmeleri." },
+      { "key": "data",      "label": "Veri Altyapısı",          "desc": "Gerçek zamanlı piyasa verisi boru hatları, tarihsel depolama ve analitik araçları." },
+      { "key": "platform",  "label": "Platform Geliştirme",     "desc": "Özel işlem terminalleri, müşteri portalları ve dahili operasyonel araçlar." }
+    ]
+  },
+  "infrastructure": {
+    "label": "Altyapı",
+    "title": "Her yere dağıtın. Latency önemli.",
+    "body": "Cloud-native, on-premise ve hibrit dağıtım ortamları için tasarlıyoruz — latency'ye duyarlı uygulamalar için colocation desteğiyle.",
+    "items": [
+      "Cloud-native dağıtım (AWS, GCP, Azure)",
+      "On-premise ve bare-metal yapılandırmalar",
+      "HFT için colocation ve proximity hosting",
+      "Kubernetes orkestrasyonu ve container altyapısı",
+      "CI/CD boru hatları ve otomatik dağıtım",
+      "Infrastructure-as-code (Terraform, Ansible)",
+      "İzleme, gözlemlenebilirlik ve uyarı yığınları",
+      "Afet kurtarma ve çoklu bölge failover",
+      "Güvenlik sertleştirme ve sızma testi hazırlığı"
+    ]
+  }
+}
