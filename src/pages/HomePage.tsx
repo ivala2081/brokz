@@ -7,6 +7,8 @@ import AnimateIn, { Stagger, StaggerItem } from '../components/AnimateIn';
 import Spotlight from '../components/fx/Spotlight';
 import InteractiveGrid from '../components/fx/InteractiveGrid';
 import NumberTicker from '../components/fx/NumberTicker';
+import ReferenceArchitecture from '../components/sections/ReferenceArchitecture';
+import HowWeEngage from '../components/sections/HowWeEngage';
 
 const EASE = [0.21, 0.47, 0.32, 0.98] as const;
 
@@ -217,6 +219,9 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ═══ REFERENCE ARCHITECTURE — How the stack composes ═══ */}
+      <ReferenceArchitecture />
+
       {/* ═══ TRUST BAND — Who we work with ═══ */}
       <section className="section-padding bg-surface-muted border-y border-line">
         <div className="section-container">
@@ -244,6 +249,9 @@ export default function HomePage() {
           </Stagger>
         </div>
       </section>
+
+      {/* ═══ HOW WE ENGAGE — Process transparency ═══ */}
+      <HowWeEngage />
 
       {/* ═══ CTA — above-fold repeat at bottom ═══ */}
       <section className="section-padding bg-surface-inverse text-white relative overflow-hidden">
