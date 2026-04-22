@@ -7,16 +7,26 @@ import AnimateIn, { Stagger, StaggerItem } from '../components/AnimateIn';
 import Spotlight from '../components/fx/Spotlight';
 import InteractiveGrid from '../components/fx/InteractiveGrid';
 import GlareCard from '../components/fx/GlareCard';
+import { breadcrumbList } from '../lib/jsonld';
+import { useLocation } from 'react-router-dom';
+import { localeFromPath } from '../i18n/routes';
 
 type PhilosophyItem = { key: string; title: string; body: string };
 type ExpertiseItem  = { key: string; label: string; desc: string };
 
 export default function AboutPage() {
   const { t } = useTranslation('about');
+  const { pathname } = useLocation();
+  const locale = localeFromPath(pathname);
 
   const philosophyItems = t('philosophy.items', { returnObjects: true }) as PhilosophyItem[];
   const expertiseItems  = t('expertise.items',  { returnObjects: true }) as ExpertiseItem[];
   const infraItems      = t('infrastructure.items', { returnObjects: true }) as string[];
+
+  const breadcrumbSchema = breadcrumbList([
+    { name: locale === 'tr' ? 'Ana Sayfa' : 'Home', path: locale === 'tr' ? '/tr' : '/' },
+    { name: t('hero.label'),                         path: pathname },
+  ]);
 
   return (
     <div className="min-h-screen bg-surface">
@@ -24,6 +34,7 @@ export default function AboutPage() {
         title={t('seo.title')}
         description={t('seo.description')}
         keywords={t('seo.keywords')}
+        jsonLd={breadcrumbSchema}
       />
 
       <NavBar />

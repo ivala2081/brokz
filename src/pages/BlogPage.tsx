@@ -7,6 +7,7 @@ import SEO from '../components/SEO';
 import PageHero from '../components/PageHero';
 import AnimateIn, { Stagger, StaggerItem } from '../components/AnimateIn';
 import { getAllPosts, categoryLabels, type BlogCategory } from '../lib/blog';
+import { breadcrumbList, collectionPage } from '../lib/jsonld';
 
 const categoryColors: Record<BlogCategory, string> = {
   industry: 'bg-blue-50 text-blue-700 border-blue-100',
@@ -51,6 +52,17 @@ export default function BlogPage() {
         description="Technical deep-dives, industry analysis, product updates, and company news from the Brokz engineering team."
         keywords="brokerage technology blog, fintech engineering, MT5 development, trading infrastructure, algo trading"
         canonical="/blog"
+        jsonLd={[
+          collectionPage(
+            'Brokz Blog',
+            'Technical deep-dives, industry analysis, product updates, and company news from the Brokz engineering team.',
+            '/blog'
+          ),
+          breadcrumbList([
+            { name: 'Home', path: '/' },
+            { name: 'Blog', path: '/blog' },
+          ]),
+        ]}
       />
 
       <NavBar />

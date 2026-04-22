@@ -5,7 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Primary Meta Tags -->
+    <!-- Primary Meta Tags — overridden by <SEO> per page; these are the
+         shell defaults that bots/social scrapers see before JS runs. -->
     <title>Brokz | Fintech Software & Automation Solutions | B2B & B2C</title>
     <meta name="title" content="Brokz | Fintech Software & Automation Solutions | B2B & B2C" />
     <meta name="description"
@@ -14,12 +15,20 @@
         content="fintech software development, b2b fintech solutions, trading infrastructure platform, algorithmic trading systems, fintech automation tools, trading analytics tools, web trading platform" />
     <meta name="author" content="Brokz" />
     <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://brokz.io/" />
 
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph / Facebook — default for non-JS-rendering bots
+         (LinkedIn/WhatsApp/Slack scrapers). Per-page <SEO> overrides these. -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Brokz | Fintech Software & Automation Solutions" />
     <meta property="og:description"
         content="Enterprise-grade fintech infrastructure and automation systems for businesses and individuals." />
+    <meta property="og:image" content="https://brokz.io/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:url" content="https://brokz.io/" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="tr_TR" />
     <meta property="og:site_name" content="Brokz" />
 
     <!-- Twitter -->
@@ -27,6 +36,7 @@
     <meta name="twitter:title" content="Brokz | Fintech Software & Automation Solutions" />
     <meta name="twitter:description"
         content="Enterprise-grade fintech infrastructure and automation systems for businesses and individuals." />
+    <meta name="twitter:image" content="https://brokz.io/og-image.png" />
 
     <!-- Favicons — SVG (modern, adaptive to color scheme) + PNG fallbacks -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" media="(prefers-color-scheme: light)" />
@@ -36,15 +46,64 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- Fonts: Geist + Geist Mono -->
+    <!-- Fonts: Geist + Geist Mono — stylesheet load (replaces CSS @import
+         to remove the extra render-blocking round-trip) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="style"
+    <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap" />
 
     <!-- Theme color -->
-    <meta name="theme-color" content="#087331" />
-    <meta name="msapplication-TileColor" content="#087331" />
+    <meta name="theme-color" content="#00C033" />
+    <meta name="msapplication-TileColor" content="#00C033" />
+
+    <!-- ─── Structured data (JSON-LD) ─────────────────────────────────────
+         Organization + WebSite are site-wide, loaded here so non-JS-rendering
+         crawlers see them without relying on React mount. Per-page types
+         (Article, Service, BreadcrumbList, FAQPage) are injected by <SEO>. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": "https://brokz.io/#organization",
+      "name": "Brokz",
+      "alternateName": "Brokz Tech",
+      "url": "https://brokz.io/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://brokz.io/icon-512.png",
+        "width": 512,
+        "height": 512
+      },
+      "description": "B2B fintech engineering firm building trading infrastructure, automation, and analytics for brokerages, prop firms, and liquidity providers.",
+      "foundingDate": "2025",
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "contactType": "customer support",
+          "email": "contact@brokz.io",
+          "availableLanguage": ["en", "tr"]
+        },
+        {
+          "@type": "ContactPoint",
+          "contactType": "legal",
+          "email": "legal@brokz.io",
+          "availableLanguage": ["en", "tr"]
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://brokz.io/#website",
+      "url": "https://brokz.io/",
+      "name": "Brokz",
+      "publisher": { "@id": "https://brokz.io/#organization" },
+      "inLanguage": ["en", "tr"]
+    }
+    </script>
 </head>
 
 <body>

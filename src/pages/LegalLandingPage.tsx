@@ -6,6 +6,9 @@ import PageHero from '../components/PageHero';
 import AnimateIn, { Stagger, StaggerItem } from '../components/AnimateIn';
 import LocalizedLink from '../i18n/LocalizedLink';
 import type { RouteKey } from '../i18n/routes';
+import { breadcrumbList } from '../lib/jsonld';
+import { useLocation } from 'react-router-dom';
+import { localeFromPath } from '../i18n/routes';
 
 // Landing card configuration — which doc key, which route, which summary key.
 const LEGAL_CARDS: { docKey: 'terms' | 'privacy' | 'risk' | 'disclaimer'; route: RouteKey }[] = [
@@ -17,7 +20,14 @@ const LEGAL_CARDS: { docKey: 'terms' | 'privacy' | 'risk' | 'disclaimer'; route:
 
 export default function LegalLandingPage() {
   const { t } = useTranslation('legal');
+  const { pathname } = useLocation();
+  const locale = localeFromPath(pathname);
   const noticeItems = t('landing.noticeItems', { returnObjects: true }) as string[];
+
+  const breadcrumbSchema = breadcrumbList([
+    { name: locale === 'tr' ? 'Ana Sayfa' : 'Home', path: locale === 'tr' ? '/tr' : '/' },
+    { name: t('landing.hero.label'),                 path: pathname },
+  ]);
 
   return (
     <div className="min-h-screen bg-surface">
@@ -25,6 +35,7 @@ export default function LegalLandingPage() {
         title={t('seo.title')}
         description={t('seo.description')}
         keywords={t('seo.keywords')}
+        jsonLd={breadcrumbSchema}
       />
 
       <NavBar />

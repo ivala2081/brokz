@@ -5,6 +5,9 @@ import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import PageHero from '../components/PageHero';
 import AnimateIn, { Stagger, StaggerItem } from '../components/AnimateIn';
+import { service, breadcrumbList } from '../lib/jsonld';
+import { useLocation } from 'react-router-dom';
+import { localeFromPath } from '../i18n/routes';
 
 type ProductItem = {
   key: string;
@@ -16,7 +19,21 @@ type ProductItem = {
 
 export default function ProductsPage() {
   const { t } = useTranslation('products');
+  const { pathname } = useLocation();
+  const locale = localeFromPath(pathname);
   const items = t('items', { returnObjects: true }) as ProductItem[];
+
+  const serviceSchema = service({
+    name: t('seo.title'),
+    description: t('seo.description'),
+    path: pathname,
+    serviceType: 'Fintech software products',
+  });
+
+  const breadcrumbSchema = breadcrumbList([
+    { name: locale === 'tr' ? 'Ana Sayfa' : 'Home', path: locale === 'tr' ? '/tr' : '/' },
+    { name: t('hero.label'),                         path: pathname },
+  ]);
 
   return (
     <div className="min-h-screen bg-surface">
@@ -24,6 +41,7 @@ export default function ProductsPage() {
         title={t('seo.title')}
         description={t('seo.description')}
         keywords={t('seo.keywords')}
+        jsonLd={[serviceSchema, breadcrumbSchema]}
       />
 
       <NavBar />

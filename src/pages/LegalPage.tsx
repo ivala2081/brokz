@@ -7,7 +7,8 @@ import PageHero from '../components/PageHero';
 import AnimateIn from '../components/AnimateIn';
 import LocalizedLink from '../i18n/LocalizedLink';
 import NotFoundPage from './NotFoundPage';
-import { ROUTES, type RouteKey } from '../i18n/routes';
+import { ROUTES, type RouteKey, localeFromPath } from '../i18n/routes';
+import { breadcrumbList } from '../lib/jsonld';
 
 type DocKey = 'terms' | 'privacy' | 'risk' | 'disclaimer';
 
@@ -54,11 +55,20 @@ export default function LegalPage() {
     danger:  'bg-red-50 border-l-status-danger text-red-900',
   } as const;
 
+  const locale = localeFromPath(pathname);
+  const legalIndexPath = locale === 'tr' ? '/tr/yasal' : '/legal';
+  const breadcrumbSchema = breadcrumbList([
+    { name: locale === 'tr' ? 'Ana Sayfa' : 'Home', path: locale === 'tr' ? '/tr' : '/' },
+    { name: t('landing.hero.label'),                 path: legalIndexPath },
+    { name: title,                                   path: pathname },
+  ]);
+
   return (
     <div className="min-h-screen bg-surface">
       <SEO
         title={`${title} | Brokz`}
         description={t('seo.description')}
+        jsonLd={breadcrumbSchema}
       />
       <NavBar />
 

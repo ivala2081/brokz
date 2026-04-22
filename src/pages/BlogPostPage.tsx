@@ -8,6 +8,7 @@ import Spotlight from '../components/fx/Spotlight';
 import InteractiveGrid from '../components/fx/InteractiveGrid';
 import TracingBeam from '../components/fx/TracingBeam';
 import { getPostBySlug, categoryLabels, type BlogCategory } from '../lib/blog';
+import { article, breadcrumbList } from '../lib/jsonld';
 
 const EASE = [0.21, 0.47, 0.32, 0.98] as const;
 
@@ -32,6 +33,20 @@ export default function BlogPostPage() {
 
   if (!post) return <NotFoundPage />;
 
+  const articleSchema = article({
+    headline: post.title,
+    description: post.excerpt,
+    path: `/blog/${post.slug}`,
+    datePublished: post.date,
+    authorName: post.author,
+  });
+
+  const breadcrumbSchema = breadcrumbList([
+    { name: 'Home',      path: '/' },
+    { name: 'Blog',      path: '/blog' },
+    { name: post.title,  path: `/blog/${post.slug}` },
+  ]);
+
   return (
     <div className="min-h-screen bg-surface">
       <SEO
@@ -41,6 +56,7 @@ export default function BlogPostPage() {
         ogTitle={post.title}
         ogDescription={post.excerpt}
         canonical={`/blog/${post.slug}`}
+        jsonLd={[articleSchema, breadcrumbSchema]}
       />
 
       <NavBar />

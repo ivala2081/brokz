@@ -6,6 +6,9 @@ import SEO from '../components/SEO';
 import PageHero from '../components/PageHero';
 import AnimateIn from '../components/AnimateIn';
 import LocalizedLink from '../i18n/LocalizedLink';
+import { breadcrumbList, contactPage } from '../lib/jsonld';
+import { useLocation } from 'react-router-dom';
+import { localeFromPath } from '../i18n/routes';
 
 type Status = 'idle' | 'submitting' | 'success' | 'error';
 
@@ -27,6 +30,14 @@ const INQUIRY_OPTIONS: { key: string; value: string }[] = [
 
 export default function ContactPage() {
   const { t } = useTranslation('contact');
+  const { pathname } = useLocation();
+  const locale = localeFromPath(pathname);
+
+  const contactSchema = contactPage(t('seo.title'), t('seo.description'), pathname);
+  const breadcrumbSchema = breadcrumbList([
+    { name: locale === 'tr' ? 'Ana Sayfa' : 'Home', path: locale === 'tr' ? '/tr' : '/' },
+    { name: t('hero.label'),                         path: pathname },
+  ]);
 
   const [formData, setFormData] = useState({
     company: '',
@@ -102,6 +113,7 @@ export default function ContactPage() {
         title={t('seo.title')}
         description={t('seo.description')}
         keywords={t('seo.keywords')}
+        jsonLd={[contactSchema, breadcrumbSchema]}
       />
 
       <NavBar />

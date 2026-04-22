@@ -3,6 +3,9 @@ import { useLocation } from 'react-router-dom';
 
 import { alternatePath, localeFromPath } from '../i18n/routes';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type JsonLd = Record<string, any>;
+
 interface SEOProps {
     title: string;
     description: string;
@@ -13,6 +16,9 @@ interface SEOProps {
     /** Override canonical path. Defaults to current pathname. */
     canonical?: string;
     noindex?: boolean;
+    /** Page-specific structured data. Pass a single schema object or an
+     *  array. Helpers live in `src/lib/jsonld.ts`. */
+    jsonLd?: JsonLd | JsonLd[];
 }
 
 const BASE_URL = 'https://brokz.io';
@@ -32,6 +38,7 @@ export default function SEO({
     ogImage = DEFAULT_OG_IMAGE,
     canonical,
     noindex = false,
+    jsonLd,
 }: SEOProps) {
     const { pathname } = useLocation();
     const currentLocale = localeFromPath(pathname);
@@ -92,6 +99,14 @@ export default function SEO({
             <meta name="twitter:title" content={ogTitle || title} />
             <meta name="twitter:description" content={ogDescription || description} />
             <meta name="twitter:image" content={ogImage} />
+
+            {/* Structured data (JSON-LD) — per-page schemas. Site-wide
+                Organization + WebSite live in index.html. */}
+            {jsonLd && (Array.isArray(jsonLd) ? jsonLd : [jsonLd]).map((schema, i) => (
+                <script key={i} type="application/ld+json">
+                    {JSON.stringify(schema)}
+                </script>
+            ))}
         </Helmet>
     );
 }

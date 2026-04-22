@@ -1,0 +1,21 @@
+# Brokz — robots.txt
+# https://brokz.io
+
+User-agent: *
+Allow: /
+
+# Internal / non-public areas — keep out of search index
+Disallow: /admin
+Disallow: /admin/
+Disallow: /design-system
+Disallow: /api/
+
+# Common tracking parameter cruft (reduces duplicate URL crawling)
+Disallow: /*?utm_
+Disallow: /*?gclid=
+Disallow: /*?fbclid=
+
+# AI scrapers — allowed for now (brand discoverability matters pre-launch)
+# Revisit after incorporation + if unauthorized training becomes a concern.
+
+Sitemap: https://brokz.io/sitemap.xml
