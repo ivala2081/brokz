@@ -1,21 +1,32 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Footer from '../../components/Footer.astro';
+import NavBar from '../../components/NavBar.tsx';
+import { getT } from '../../i18n/t';
+
+const t = getT('tr', 'home');
 ---
 <BaseLayout
-  title="Brokz | B2B Fintech Yazılım & Otomasyon Çözümleri"
-  description="Kurumsal düzeyde fintech altyapısı ve otomasyon sistemleri. 2025'te kurulan Brokz, broker'lar, fonlar ve bireysel trader'lar için teknoloji çözümleri sunar."
-  keywords="fintech yazılım, b2b fintech, borsa altyapısı, algoritmik işlem platformu, broker yazılımı"
+  title={t('seo.title')}
+  description={t('seo.description')}
+  keywords={t('seo.keywords')}
 >
+  <NavBar client:load />
+
   <main class="min-h-screen bg-surface">
-    <section class="section-padding">
-      <div class="section-container">
-        <p class="section-label">Astro migrasyonu — kavram kanıtı</p>
-        <h1 class="heading-hero text-ink max-w-5xl">
+    <section class="section-padding bg-surface-inverse text-white relative overflow-hidden">
+      <div class="absolute inset-0 bg-grid-dark bg-[length:64px_64px] pointer-events-none"></div>
+      <div class="absolute inset-0 bg-brand-radial pointer-events-none"></div>
+
+      <div class="relative section-container pt-36 pb-24">
+        <p class="section-label-light">Astro migrasyonu · faz 2</p>
+        <h1 class="heading-hero text-white max-w-5xl mt-6">
           Brokz, Astro üzerinde.
         </h1>
-        <p class="body-lg mt-8 max-w-2xl">
-          Türkçe locale doğru render oluyorsa — html lang="tr" + hreflang
-          çiftleri + canonical doğru, migration altyapısı sağlam demektir.
+        <p class="body-lg text-gray-300 mt-8 max-w-2xl">
+          Türkçe locale — html lang, hreflang, canonical + Footer server-side
+          i18n doğru render oluyor. NavBar client tarafında aktif lokasyonu
+          tespit ediyor.
         </p>
 
         <div class="mt-14">
@@ -26,4 +37,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       </div>
     </section>
   </main>
+
+  <Footer />
 </BaseLayout>

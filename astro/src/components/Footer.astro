@@ -1,0 +1,162 @@
+---
+/**
+ * Footer — server-rendered Astro component. Zero JS on the page (no
+ * interactivity, no animation handlers). Uses Tailwind keyframes for the
+ * brand-watermark-svg breathing animation, and CSS for the status dot ping.
+ *
+ * i18n: pulled via getT() using the locale derived from the current path.
+ * Links are regular <a> tags built from ROUTES map + localized paths.
+ */
+
+import { BrokzLogoCompact } from './BrokzLogo';
+import { ROUTES, localeFromPath, type RouteKey } from '../lib/routes';
+import { getT } from '../i18n/t';
+import watermarkSrc from '../assets/logo/brokz-logo-on-dark.svg';
+
+const pathname = Astro.url.pathname;
+const locale = localeFromPath(pathname);
+const t = getT(locale, 'common');
+
+const COMPANY_LINKS: { key: RouteKey; i18n: string }[] = [
+    { key: 'solutions', i18n: 'nav.solutions' },
+    { key: 'products',  i18n: 'nav.products' },
+    { key: 'about',     i18n: 'nav.about' },
+    { key: 'blog',      i18n: 'nav.blog' },
+    { key: 'contact',   i18n: 'nav.contact' },
+];
+
+const LEGAL_LINKS: { key: RouteKey; i18n: string }[] = [
+    { key: 'legalTerms',      i18n: 'footer.legalLinks.terms' },
+    { key: 'legalPrivacy',    i18n: 'footer.legalLinks.privacy' },
+    { key: 'legalRisk',       i18n: 'footer.legalLinks.risk' },
+    { key: 'legalDisclaimer', i18n: 'footer.legalLinks.disclaimer' },
+];
+
+const year = new Date().getFullYear();
+
+const href = (key: RouteKey) => ROUTES[key][locale];
+const contactHref = href('contact');
+const legalHref = href('legal');
+---
+
+<footer class="w-full bg-surface-inverse text-ink-subtle relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none bg-grid-dark bg-[length:64px_64px]"></div>
+    <div class="absolute inset-0 bg-brand-radial pointer-events-none"></div>
+
+    <div
+        class="absolute inset-x-0 bottom-0 pointer-events-none select-none flex items-end justify-center overflow-hidden"
+        aria-hidden="true"
+    >
+        <img src={watermarkSrc.src} alt="" draggable="false" class="brand-watermark-svg" />
+    </div>
+
+    <div class="relative max-w-layout mx-auto px-6">
+
+        <section class="pt-16 md:pt-20 pb-8 md:pb-10">
+            <p class="section-label-light mb-4">{t('footer.eyebrow')}</p>
+            <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 lg:gap-12">
+                <div class="max-w-2xl">
+                    <h2 class="text-2xl md:text-3xl font-bold tracking-tight leading-tight text-white mb-5 max-w-[20ch]">
+                        {t('footer.heading')}
+                    </h2>
+                    <p class="body text-gray-300">{t('footer.body')}</p>
+                </div>
+                <a
+                    href={contactHref}
+                    class="btn-primary btn-shimmer shrink-0 self-start lg:self-end"
+                >
+                    {t('cta.startProject')}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 12 19" />
+                    </svg>
+                </a>
+            </div>
+        </section>
+
+        <section class="pt-10 pb-10 border-t border-line-inverse">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-10">
+                <div class="lg:col-span-5">
+                    <BrokzLogoCompact size={80} withWordmark variant="light" />
+                    <p class="body-sm text-ink-subtle mt-6 max-w-sm">{t('footer.brandDescription')}</p>
+
+                    <div class="flex items-center gap-2.5 mt-8">
+                        <span class="relative flex h-2 w-2" aria-hidden="true">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-accent opacity-60"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-accent"></span>
+                        </span>
+                        <span class="text-xs font-mono tabular text-ink-subtle">{t('status.operational')}</span>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-3 lg:col-start-7">
+                    <p class="eyebrow text-ink-muted mb-6">{t('footer.columns.company')}</p>
+                    <ul class="flex flex-col gap-3.5 text-sm">
+                        {COMPANY_LINKS.map(link => (
+                            <li>
+                                <a
+                                    href={href(link.key)}
+                                    class="text-ink-subtle hover:text-white transition-colors duration-base focus-visible:outline-none focus-visible:text-white"
+                                >
+                                    {t(link.i18n)}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+                <div class="lg:col-span-3">
+                    <p class="eyebrow text-ink-muted mb-6">{t('footer.columns.legal')}</p>
+                    <ul class="flex flex-col gap-3.5 text-sm">
+                        {LEGAL_LINKS.map(link => (
+                            <li>
+                                <a
+                                    href={href(link.key)}
+                                    class="text-ink-subtle hover:text-white transition-colors duration-base focus-visible:outline-none focus-visible:text-white"
+                                >
+                                    {t(link.i18n)}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="pt-8 pb-8 border-t border-line-inverse">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10">
+                <div class="lg:col-span-3">
+                    <p class="eyebrow text-ink-muted">{t('footer.regulatory.label')}</p>
+                </div>
+                <div class="lg:col-span-9">
+                    <p class="text-xs text-ink-subtle leading-relaxed max-w-3xl">
+                        <strong class="text-gray-300 font-semibold">{t('footer.regulatory.leadStrong')}</strong>{' '}
+                        {t('footer.regulatory.body')}
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mt-6 pt-6 border-t border-line-inverse">
+                <p class="text-xs font-mono tabular text-ink-muted">
+                    {t('footer.copyright').replace('{{year}}', String(year))}
+                </p>
+                <div class="flex items-center gap-5">
+                    <a
+                        href={legalHref}
+                        class="text-xs font-mono tabular text-ink-subtle hover:text-white transition-colors focus-visible:outline-none focus-visible:text-white"
+                    >
+                        {t('footer.legalShort')}
+                    </a>
+                    <span class="text-ink-muted" aria-hidden="true">·</span>
+                    <a
+                        href="mailto:contact@brokztech.com"
+                        class="text-xs font-mono tabular text-ink-subtle hover:text-brand-accent transition-colors focus-visible:outline-none focus-visible:text-brand-accent"
+                    >
+                        contact@brokztech.com
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</footer>

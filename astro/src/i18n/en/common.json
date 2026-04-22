@@ -1,0 +1,75 @@
+{
+  "nav": {
+    "home": "Home",
+    "solutions": "Solutions",
+    "products": "Products",
+    "about": "About",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "cta": {
+    "startProject": "Start a Project",
+    "exploreSolutions": "Explore Solutions",
+    "learnMore": "Learn more",
+    "readMore": "Read more"
+  },
+  "a11y": {
+    "skipToMain": "Skip to main content",
+    "mainContent": "Main content",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu",
+    "brokzHome": "Brokz — Home",
+    "switchLanguage": "Switch language"
+  },
+  "status": {
+    "operational": "All systems operational"
+  },
+  "language": {
+    "en": "English",
+    "tr": "Türkçe",
+    "label": "Language"
+  },
+  "notFound": {
+    "seoTitle": "Page Not Found | Brokz",
+    "seoDescription": "The page you're looking for doesn't exist or has been moved.",
+    "eyebrow": "Error 404",
+    "subtitle": "This route was not found in our system.",
+    "body": "The page you requested doesn't exist, was moved, or the link may be incomplete.",
+    "requestedLabel": "Requested:",
+    "ctaReturnHome": "Return Home",
+    "ctaReportLink": "Report a Broken Link",
+    "suggestionsLabel": "Suggested Pages",
+    "suggestionsTitle": "You might be looking for",
+    "visitPrefix": "Visit",
+    "suggestions": {
+      "home":      { "label": "Home",      "description": "Overview of Brokz infrastructure & services." },
+      "solutions": { "label": "Solutions", "description": "Engineering approach and capabilities." },
+      "products":  { "label": "Products",  "description": "Core product lines and platforms." },
+      "blog":      { "label": "Blog",      "description": "Technical insights and industry analysis." },
+      "contact":   { "label": "Contact",   "description": "Start a conversation with our team." }
+    }
+  },
+  "footer": {
+    "eyebrow": "Brokz · B2B Fintech Engineering",
+    "heading": "One engineering partner. The full stack.",
+    "body": "Brokerages, proprietary trading firms, and liquidity providers. Response within one business day.",
+    "brandDescription": "Institutional-grade fintech infrastructure and trading technology. Engineered for brokerages, prop firms, and liquidity providers.",
+    "columns": {
+      "company": "Company",
+      "legal": "Legal"
+    },
+    "legalLinks": {
+      "terms": "Terms of Service",
+      "privacy": "Privacy Policy",
+      "risk": "Risk Disclosure",
+      "disclaimer": "Disclaimer"
+    },
+    "regulatory": {
+      "label": "Regulatory Notice",
+      "leadStrong": "Brokz is a technology and systems provider.",
+      "body": "We do not provide investment advice, manage client funds, or operate as a broker, dealer, or financial advisor. Trading involves substantial risk of loss."
+    },
+    "copyright": "© {{year}} Brokz · Founded 2025 · All rights reserved",
+    "legalShort": "Legal"
+  }
+}

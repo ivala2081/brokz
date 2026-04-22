@@ -15,11 +15,15 @@
     "@astrojs/mdx": "^5.0.3",
     "@astrojs/react": "^5.0.3",
     "@astrojs/sitemap": "^3.7.2",
+    "@motionone/dom": "^10.18.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "astro": "^6.1.8",
+    "framer-motion": "^12.38.0",
+    "i18next": "^26.0.6",
     "react": "^19.2.5",
-    "react-dom": "^19.2.5"
+    "react-dom": "^19.2.5",
+    "react-i18next": "^17.0.4"
   },
   "devDependencies": {
     "@astrojs/tailwind": "^6.0.2",
