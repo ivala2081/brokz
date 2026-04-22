@@ -23,6 +23,7 @@ const jsonLd = [
         path: `/blog/${post.slug}`,
         datePublished: post.date,
         authorName: post.author,
+        image: `/og/blog-${post.slug}.png`,
     }),
     breadcrumbList([
         { name: 'Home',      path: '/' },
@@ -37,6 +38,7 @@ const jsonLd = [
   keywords={`${post.title}, brokerage technology, fintech engineering, Brokz`}
   ogTitle={post.title}
   ogDescription={post.excerpt}
+  ogImage={`https://brokztech.com/og/blog-${post.slug}.png`}
   canonical={`/blog/${post.slug}`}
   jsonLd={jsonLd}
 >
