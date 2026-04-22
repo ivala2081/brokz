@@ -317,10 +317,10 @@ export default function NavBar() {
                     </span>
                   </div>
                   <a
-                    href="mailto:contact@brokz.io"
+                    href="mailto:contact@brokztech.com"
                     className="text-sm font-mono tabular text-ink-subtle hover:text-brand-accent transition-colors focus-visible:outline-none focus-visible:text-brand-accent w-fit"
                   >
-                    contact@brokz.io
+                    contact@brokztech.com
                   </a>
                   <div className="pt-2">
                     <LanguageSwitcher tone="on-dark" />

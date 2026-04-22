@@ -178,7 +178,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     if (error) {
       console.error('Resend API error:', error);
-      return res.status(502).json({ error: 'Failed to send message. Please try again or email contact@brokz.io directly.' });
+      return res.status(502).json({ error: 'Failed to send message. Please try again or email contact@brokztech.com directly.' });
     }
 
     return res.status(200).json({ ok: true });

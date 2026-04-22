@@ -93,8 +93,8 @@ export default function LegalPage() {
                 </p>
                 <p className="text-xs font-mono tabular text-ink-muted">
                   {t('preIncorporation.contactLabel')}{' '}
-                  <a href="mailto:legal@brokz.io" className="text-brand hover:underline">
-                    legal@brokz.io
+                  <a href="mailto:legal@brokztech.com" className="text-brand hover:underline">
+                    legal@brokztech.com
                   </a>
                 </p>
               </aside>

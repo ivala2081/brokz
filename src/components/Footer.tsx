@@ -155,10 +155,10 @@ export default function Footer() {
               </LocalizedLink>
               <span className="text-ink-muted" aria-hidden="true">·</span>
               <a
-                href="mailto:contact@brokz.io"
+                href="mailto:contact@brokztech.com"
                 className="text-xs font-mono tabular text-ink-subtle hover:text-brand-accent transition-colors focus-visible:outline-none focus-visible:text-brand-accent"
               >
-                contact@brokz.io
+                contact@brokztech.com
               </a>
             </div>
           </div>

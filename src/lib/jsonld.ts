@@ -6,7 +6,7 @@
  * flow through the <SEO jsonLd={...} /> prop and render via react-helmet-async.
  */
 
-const BASE_URL = 'https://brokz.io';
+const BASE_URL = 'https://brokztech.com';
 const ORG_ID = `${BASE_URL}/#organization`;
 
 /** Anything that can be serialized as JSON. */

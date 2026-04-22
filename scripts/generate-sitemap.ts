@@ -21,7 +21,7 @@ import { ROUTES, type RouteKey, type Locale } from '../src/i18n/routes';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, '..');
 
-const BASE_URL = 'https://brokz.io';
+const BASE_URL = 'https://brokztech.com';
 
 type Priority = '1.0' | '0.9' | '0.8' | '0.7' | '0.6' | '0.5';
 type ChangeFreq = 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';

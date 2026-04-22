@@ -145,8 +145,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="eyebrow text-ink-muted mb-1">{t('info.emailLabel')}</p>
-                    <a href="mailto:contact@brokz.io" className="text-sm font-medium text-ink hover:text-brand transition-colors">
-                      contact@brokz.io
+                    <a href="mailto:contact@brokztech.com" className="text-sm font-medium text-ink hover:text-brand transition-colors">
+                      contact@brokztech.com
                     </a>
                   </div>
                 </div>

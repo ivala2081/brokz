@@ -21,7 +21,7 @@ interface SEOProps {
     jsonLd?: JsonLd | JsonLd[];
 }
 
-const BASE_URL = 'https://brokz.io';
+const BASE_URL = 'https://brokztech.com';
 const DEFAULT_OG_IMAGE = `${BASE_URL}/og-image.png`;
 
 /**

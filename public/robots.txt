@@ -1,5 +1,5 @@
 # Brokz — robots.txt
-# https://brokz.io
+# https://brokztech.com
 
 User-agent: *
 Allow: /
@@ -18,4 +18,4 @@ Disallow: /*?fbclid=
 # AI scrapers — allowed for now (brand discoverability matters pre-launch)
 # Revisit after incorporation + if unauthorized training becomes a concern.
 
-Sitemap: https://brokz.io/sitemap.xml
+Sitemap: https://brokztech.com/sitemap.xml
