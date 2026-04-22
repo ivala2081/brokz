@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Footer from '../../components/Footer.astro';
+import NavBar from '../../components/NavBar.tsx';
+import BlogPostContent from '../../components/BlogPostContent.tsx';
+import { getAllPosts } from '../../lib/blog';
+import { article, breadcrumbList } from '../../lib/jsonld';
+
+export async function getStaticPaths() {
+    const posts = getAllPosts();
+    return posts.map(post => ({
+        params: { slug: post.slug },
+        props: { post },
+    }));
+}
+
+const { post } = Astro.props;
+
+const jsonLd = [
+    article({
+        headline: post.title,
+        description: post.excerpt,
+        path: `/blog/${post.slug}`,
+        datePublished: post.date,
+        authorName: post.author,
+    }),
+    breadcrumbList([
+        { name: 'Home',      path: '/' },
+        { name: 'Blog',      path: '/blog' },
+        { name: post.title,  path: `/blog/${post.slug}` },
+    ]),
+];
+---
+<BaseLayout
+  title={`${post.title} | Brokz Blog`}
+  description={post.excerpt}
+  keywords={`${post.title}, brokerage technology, fintech engineering, Brokz`}
+  ogTitle={post.title}
+  ogDescription={post.excerpt}
+  canonical={`/blog/${post.slug}`}
+  jsonLd={jsonLd}
+>
+  <NavBar client:load />
+  <main class="min-h-screen bg-surface">
+    <BlogPostContent post={post} client:load />
+  </main>
+  <Footer />
+</BaseLayout>

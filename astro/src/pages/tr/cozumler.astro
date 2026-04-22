@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Footer from '../../components/Footer.astro';
+import NavBar from '../../components/NavBar.tsx';
+import SolutionsPageContent from '../../components/SolutionsPageContent.tsx';
+import { getT } from '../../i18n/t';
+import { service, breadcrumbList } from '../../lib/jsonld';
+
+const t = getT('tr', 'solutions');
+const pathname = '/tr/cozumler';
+const jsonLd = [
+    service({
+        name: t('seo.title'),
+        description: t('seo.description'),
+        path: pathname,
+        serviceType: 'Fintech infrastructure & solutions',
+    }),
+    breadcrumbList([
+        { name: 'Ana Sayfa',      path: '/tr' },
+        { name: t('hero.label'),   path: pathname },
+    ]),
+];
+---
+<BaseLayout
+  title={t('seo.title')}
+  description={t('seo.description')}
+  keywords={t('seo.keywords')}
+  jsonLd={jsonLd}
+>
+  <NavBar client:load />
+  <main class="min-h-screen bg-surface">
+    <SolutionsPageContent client:load />
+  </main>
+  <Footer />
+</BaseLayout>

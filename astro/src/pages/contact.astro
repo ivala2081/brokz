@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/Footer.astro';
+import NavBar from '../components/NavBar.tsx';
+import ContactPageContent from '../components/ContactPageContent.tsx';
+import { getT } from '../i18n/t';
+import { breadcrumbList, contactPage } from '../lib/jsonld';
+
+const t = getT('en', 'contact');
+const pathname = '/contact';
+const jsonLd = [
+    contactPage(t('seo.title'), t('seo.description'), pathname),
+    breadcrumbList([
+        { name: 'Home',         path: '/' },
+        { name: t('hero.label'), path: pathname },
+    ]),
+];
+---
+<BaseLayout
+  title={t('seo.title')}
+  description={t('seo.description')}
+  keywords={t('seo.keywords')}
+  jsonLd={jsonLd}
+>
+  <NavBar client:load />
+  <main class="min-h-screen bg-surface">
+    <ContactPageContent client:load />
+  </main>
+  <Footer />
+</BaseLayout>

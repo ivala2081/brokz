@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Footer from '../../../components/Footer.astro';
+import NavBar from '../../../components/NavBar.tsx';
+import LegalDocContent from '../../../components/LegalDocContent.tsx';
+import { getT } from '../../../i18n/t';
+import { breadcrumbList } from '../../../lib/jsonld';
+
+const t = getT('tr', 'legal');
+const docKey = 'terms';
+const pathname = '/tr/yasal/kullanim-kosullari';
+const title = t(`docs.${docKey}.title`);
+const jsonLd = breadcrumbList([
+    { name: 'Ana Sayfa',             path: '/tr' },
+    { name: t('landing.hero.label'), path: '/tr/yasal' },
+    { name: title,                   path: pathname },
+]);
+---
+<BaseLayout
+  title={`${title} | Brokz`}
+  description={t('seo.description')}
+  jsonLd={jsonLd}
+>
+  <NavBar client:load />
+  <main class="min-h-screen bg-surface">
+    <LegalDocContent docKey={docKey} client:load />
+  </main>
+  <Footer />
+</BaseLayout>
