@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Footer from '../../components/Footer.astro';
 import NavBar from '../../components/NavBar.tsx';
+import HomePageContent from '../../components/HomePageContent.tsx';
 import { getT } from '../../i18n/t';
 
 const t = getT('tr', 'home');
@@ -12,31 +13,8 @@ const t = getT('tr', 'home');
   keywords={t('seo.keywords')}
 >
   <NavBar client:load />
-
   <main class="min-h-screen bg-surface">
-    <section class="section-padding bg-surface-inverse text-white relative overflow-hidden">
-      <div class="absolute inset-0 bg-grid-dark bg-[length:64px_64px] pointer-events-none"></div>
-      <div class="absolute inset-0 bg-brand-radial pointer-events-none"></div>
-
-      <div class="relative section-container pt-36 pb-24">
-        <p class="section-label-light">Astro migrasyonu · faz 2</p>
-        <h1 class="heading-hero text-white max-w-5xl mt-6">
-          Brokz, Astro üzerinde.
-        </h1>
-        <p class="body-lg text-gray-300 mt-8 max-w-2xl">
-          Türkçe locale — html lang, hreflang, canonical + Footer server-side
-          i18n doğru render oluyor. NavBar client tarafında aktif lokasyonu
-          tespit ediyor.
-        </p>
-
-        <div class="mt-14">
-          <a href="/" class="btn-primary btn-shimmer">
-            English locale →
-          </a>
-        </div>
-      </div>
-    </section>
+    <HomePageContent client:load />
   </main>
-
   <Footer />
 </BaseLayout>

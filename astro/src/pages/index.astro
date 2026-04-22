@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Footer from '../components/Footer.astro';
 import NavBar from '../components/NavBar.tsx';
+import HomePageContent from '../components/HomePageContent.tsx';
 import { getT } from '../i18n/t';
 
 const t = getT('en', 'home');
@@ -12,34 +13,8 @@ const t = getT('en', 'home');
   keywords={t('seo.keywords')}
 >
   <NavBar client:load />
-
   <main class="min-h-screen bg-surface">
-    <section class="section-padding bg-surface-inverse text-white relative overflow-hidden">
-      <div class="absolute inset-0 bg-grid-dark bg-[length:64px_64px] pointer-events-none"></div>
-      <div class="absolute inset-0 bg-brand-radial pointer-events-none"></div>
-
-      <div class="relative section-container pt-36 pb-24">
-        <p class="section-label-light">Astro migration · phase 2</p>
-        <h1 class="heading-hero text-white max-w-5xl mt-6">
-          Brokz on Astro.
-        </h1>
-        <p class="body-lg text-gray-300 mt-8 max-w-2xl">
-          Shell + NavBar island + Footer are live. Static HTML ships full
-          SEO tags and JSON-LD before any JS executes. NavBar hydrates as
-          a React island on load for scroll-aware state and the mobile menu.
-        </p>
-
-        <div class="mt-14 flex flex-wrap gap-4">
-          <a href="/tr" class="btn-primary btn-shimmer">
-            Turkish locale →
-          </a>
-          <a href="/non-existent" class="btn-ghost">
-            Test 404
-          </a>
-        </div>
-      </div>
-    </section>
+    <HomePageContent client:load />
   </main>
-
   <Footer />
 </BaseLayout>
