@@ -1,0 +1,167 @@
+---
+/**
+ * BaseLayout — every page wraps in this. Handles the HTML shell, head meta,
+ * canonical + hreflang, OG/Twitter, and per-page JSON-LD injection. The
+ * site-wide Organization + WebSite JSON-LD is rendered directly below so
+ * bots see it on every URL without any JS.
+ */
+
+import '../styles/global.css';
+import { alternatePath, localeFromPath, type Locale } from '../lib/routes';
+
+export interface Props {
+  title: string;
+  description: string;
+  keywords?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  canonical?: string;
+  noindex?: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  jsonLd?: Record<string, any> | Record<string, any>[];
+}
+
+const BASE_URL = 'https://brokztech.com';
+const DEFAULT_OG_IMAGE = `${BASE_URL}/og-image.png`;
+
+const {
+  title,
+  description,
+  keywords,
+  ogTitle,
+  ogDescription,
+  ogImage = DEFAULT_OG_IMAGE,
+  canonical,
+  noindex = false,
+  jsonLd,
+} = Astro.props;
+
+const pathname = Astro.url.pathname;
+const currentLocale: Locale = localeFromPath(pathname);
+const canonicalPath = canonical ?? pathname;
+const canonicalUrl = canonicalPath.startsWith('http') ? canonicalPath : `${BASE_URL}${canonicalPath}`;
+
+const alt = alternatePath(pathname, currentLocale);
+const alternateUrl = alt ? `${BASE_URL}${alt}` : null;
+const xDefaultPath = currentLocale === 'en' ? pathname : alt;
+const xDefaultUrl = xDefaultPath ? `${BASE_URL}${xDefaultPath}` : null;
+
+const perPageSchemas = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+---
+<!doctype html>
+<html lang={currentLocale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {keywords && <meta name="keywords" content={keywords} />}
+    <meta name="author" content="Brokz" />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang={currentLocale} href={canonicalUrl} />
+    {alternateUrl && (
+      <link
+        rel="alternate"
+        hreflang={currentLocale === 'en' ? 'tr' : 'en'}
+        href={alternateUrl}
+      />
+    )}
+    {xDefaultUrl && <link rel="alternate" hreflang="x-default" href={xDefaultUrl} />}
+
+    {/* Open Graph */}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={ogTitle || title} />
+    <meta property="og:description" content={ogDescription || description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content={currentLocale === 'tr' ? 'tr_TR' : 'en_US'} />
+    {alternateUrl && (
+      <meta
+        property="og:locale:alternate"
+        content={currentLocale === 'en' ? 'tr_TR' : 'en_US'}
+      />
+    )}
+    <meta property="og:site_name" content="Brokz" />
+
+    {/* Twitter */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={ogTitle || title} />
+    <meta name="twitter:description" content={ogDescription || description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    {/* Favicons */}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/svg+xml" href="/favicon-dark.svg" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    {/* Fonts */}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap"
+    />
+
+    {/* Theme color */}
+    <meta name="theme-color" content="#00C033" />
+    <meta name="msapplication-TileColor" content="#00C033" />
+
+    {/* Site-wide JSON-LD (Organization + WebSite) */}
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      '@id': `${BASE_URL}/#organization`,
+      name: 'Brokz',
+      alternateName: 'Brokz Tech',
+      url: `${BASE_URL}/`,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${BASE_URL}/icon-512.png`,
+        width: 512,
+        height: 512,
+      },
+      description: 'B2B fintech engineering firm building trading infrastructure, automation, and analytics for brokerages, prop firms, and liquidity providers.',
+      foundingDate: '2025',
+      contactPoint: [
+        {
+          '@type': 'ContactPoint',
+          contactType: 'customer support',
+          email: 'contact@brokztech.com',
+          availableLanguage: ['en', 'tr'],
+        },
+        {
+          '@type': 'ContactPoint',
+          contactType: 'legal',
+          email: 'legal@brokztech.com',
+          availableLanguage: ['en', 'tr'],
+        },
+      ],
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      '@id': `${BASE_URL}/#website`,
+      url: `${BASE_URL}/`,
+      name: 'Brokz',
+      publisher: { '@id': `${BASE_URL}/#organization` },
+      inLanguage: ['en', 'tr'],
+    })} />
+
+    {/* Per-page JSON-LD */}
+    {perPageSchemas.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

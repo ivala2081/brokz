@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Brokz | Fintech Software & Automation Solutions | B2B & B2C"
+  description="Enterprise-grade fintech infrastructure and automation systems. Founded in 2025, Brokz provides technology solutions for brokers, funds, and individual traders."
+  keywords="fintech software development, b2b fintech solutions, trading infrastructure platform, algorithmic trading systems, fintech automation tools, trading analytics tools"
+>
+  <main class="min-h-screen bg-surface">
+    <section class="section-padding">
+      <div class="section-container">
+        <p class="section-label">Astro migration — proof of concept</p>
+        <h1 class="heading-hero text-ink max-w-5xl">
+          Brokz on Astro.
+        </h1>
+        <p class="body-lg mt-8 max-w-2xl">
+          This is the scaffold page running on Astro with the existing Tailwind
+          design system tokens ported 1:1. If you see this with correct
+          typography (Geist, extrabold heading, tight leading), the toolchain
+          is aligned and ready for page-by-page migration.
+        </p>
+
+        <div class="mt-14 flex flex-wrap gap-4">
+          <a href="/tr" class="btn-primary btn-shimmer">
+            Turkish locale →
+          </a>
+          <a href="/non-existent" class="btn-secondary">
+            Test 404
+          </a>
+        </div>
+
+        <div class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="card">
+            <p class="eyebrow text-brand mb-3">01</p>
+            <h3 class="heading-3 text-ink mb-2">Static output</h3>
+            <p class="body-sm">HTML shell pre-rendered. Every URL has full SEO tags, JSON-LD, and content before any JS runs.</p>
+          </div>
+          <div class="card">
+            <p class="eyebrow text-brand mb-3">02</p>
+            <h3 class="heading-3 text-ink mb-2">React islands</h3>
+            <p class="body-sm">Existing framer-motion components port as client islands — hydrated only where interactivity is needed.</p>
+          </div>
+          <div class="card">
+            <p class="eyebrow text-brand mb-3">03</p>
+            <h3 class="heading-3 text-ink mb-2">Shared-host ready</h3>
+            <p class="body-sm">Static build deploys to any cPanel/FTP host. No Node.js runtime required at serve time.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

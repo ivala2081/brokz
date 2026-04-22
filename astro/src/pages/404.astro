@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="404 — Page not found | Brokz"
+  description="The page you are looking for does not exist."
+  noindex
+>
+  <main class="min-h-screen bg-surface flex items-center justify-center">
+    <div class="text-center max-w-lg px-6">
+      <p class="eyebrow text-brand mb-4">Error 404</p>
+      <h1 class="heading-hero-sm text-ink mb-6">Page not found.</h1>
+      <p class="body mb-10">
+        The page you are looking for may have moved or no longer exists.
+      </p>
+      <a href="/" class="btn-primary btn-shimmer">
+        Back to home →
+      </a>
+    </div>
+  </main>
+</BaseLayout>
