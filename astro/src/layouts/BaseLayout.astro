@@ -48,6 +48,20 @@ const xDefaultPath = currentLocale === 'en' ? pathname : alt;
 const xDefaultUrl = xDefaultPath ? `${BASE_URL}${xDefaultPath}` : null;
 
 const perPageSchemas = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+
+// ─── Tracking / verification env vars ────────────────────────────────────
+// Populated via astro/.env once accounts are opened (post-domain-purchase).
+// All are optional — if unset, the corresponding tag is simply not emitted.
+const GA4_ID                = import.meta.env.PUBLIC_GA4_ID;              // "G-XXXXXXXXXX"
+const GTM_ID                = import.meta.env.PUBLIC_GTM_ID;              // "GTM-XXXXXXX"
+const GSC_VERIFICATION      = import.meta.env.PUBLIC_GSC_VERIFICATION;    // token string
+const BING_VERIFICATION     = import.meta.env.PUBLIC_BING_VERIFICATION;   // token string
+const CLARITY_ID            = import.meta.env.PUBLIC_CLARITY_ID;          // Clarity project ID
+const YANDEX_VERIFICATION   = import.meta.env.PUBLIC_YANDEX_VERIFICATION; // TR market
+
+// Only fire analytics in production — preview/dev runs stay clean of
+// events that would inflate real-user metrics.
+const enableAnalytics = import.meta.env.PROD && !noindex;
 ---
 <!doctype html>
 <html lang={currentLocale}>
@@ -60,6 +74,12 @@ const perPageSchemas = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []
     {keywords && <meta name="keywords" content={keywords} />}
     <meta name="author" content="Brokz" />
     <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+
+    {/* Search-engine verification tokens — filled in astro/.env once the
+        matching webmaster accounts are claimed on brokztech.com. */}
+    {GSC_VERIFICATION && <meta name="google-site-verification" content={GSC_VERIFICATION} />}
+    {BING_VERIFICATION && <meta name="msvalidate.01" content={BING_VERIFICATION} />}
+    {YANDEX_VERIFICATION && <meta name="yandex-verification" content={YANDEX_VERIFICATION} />}
 
     <link rel="canonical" href={canonicalUrl} />
     <link rel="alternate" hreflang={currentLocale} href={canonicalUrl} />
@@ -160,8 +180,37 @@ const perPageSchemas = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []
     {perPageSchemas.map((schema) => (
       <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     ))}
+
+    {/* ─── Analytics (production-only, env-gated) ─────────────────────
+        GTM is the preferred entry point — once a container is wired, GA4
+        / Meta Pixel / LinkedIn Insight all move inside GTM without code
+        redeploys. GA4 direct fallback fires only if GTM_ID is unset. */}
+    {enableAnalytics && GTM_ID && (
+      <script is:inline set:html={`
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');
+      `} />
+    )}
+    {enableAnalytics && !GTM_ID && GA4_ID && (
+      <>
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`} />
+        <script is:inline set:html={`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${GA4_ID}', { anonymize_ip: true });
+        `} />
+      </>
+    )}
+    {enableAnalytics && CLARITY_ID && (
+      <script is:inline set:html={`
+        (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${CLARITY_ID}");
+      `} />
+    )}
   </head>
   <body>
+    {enableAnalytics && GTM_ID && (
+      <noscript set:html={`<iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`} />
+    )}
     <slot />
   </body>
 </html>
