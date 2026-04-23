@@ -71,6 +71,26 @@
       "title": "Son siparişler",
       "empty": "Henüz sipariş yok.",
       "viewAll": "Tüm siparişleri gör"
+    },
+    "subscription": {
+      "eyebrow": "Aktif abonelik",
+      "billingTypes": {
+        "onetime": "Tek seferlik",
+        "monthly": "Aylık",
+        "annual_upfront": "Yıllık peşin",
+        "annual_installments": "Yıllık taksitli"
+      },
+      "perPeriod": {
+        "onetime": "",
+        "monthly": "/ ay",
+        "annual_upfront": "/ yıl",
+        "annual_installments": "/ ay (yıllık sözleşme)"
+      },
+      "nextInvoice": "Sonraki fatura",
+      "lastPaid": "Son ödeme",
+      "payNow": "Faturayı görüntüle ve öde",
+      "overdueHint": "Vade geçti — {{days}} gün",
+      "suspendedWarning": "Lisans askıya alındı. Ödemeyi yapar yapmaz geri aktifleşir."
     }
   },
   "orders": {

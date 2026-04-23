@@ -71,6 +71,26 @@
       "title": "Recent orders",
       "empty": "No orders yet.",
       "viewAll": "View all orders"
+    },
+    "subscription": {
+      "eyebrow": "Active subscription",
+      "billingTypes": {
+        "onetime": "One-time",
+        "monthly": "Monthly",
+        "annual_upfront": "Annual (upfront)",
+        "annual_installments": "Annual (installments)"
+      },
+      "perPeriod": {
+        "onetime": "",
+        "monthly": "/ mo",
+        "annual_upfront": "/ yr",
+        "annual_installments": "/ mo (annual contract)"
+      },
+      "nextInvoice": "Next invoice",
+      "lastPaid": "Last paid",
+      "payNow": "Open invoice and pay",
+      "overdueHint": "Overdue by {{days}} days",
+      "suspendedWarning": "License suspended. It reactivates as soon as you pay."
     }
   },
   "orders": {

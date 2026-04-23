@@ -25,12 +25,34 @@ interface Row {
     expires_at: string | null;
     order: {
         id: string;
+        billing_type: string | null;
+        cancelled_at: string | null;
+        next_invoice_at: string | null;
         product: { name: string } | null;
         organization: { id: string; name: string } | null;
     } | null;
 }
 
 const STATUS_OPTIONS = ['all', 'active', 'expired', 'revoked'];
+
+type GraceState = 'ok' | 'soon' | 'overdue' | 'suspended';
+
+function graceStateFor(row: Row, openInvoice: OpenInv | null): GraceState {
+    if (!row.order || row.order.billing_type === 'onetime' || row.order.cancelled_at) return 'ok';
+    if (!openInvoice || !openInvoice.due_at) return 'ok';
+    const diffDays = Math.floor((Date.now() - new Date(openInvoice.due_at).getTime()) / 86400_000);
+    if (diffDays > 10) return 'suspended';
+    if (diffDays > 3) return 'overdue';
+    if (diffDays > -3) return 'soon';
+    return 'ok';
+}
+
+interface OpenInv {
+    id: string;
+    order_id: string;
+    due_at: string | null;
+    status: string;
+}
 
 export default function LicensesTable({ locale: localeProp = 'tr' }: { locale?: Locale }) {
     const locale = resolveAdminLocale(localeProp);
@@ -55,19 +77,49 @@ function LicensesInner({ locale }: { locale: Locale }) {
     const [status, setStatus] = useState<string>('all');
     const [revealed, setRevealed] = useState<Record<string, boolean>>({});
     const [extending, setExtending] = useState<Row | null>(null);
+    const [openInvoices, setOpenInvoices] = useState<Record<string, OpenInv>>({});
 
     const load = useCallback(async () => {
         setLoading(true);
         let query = supabase
             .from('licenses')
-            .select('id, license_key, status, issued_at, expires_at, order:orders(id, product:products(name), organization:organizations(id, name))')
+            .select('id, license_key, status, issued_at, expires_at, order:orders(id, billing_type, cancelled_at, next_invoice_at, product:products(name), organization:organizations(id, name))')
             .is('deleted_at', null)
             .order('issued_at', { ascending: false });
         if (status !== 'all') query = query.eq('status', status);
-        const { data } = await query;
+        const [{ data }, invRes] = await Promise.all([
+            query,
+            supabase
+                .from('invoices')
+                .select('id, order_id, due_at, status')
+                .in('status', ['sent', 'overdue'])
+                .is('deleted_at', null),
+        ]);
         setRows((data as unknown as Row[]) ?? []);
+        const map: Record<string, OpenInv> = {};
+        for (const inv of (invRes.data as OpenInv[] | null) ?? []) {
+            if (!map[inv.order_id]) map[inv.order_id] = inv;
+        }
+        setOpenInvoices(map);
         setLoading(false);
     }, [supabase, status]);
+
+    async function resume(r: Row) {
+        // Ask for confirm — admin is overriding grace-period suspension for this license.
+        if (!window.confirm(t('licenses.resume.confirm'))) return;
+        // Mark associated open invoice as paid (best-effort), set license back to active.
+        const orderId = r.order?.id;
+        const openInv = orderId ? openInvoices[orderId] : null;
+        if (openInv) {
+            await supabase.from('invoices').update({
+                status: 'paid', paid_at: new Date().toISOString(),
+            }).eq('id', openInv.id);
+        }
+        const { error } = await supabase.from('licenses').update({ status: 'active' }).eq('id', r.id);
+        if (error) { toast.error(t('licenses.resume.error')); return; }
+        toast.success(t('licenses.resume.success'));
+        void load();
+    }
 
     useEffect(() => {
         void load();
@@ -167,24 +219,53 @@ function LicensesInner({ locale }: { locale: Locale }) {
         {
             key: 'status',
             header: t('licenses.columns.status'),
-            cell: (r) => <StatusBadge status={r.status} />,
+            cell: (r) => {
+                const orderId = r.order?.id;
+                const openInv = orderId ? openInvoices[orderId] : null;
+                const grace = graceStateFor(r, openInv ?? null);
+                return (
+                    <div className="flex flex-col gap-1">
+                        <StatusBadge status={r.status} />
+                        {grace === 'soon' && (
+                            <span className="text-2xs text-amber-700">{t('licenses.grace.soon')}</span>
+                        )}
+                        {grace === 'overdue' && (
+                            <span className="text-2xs text-amber-800 font-semibold">{t('licenses.grace.overdue')}</span>
+                        )}
+                        {grace === 'suspended' && (
+                            <span className="text-2xs text-red-700 font-semibold">{t('licenses.grace.suspended')}</span>
+                        )}
+                    </div>
+                );
+            },
             searchAccessor: (r) => r.status,
         },
         {
             key: 'actions',
             header: '',
-            cell: (r) => (
-                <div className="text-right flex justify-end gap-1.5">
-                    <Button size="sm" variant="secondary" onClick={() => setExtending(r)}>
-                        {t('licenses.extendDialog.submit')}
-                    </Button>
-                    {r.status === 'active' && (
-                        <Button size="sm" variant="danger" onClick={() => void revoke(r)}>
-                            {t('licenses.revoke.action')}
+            cell: (r) => {
+                const orderId = r.order?.id;
+                const openInv = orderId ? openInvoices[orderId] : null;
+                const grace = graceStateFor(r, openInv ?? null);
+                const showResume = grace === 'suspended' || grace === 'overdue';
+                return (
+                    <div className="text-right flex justify-end gap-1.5">
+                        {showResume && (
+                            <Button size="sm" onClick={() => void resume(r)}>
+                                {t('licenses.resume.action')}
+                            </Button>
+                        )}
+                        <Button size="sm" variant="secondary" onClick={() => setExtending(r)}>
+                            {t('licenses.extendDialog.submit')}
                         </Button>
-                    )}
-                </div>
-            ),
+                        {r.status === 'active' && (
+                            <Button size="sm" variant="danger" onClick={() => void revoke(r)}>
+                                {t('licenses.revoke.action')}
+                            </Button>
+                        )}
+                    </div>
+                );
+            },
             align: 'right',
         },
     ];

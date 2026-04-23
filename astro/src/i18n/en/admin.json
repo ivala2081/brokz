@@ -309,9 +309,19 @@
       "basePrice": "Base price",
       "currency": "Currency",
       "isActive": "Active in catalog",
+      "billingType": "Billing type",
+      "billingTypeHint": "One-time or recurring",
+      "setupFee": "Setup fee",
+      "setupFeeHint": "Charged once with the first invoice on recurring products",
       "submit": "Save",
       "success": "Product saved.",
       "error": "Couldn't save product."
+    },
+    "billingTypes": {
+      "onetime": "One-time",
+      "monthly": "Monthly",
+      "annual_upfront": "Annual (upfront)",
+      "annual_installments": "Annual (installments)"
     }
   },
   "orders": {
@@ -339,6 +349,10 @@
       "quantity": "Quantity",
       "unitPrice": "Unit price",
       "notes": "Notes",
+      "periodStart": "First period start date",
+      "periodStartHint": "The subscription starts from this date",
+      "billingTypeLabel": "Billing",
+      "setupFeeLabel": "Setup fee",
       "submit": "Create order",
       "success": "Order created.",
       "error": "Couldn't create order."
@@ -381,6 +395,17 @@
       "confirm": "Revoke this license?",
       "success": "License revoked.",
       "error": "Couldn't revoke license."
+    },
+    "resume": {
+      "action": "Resume",
+      "confirm": "This license is suspended. Mark the open invoice paid and reactivate?",
+      "success": "License reactivated, invoice marked paid.",
+      "error": "Couldn't reactivate."
+    },
+    "grace": {
+      "soon": "Due soon",
+      "overdue": "Overdue",
+      "suspended": "Suspended"
     }
   },
   "invoices": {
@@ -404,6 +429,16 @@
       "title": "Issue invoice",
       "order": "Order",
       "dueAt": "Due date",
+      "invoiceType": "Invoice type",
+      "amount": "Amount",
+      "periodStart": "Period start",
+      "periodEnd": "Period end",
+      "types": {
+        "setup": "Setup fee",
+        "subscription": "Subscription period",
+        "onetime": "One-time",
+        "addon": "Add-on"
+      },
       "submit": "Issue",
       "success": "Invoice issued.",
       "error": "Couldn't issue invoice."

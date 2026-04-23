@@ -14,6 +14,8 @@ import Field from '../ui/Field';
 import { useAuth } from '../auth/AuthContext';
 import { toast } from '../ui/Toast';
 
+export type ProductBillingType = 'onetime' | 'monthly' | 'annual_upfront' | 'annual_installments';
+
 export interface ProductRow {
     id: string | null;
     slug: string;
@@ -23,6 +25,8 @@ export interface ProductRow {
     base_price: number;
     currency: string;
     is_active: boolean;
+    billing_type: ProductBillingType;
+    setup_fee: number;
 }
 
 export interface ProductDialogProps {
@@ -33,6 +37,7 @@ export interface ProductDialogProps {
 }
 
 const CURRENCIES = ['USD', 'EUR', 'GBP', 'TRY'];
+const BILLING_TYPES: ProductBillingType[] = ['onetime', 'monthly', 'annual_upfront', 'annual_installments'];
 
 function slugify(v: string): string {
     return v
@@ -55,6 +60,8 @@ export default function ProductDialog({ open, onClose, onSuccess, initial }: Pro
         base_price: 0,
         currency: 'USD',
         is_active: true,
+        billing_type: 'onetime',
+        setup_fee: 0,
     });
     const [submitting, setSubmitting] = useState(false);
 
@@ -72,6 +79,8 @@ export default function ProductDialog({ open, onClose, onSuccess, initial }: Pro
                 base_price: 0,
                 currency: 'USD',
                 is_active: true,
+                billing_type: 'onetime',
+                setup_fee: 0,
             });
         }
     }, [open, initial]);
@@ -91,6 +100,8 @@ export default function ProductDialog({ open, onClose, onSuccess, initial }: Pro
             base_price: form.base_price,
             currency: form.currency,
             is_active: form.is_active,
+            billing_type: form.billing_type,
+            setup_fee: form.setup_fee,
         };
         const { error } = form.id
             ? await supabase.from('products').update(payload).eq('id', form.id)
@@ -175,6 +186,28 @@ export default function ProductDialog({ open, onClose, onSuccess, initial }: Pro
                                 <option key={c} value={c}>{c}</option>
                             ))}
                         </Select>
+                    </Field>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                    <Field label={t('products.dialog.billingType')} required hint={t('products.dialog.billingTypeHint')}>
+                        <Select
+                            value={form.billing_type}
+                            onChange={(e) => update('billing_type', e.target.value as ProductBillingType)}
+                        >
+                            {BILLING_TYPES.map((bt) => (
+                                <option key={bt} value={bt}>{t(`products.billingTypes.${bt}`)}</option>
+                            ))}
+                        </Select>
+                    </Field>
+                    <Field label={t('products.dialog.setupFee')} hint={t('products.dialog.setupFeeHint')}>
+                        <Input
+                            type="number"
+                            step="0.01"
+                            min={0}
+                            value={form.setup_fee}
+                            onChange={(e) => update('setup_fee', Number(e.target.value))}
+                            disabled={form.billing_type === 'onetime'}
+                        />
                     </Field>
                 </div>
                 <label className="flex items-center gap-2 text-sm text-ink">

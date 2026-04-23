@@ -25,6 +25,8 @@ interface Row {
     base_price: number;
     currency: string;
     is_active: boolean;
+    billing_type: 'onetime' | 'monthly' | 'annual_upfront' | 'annual_installments';
+    setup_fee: number;
     updated_at: string;
 }
 
@@ -55,7 +57,7 @@ function ProductsInner({ locale }: { locale: Locale }) {
         setLoading(true);
         const { data } = await supabase
             .from('products')
-            .select('id, slug, name, description, category, base_price, currency, is_active, updated_at')
+            .select('id, slug, name, description, category, base_price, currency, is_active, billing_type, setup_fee, updated_at')
             .order('name', { ascending: true });
         setRows((data as Row[]) ?? []);
         setLoading(false);
@@ -79,6 +81,8 @@ function ProductsInner({ locale }: { locale: Locale }) {
             base_price: Number(r.base_price),
             currency: r.currency,
             is_active: r.is_active,
+            billing_type: r.billing_type ?? 'onetime',
+            setup_fee: Number(r.setup_fee ?? 0),
         });
         setDialogOpen(true);
     }

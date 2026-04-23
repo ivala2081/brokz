@@ -91,9 +91,40 @@ function AdminShellInner({
     children,
 }: AdminShellProps) {
     const { t, i18n } = useTranslation('admin');
-    const { user, profile, signOut } = useAuth();
+    const { user, profile, signOut, supabase } = useAuth();
     const [mobileOpen, setMobileOpen] = useState(false);
     const [effectiveLocale, setEffectiveLocale] = useState<AdminLocale>(locale);
+    const [pendingPayments, setPendingPayments] = useState<number>(0);
+    const [openTickets, setOpenTickets] = useState<number>(0);
+
+    useEffect(() => {
+        let cancelled = false;
+        async function load() {
+            const [{ count: pay }, { count: tkt }] = await Promise.all([
+                supabase
+                    .from('payment_submissions')
+                    .select('*', { count: 'exact', head: true })
+                    .eq('status', 'pending_review'),
+                supabase
+                    .from('tickets')
+                    .select('*', { count: 'exact', head: true })
+                    .neq('status', 'closed')
+                    .is('deleted_at', null),
+            ]);
+            if (cancelled) return;
+            setPendingPayments(pay ?? 0);
+            setOpenTickets(tkt ?? 0);
+        }
+        void load();
+        const handle = window.setInterval(() => { void load(); }, 30_000);
+        return () => { cancelled = true; window.clearInterval(handle); };
+    }, [supabase]);
+
+    const badgeFor = (key: AdminNavKey): number => {
+        if (key === 'payments') return pendingPayments;
+        if (key === 'tickets') return openTickets;
+        return 0;
+    };
 
     useEffect(() => {
         const resolved = resolveAdminLocale(locale);
@@ -136,22 +167,30 @@ function AdminShellInner({
                 </div>
                 <nav className="flex-1 overflow-y-auto py-3">
                     <ul className="space-y-0.5 px-2">
-                        {NAV.map((item) => (
-                            <li key={item.key}>
-                                <a
-                                    href={item.href}
-                                    aria-current={activeKey === item.key ? 'page' : undefined}
-                                    className={cn(
-                                        'flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors',
-                                        activeKey === item.key
-                                            ? 'bg-brand-subtle text-green-700'
-                                            : 'text-ink-secondary hover:bg-surface-muted hover:text-ink',
-                                    )}
-                                >
-                                    {t(`nav.${item.key}`)}
-                                </a>
-                            </li>
-                        ))}
+                        {NAV.map((item) => {
+                            const badge = badgeFor(item.key);
+                            return (
+                                <li key={item.key}>
+                                    <a
+                                        href={item.href}
+                                        aria-current={activeKey === item.key ? 'page' : undefined}
+                                        className={cn(
+                                            'flex items-center justify-between rounded-md px-3 py-2 text-sm font-medium transition-colors',
+                                            activeKey === item.key
+                                                ? 'bg-brand-subtle text-green-700'
+                                                : 'text-ink-secondary hover:bg-surface-muted hover:text-ink',
+                                        )}
+                                    >
+                                        <span>{t(`nav.${item.key}`)}</span>
+                                        {badge > 0 && (
+                                            <span className="inline-flex items-center justify-center min-w-[1.25rem] h-5 px-1.5 rounded-full bg-brand text-white text-2xs font-bold tabular-nums">
+                                                {badge}
+                                            </span>
+                                        )}
+                                    </a>
+                                </li>
+                            );
+                        })}
                     </ul>
                 </nav>
                 <div className="border-t border-line p-3">

@@ -309,9 +309,19 @@
       "basePrice": "Temel Fiyat",
       "currency": "Para Birimi",
       "isActive": "Katalogta aktif",
+      "billingType": "Faturalandırma tipi",
+      "billingTypeHint": "Tek seferlik ya da tekrarlayan",
+      "setupFee": "Kurulum ücreti",
+      "setupFeeHint": "Tekrarlayan ürünlerde ilk fatura kesilirken alınır",
       "submit": "Kaydet",
       "success": "Ürün kaydedildi.",
       "error": "Ürün kaydedilemedi."
+    },
+    "billingTypes": {
+      "onetime": "Tek seferlik",
+      "monthly": "Aylık",
+      "annual_upfront": "Yıllık (peşin)",
+      "annual_installments": "Yıllık (taksitli)"
     }
   },
   "orders": {
@@ -339,6 +349,10 @@
       "quantity": "Adet",
       "unitPrice": "Birim Fiyat",
       "notes": "Notlar",
+      "periodStart": "İlk dönem başlangıç tarihi",
+      "periodStartHint": "Abonelik bu tarihten itibaren başlar",
+      "billingTypeLabel": "Faturalandırma",
+      "setupFeeLabel": "Kurulum ücreti",
       "submit": "Siparişi Oluştur",
       "success": "Sipariş oluşturuldu.",
       "error": "Sipariş oluşturulamadı."
@@ -381,6 +395,17 @@
       "confirm": "Bu lisansı iptal etmek istediğinize emin misiniz?",
       "success": "Lisans iptal edildi.",
       "error": "Lisans iptal edilemedi."
+    },
+    "resume": {
+      "action": "Geri aktifleştir",
+      "confirm": "Bu lisans askıya alınmış. Ödemeyi manuel olarak işaretleyip lisansı aktifleştirmek istiyor musunuz?",
+      "success": "Lisans tekrar aktif, ilgili fatura ödendi olarak işaretlendi.",
+      "error": "Lisans aktifleştirilemedi."
+    },
+    "grace": {
+      "soon": "Vade yakın",
+      "overdue": "Vade geçti",
+      "suspended": "Askıda"
     }
   },
   "invoices": {
@@ -404,6 +429,16 @@
       "title": "Fatura Oluştur",
       "order": "Sipariş",
       "dueAt": "Vade tarihi",
+      "invoiceType": "Fatura tipi",
+      "amount": "Tutar",
+      "periodStart": "Dönem başlangıç",
+      "periodEnd": "Dönem bitiş",
+      "types": {
+        "setup": "Kurulum faturası",
+        "subscription": "Abonelik dönemi",
+        "onetime": "Tek seferlik",
+        "addon": "Ek ürün / servis"
+      },
       "submit": "Oluştur",
       "success": "Fatura oluşturuldu.",
       "error": "Fatura oluşturulamadı."

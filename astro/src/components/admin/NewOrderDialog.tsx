@@ -24,8 +24,28 @@ export interface NewOrderDialogProps {
     prefillOrgId?: string;
 }
 
+type ProductBillingType = 'onetime' | 'monthly' | 'annual_upfront' | 'annual_installments';
 interface OrgRow { id: string; name: string; }
-interface ProductRow { id: string; name: string; base_price: number; currency: string; }
+interface ProductRow {
+    id: string;
+    name: string;
+    base_price: number;
+    currency: string;
+    billing_type: ProductBillingType;
+    setup_fee: number;
+}
+
+function addMonths(date: Date, months: number): Date {
+    const d = new Date(date);
+    d.setMonth(d.getMonth() + months);
+    return d;
+}
+
+function nextInvoiceFrom(start: Date, billingType: ProductBillingType): Date | null {
+    if (billingType === 'onetime') return null;
+    if (billingType === 'annual_upfront') return addMonths(start, 12);
+    return addMonths(start, 1); // monthly + annual_installments both bill monthly
+}
 
 export default function NewOrderDialog({
     open,
@@ -43,7 +63,12 @@ export default function NewOrderDialog({
     const [quantity, setQuantity] = useState(1);
     const [unitPrice, setUnitPrice] = useState('0');
     const [notes, setNotes] = useState('');
+    const [periodStart, setPeriodStart] = useState<string>(() => new Date().toISOString().slice(0, 10));
     const [submitting, setSubmitting] = useState(false);
+
+    const selectedProduct = products.find((p) => p.id === productId) ?? null;
+    const billingType: ProductBillingType = selectedProduct?.billing_type ?? 'onetime';
+    const isRecurring = billingType !== 'onetime';
 
     useEffect(() => {
         if (!open) return;
@@ -56,7 +81,7 @@ export default function NewOrderDialog({
         void (async () => {
             const [{ data: orgsData }, { data: productsData }] = await Promise.all([
                 supabase.from('organizations').select('id, name').order('name'),
-                supabase.from('products').select('id, name, base_price, currency').eq('is_active', true).order('name'),
+                supabase.from('products').select('id, name, base_price, currency, billing_type, setup_fee').eq('is_active', true).order('name'),
             ]);
             if (orgsData) setOrgs(orgsData as OrgRow[]);
             if (productsData) setProducts(productsData as ProductRow[]);
@@ -80,12 +105,32 @@ export default function NewOrderDialog({
             unit_price: Number(unitPrice),
             notes: notes || undefined,
         };
-        const { error } = await callEdgeFunction(supabase, 'admin-create-order', body);
-        setSubmitting(false);
-        if (error) {
+        const { data, error } = await callEdgeFunction<{ order_id: string }>(
+            supabase, 'admin-create-order', body,
+        );
+        if (error || !data?.order_id) {
+            setSubmitting(false);
             toast.error(t('orders.dialog.error'));
             return;
         }
+
+        // For recurring products, decorate the order with billing fields
+        // (admin-create-order Edge Function only handles the base flow).
+        if (isRecurring) {
+            const start = new Date(periodStart);
+            const next = nextInvoiceFrom(start, billingType);
+            await supabase.from('orders').update({
+                billing_type: billingType,
+                period_start: periodStart,
+                next_invoice_at: next ? next.toISOString().slice(0, 10) : null,
+            }).eq('id', data.order_id);
+        } else {
+            await supabase.from('orders').update({
+                billing_type: 'onetime',
+            }).eq('id', data.order_id);
+        }
+
+        setSubmitting(false);
         toast.success(t('orders.dialog.success'));
         onSuccess?.();
         onClose();
@@ -146,6 +191,34 @@ export default function NewOrderDialog({
                         />
                     </Field>
                 </div>
+                {selectedProduct && (
+                    <div className="rounded-md border border-line bg-surface-muted px-3 py-2 text-xs text-ink-secondary space-y-0.5">
+                        <p>
+                            <span className="text-ink-muted">{t('orders.dialog.billingTypeLabel')}: </span>
+                            <strong className="text-ink">{t(`products.billingTypes.${billingType}`)}</strong>
+                        </p>
+                        {selectedProduct.setup_fee > 0 && (
+                            <p>
+                                <span className="text-ink-muted">{t('orders.dialog.setupFeeLabel')}: </span>
+                                <strong className="text-ink tabular-nums">
+                                    {selectedProduct.setup_fee.toFixed(2)} {selectedProduct.currency}
+                                </strong>
+                            </p>
+                        )}
+                    </div>
+                )}
+
+                {isRecurring && (
+                    <Field label={t('orders.dialog.periodStart')} required hint={t('orders.dialog.periodStartHint')}>
+                        <Input
+                            type="date"
+                            value={periodStart}
+                            onChange={(e) => setPeriodStart(e.target.value)}
+                            required
+                        />
+                    </Field>
+                )}
+
                 <Field label={t('orders.dialog.notes')}>
                     <Textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={3} />
                 </Field>
