@@ -40,11 +40,107 @@
     "licenses": "Licenses",
     "invoices": "Invoices",
     "tickets": "Tickets",
+    "payments": "Payments",
+    "wallets": "Wallets",
     "leads": "Leads",
     "blog": "Blog",
     "audit": "Audit",
     "account": "Account",
     "settings": "Settings"
+  },
+  "payments": {
+    "title": "Payment reviews",
+    "subtitle": "Approve or reject customer crypto payment proofs",
+    "tabs": {
+      "pending_review": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+    "columns": {
+      "customer": "Customer",
+      "invoice": "Invoice",
+      "expected": "Expected",
+      "paid": "Received",
+      "network": "Network",
+      "tx": "TX",
+      "submitted": "Submitted"
+    },
+    "action": {
+      "approve": "Approve",
+      "reject": "Reject",
+      "approved": "Payment approved. Invoice marked paid.",
+      "rejected": "Payment rejected."
+    },
+    "review": {
+      "submitter": "Submitted by",
+      "submittedAt": "Submitted at",
+      "openExplorer": "Open in explorer",
+      "note": "Customer note",
+      "rejection": "Rejection reason",
+      "screenshot": "Screenshot",
+      "openFull": "Open full size"
+    },
+    "rejectDialog": {
+      "title": "Reject payment",
+      "description": "Write a reason visible to the customer.",
+      "placeholder": "e.g. TX not found, wrong amount, ..."
+    },
+    "empty": {
+      "pending_review": {
+        "title": "No pending payments",
+        "description": "Customer submissions will appear here."
+      },
+      "approved": {
+        "title": "No approved payments yet",
+        "description": "Approved proofs live here."
+      },
+      "rejected": {
+        "title": "No rejected payments",
+        "description": "Rejected proofs live here."
+      }
+    },
+    "error": {
+      "generic": "Action failed, please retry."
+    }
+  },
+  "wallets": {
+    "title": "Payment wallets",
+    "subtitle": "Manage the addresses customers send payments to",
+    "newCta": "New wallet",
+    "newTitle": "New wallet",
+    "editTitle": "Edit wallet",
+    "deleteConfirm": "Delete this wallet? (Deactivating is usually safer.)",
+    "memoLabel": "Memo / Tag (optional)",
+    "displayOrderLabel": "Sort order (lower shows first)",
+    "columns": {
+      "network": "Network",
+      "address": "Address",
+      "label": "Label",
+      "status": "Status"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "action": {
+      "activate": "Activate",
+      "deactivate": "Deactivate"
+    },
+    "empty": {
+      "title": "No wallets yet",
+      "description": "Add at least one address per network to start receiving payments."
+    },
+    "success": {
+      "created": "Wallet added.",
+      "updated": "Wallet updated.",
+      "deleted": "Wallet deleted."
+    },
+    "error": {
+      "generic": "Action failed.",
+      "update": "Could not update.",
+      "delete": "Could not delete.",
+      "addressShape": "Invalid address format for the selected network."
+    }
   },
   "account": {
     "title": "Account settings",

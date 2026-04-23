@@ -198,5 +198,43 @@
       "success": "Şifre güncellendi.",
       "error": "Şifre güncellenemedi."
     }
+  },
+  "payment": {
+    "walletsHeading": "Ödeme adresleri",
+    "networkWarning": "Sadece aşağıdaki ağlardan gönderin. Yanlış ağ = fon kaybı.",
+    "pendingReview": "İncelemede",
+    "lastRejected": "Son gönderim reddedildi",
+    "history": "Ödeme kanıtları",
+    "status": {
+      "pending_review": "İncelemede",
+      "approved": "Onaylandı",
+      "rejected": "Reddedildi"
+    },
+    "proof": {
+      "title": "Ödeme kanıtı gönder",
+      "description": "Ödemeyi yaptıktan sonra işlem hash'ini (TX hash) gönderin. Ekibimiz 1 iş günü içinde onaylar.",
+      "cta": "Ödeme kanıtı gönder",
+      "pendingCta": "İnceleme bekleniyor…",
+      "network": "Ağ",
+      "txHash": "İşlem hash (TX hash)",
+      "amount": "Gönderilen miktar",
+      "currency": "Para birimi",
+      "fileOptional": "Ekran görüntüsü (opsiyonel)",
+      "noteOptional": "Not (opsiyonel)",
+      "notePlaceholder": "Örn. Binance hesabımdan gönderildi",
+      "submit": "Gönder",
+      "success": "Kanıt gönderildi, ekibimiz inceliyor.",
+      "preview": {
+        "label": "Seçim"
+      },
+      "errors": {
+        "txHashRequired": "TX hash zorunlu",
+        "txHashShape": "Seçili ağ için geçersiz TX hash formatı",
+        "amountInvalid": "Miktar geçerli değil",
+        "fileTooLarge": "Dosya 10 MB'dan büyük olamaz",
+        "upload": "Dosya yüklenemedi, lütfen tekrar deneyin.",
+        "generic": "Gönderilemedi, lütfen tekrar deneyin."
+      }
+    }
   }
 }

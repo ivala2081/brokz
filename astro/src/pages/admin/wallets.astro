@@ -1,0 +1,7 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import WalletsTable from '../../components/admin/WalletsTable.tsx';
+---
+<AdminLayout title="Brokz Admin · Wallets">
+  <WalletsTable locale="tr" client:only="react" />
+</AdminLayout>

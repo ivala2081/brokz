@@ -48,6 +48,8 @@ export type AdminNavKey =
     | 'orders'
     | 'licenses'
     | 'invoices'
+    | 'payments'
+    | 'wallets'
     | 'tickets'
     | 'leads'
     | 'blog'
@@ -61,6 +63,8 @@ const NAV: Array<{ key: AdminNavKey; href: string }> = [
     { key: 'orders', href: '/admin/orders' },
     { key: 'licenses', href: '/admin/licenses' },
     { key: 'invoices', href: '/admin/invoices' },
+    { key: 'payments', href: '/admin/payments' },
+    { key: 'wallets', href: '/admin/wallets' },
     { key: 'tickets', href: '/admin/tickets' },
     { key: 'leads', href: '/admin/leads' },
     { key: 'blog', href: '/admin/blog' },

@@ -198,5 +198,43 @@
       "success": "Password updated.",
       "error": "Couldn't update password."
     }
+  },
+  "payment": {
+    "walletsHeading": "Payment addresses",
+    "networkWarning": "Send from the listed networks only. Wrong network = lost funds.",
+    "pendingReview": "Under review",
+    "lastRejected": "Last submission rejected",
+    "history": "Payment proofs",
+    "status": {
+      "pending_review": "Under review",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+    "proof": {
+      "title": "Submit payment proof",
+      "description": "After you've sent the payment, submit the transaction hash. We approve within 1 business day.",
+      "cta": "Submit payment proof",
+      "pendingCta": "Awaiting review…",
+      "network": "Network",
+      "txHash": "Transaction hash (TX)",
+      "amount": "Amount sent",
+      "currency": "Currency",
+      "fileOptional": "Screenshot (optional)",
+      "noteOptional": "Note (optional)",
+      "notePlaceholder": "e.g. Sent from my Binance account",
+      "submit": "Submit",
+      "success": "Proof submitted. Our team is reviewing it.",
+      "preview": {
+        "label": "Selection"
+      },
+      "errors": {
+        "txHashRequired": "Transaction hash is required",
+        "txHashShape": "Invalid hash format for the selected network",
+        "amountInvalid": "Amount is not valid",
+        "fileTooLarge": "File must be under 10 MB",
+        "upload": "Upload failed, please retry.",
+        "generic": "Could not submit, please retry."
+      }
+    }
   }
 }

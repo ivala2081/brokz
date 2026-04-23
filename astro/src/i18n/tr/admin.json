@@ -40,11 +40,107 @@
     "licenses": "Lisanslar",
     "invoices": "Faturalar",
     "tickets": "Talepler",
+    "payments": "Ödemeler",
+    "wallets": "Cüzdanlar",
     "leads": "Potansiyeller",
     "blog": "Blog",
     "audit": "Denetim",
     "account": "Hesabım",
     "settings": "Ayarlar"
+  },
+  "payments": {
+    "title": "Ödeme İncelemeleri",
+    "subtitle": "Müşterilerden gelen kripto ödeme kanıtlarını onaylayın veya reddedin",
+    "tabs": {
+      "pending_review": "İncelenmeyi Bekliyor",
+      "approved": "Onaylananlar",
+      "rejected": "Reddedilenler"
+    },
+    "columns": {
+      "customer": "Müşteri",
+      "invoice": "Fatura",
+      "expected": "Beklenen",
+      "paid": "Gelen",
+      "network": "Ağ",
+      "tx": "TX",
+      "submitted": "Gönderildi"
+    },
+    "action": {
+      "approve": "Onayla",
+      "reject": "Reddet",
+      "approved": "Ödeme onaylandı. Fatura ödendi olarak işaretlendi.",
+      "rejected": "Ödeme reddedildi."
+    },
+    "review": {
+      "submitter": "Gönderen kullanıcı",
+      "submittedAt": "Gönderim zamanı",
+      "openExplorer": "Blockchain'de aç",
+      "note": "Müşteri notu",
+      "rejection": "Ret sebebi",
+      "screenshot": "Ekran görüntüsü",
+      "openFull": "Tam boyut aç"
+    },
+    "rejectDialog": {
+      "title": "Ödemeyi reddet",
+      "description": "Müşteriye görünür bir sebep yazın.",
+      "placeholder": "Örn. TX bulunamadı, yanlış miktar, ..."
+    },
+    "empty": {
+      "pending_review": {
+        "title": "İncelenmeyi bekleyen ödeme yok",
+        "description": "Müşteriler ödeme kanıtı gönderdiğinde burada listelenir."
+      },
+      "approved": {
+        "title": "Henüz onaylanan ödeme yok",
+        "description": "Onaylanan ödemeler burada arşivlenir."
+      },
+      "rejected": {
+        "title": "Reddedilen ödeme yok",
+        "description": "Reddedilen kanıtlar burada görünür."
+      }
+    },
+    "error": {
+      "generic": "İşlem yapılamadı, lütfen tekrar deneyin."
+    }
+  },
+  "wallets": {
+    "title": "Ödeme Cüzdanları",
+    "subtitle": "Müşterilerin ödeme gönderdiği adresleri yönetin",
+    "newCta": "Yeni cüzdan",
+    "newTitle": "Yeni Cüzdan",
+    "editTitle": "Cüzdan Düzenle",
+    "deleteConfirm": "Bu cüzdanı silmek istediğinizden emin misiniz? (Deaktif etmek genellikle daha güvenli.)",
+    "memoLabel": "Memo / Tag (opsiyonel)",
+    "displayOrderLabel": "Sıralama (düşük olan önce görünür)",
+    "columns": {
+      "network": "Ağ",
+      "address": "Adres",
+      "label": "Etiket",
+      "status": "Durum"
+    },
+    "status": {
+      "active": "Aktif",
+      "inactive": "Pasif"
+    },
+    "action": {
+      "activate": "Aktifleştir",
+      "deactivate": "Deaktif et"
+    },
+    "empty": {
+      "title": "Henüz cüzdan yok",
+      "description": "Müşteri ödemeleri alabilmek için her ağ için en az bir adres ekleyin."
+    },
+    "success": {
+      "created": "Cüzdan eklendi.",
+      "updated": "Cüzdan güncellendi.",
+      "deleted": "Cüzdan silindi."
+    },
+    "error": {
+      "generic": "İşlem yapılamadı.",
+      "update": "Güncellenemedi.",
+      "delete": "Silinemedi.",
+      "addressShape": "Seçili ağ için geçersiz adres formatı."
+    }
   },
   "account": {
     "title": "Hesap Ayarları",

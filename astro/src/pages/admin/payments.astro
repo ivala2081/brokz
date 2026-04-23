@@ -1,0 +1,7 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import PaymentsQueue from '../../components/admin/PaymentsQueue.tsx';
+---
+<AdminLayout title="Brokz Admin · Payments">
+  <PaymentsQueue locale="tr" client:only="react" />
+</AdminLayout>
