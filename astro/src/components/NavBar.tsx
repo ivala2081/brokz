@@ -59,11 +59,11 @@ export default function NavBar() {
   // Astro is static-router-free: reflect the real pathname client-side
   // after hydration, then re-read whenever a navigation happens (popstate).
   const [pathname, setPathname] = useState(
-    typeof window !== 'undefined' ? window.pathname : '',
+    typeof window !== 'undefined' ? window.location.pathname : '',
   );
 
   useEffect(() => {
-    const onPop = () => setPathname(window.pathname);
+    const onPop = () => setPathname(window.location.pathname);
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
   }, []);
@@ -177,6 +177,12 @@ export default function NavBar() {
 
           <div className="hidden md:flex items-center gap-5">
             <LanguageSwitcher tone={overDark ? 'on-light' : 'on-dark'} />
+            <a
+              href="/auth/login"
+              className={`text-sm font-medium transition-colors duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-ring focus-visible:ring-offset-2 rounded-md ${linkIdle} hover:text-brand`}
+            >
+              {t('cta.signIn')}
+            </a>
             <LocalizedLink
               to="contact"
               className={`inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-pill transition-colors duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-ring focus-visible:ring-offset-2 ${ctaClasses}`}
@@ -316,6 +322,12 @@ export default function NavBar() {
                     <polyline points="12 5 19 12 12 19" />
                   </svg>
                 </LocalizedLink>
+                <a
+                  href="/auth/login"
+                  className="inline-flex items-center justify-center w-full py-3 text-sm font-medium text-white/80 border border-line-inverse rounded-pill hover:text-brand-accent hover:border-brand-accent transition-colors"
+                >
+                  {t('nav.portal')}
+                </a>
 
                 <div className="flex flex-col gap-4 pt-6 border-t border-line-inverse">
                   <div className="flex items-center gap-2.5">

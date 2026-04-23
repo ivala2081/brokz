@@ -15,6 +15,12 @@ import enContact from './en/contact.json';
 import trContact from './tr/contact.json';
 import enLegal from './en/legal.json';
 import trLegal from './tr/legal.json';
+import enAuth from './en/auth.json';
+import trAuth from './tr/auth.json';
+import enAdmin from './en/admin.json';
+import trAdmin from './tr/admin.json';
+import enDashboard from './en/dashboard.json';
+import trDashboard from './tr/dashboard.json';
 
 export const SUPPORTED_LANGUAGES = ['en', 'tr'] as const;
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
@@ -34,6 +40,9 @@ void i18n.use(initReactI18next).init({
       about: enAbout,
       contact: enContact,
       legal: enLegal,
+      auth: enAuth,
+      admin: enAdmin,
+      dashboard: enDashboard,
     },
     tr: {
       common: trCommon,
@@ -43,6 +52,9 @@ void i18n.use(initReactI18next).init({
       about: trAbout,
       contact: trContact,
       legal: trLegal,
+      auth: trAuth,
+      admin: trAdmin,
+      dashboard: trDashboard,
     },
   },
   lng: 'en',

@@ -1,0 +1,7 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import AuditViewer from '../../components/admin/AuditViewer.tsx';
+---
+<AdminLayout title="Brokz Admin · Audit">
+  <AuditViewer locale="tr" client:only="react" />
+</AdminLayout>

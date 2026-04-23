@@ -149,10 +149,6 @@ export default function ReferenceArchitecture() {
           </div>
         </div>
 
-        {/* Footnote */}
-        <p className="mt-12 md:mt-16 text-sm text-ink-subtle font-mono tabular text-center">
-          {t('referenceArch.footnote')}
-        </p>
       </div>
     </section>
   );

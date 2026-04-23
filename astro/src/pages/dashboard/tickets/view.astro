@@ -1,0 +1,8 @@
+---
+import DashboardLayout from '../../../layouts/DashboardLayout.astro';
+import TicketThread from '../../../components/dashboard/TicketThread.tsx';
+
+---
+<DashboardLayout title="Brokz Portal · Destek Talebi">
+  <TicketThread locale="tr" client:only="react" />
+</DashboardLayout>

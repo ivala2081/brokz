@@ -11,7 +11,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "og": "tsx scripts/generate-og.ts"
+    "og": "tsx scripts/generate-og.ts",
+    "test:rls": "bun scripts/rls-smoke.ts",
+    "check": "astro check"
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.3",
@@ -21,17 +23,25 @@
     "@fontsource-variable/geist-mono": "^5.2.7",
     "@fontsource/geist": "^5.2.8",
     "@motionone/dom": "^10.18.0",
+    "@supabase/ssr": "^0.5.2",
+    "@supabase/supabase-js": "^2.45.4",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "astro": "^6.1.8",
+    "clsx": "^2.1.1",
     "framer-motion": "^12.38.0",
     "i18next": "^26.0.6",
     "marked": "^18.0.2",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
-    "react-i18next": "^17.0.4"
+    "react-i18next": "^17.0.4",
+    "@hookform/resolvers": "^3.9.1",
+    "react-hook-form": "^7.53.2",
+    "sonner": "^1.7.1",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.8",
     "@astrojs/tailwind": "^6.0.2",
     "@resvg/resvg-js": "^2.6.2",
     "@tailwindcss/typography": "^0.5.19",
@@ -40,6 +50,7 @@
     "satori": "^0.26.0",
     "satori-html": "^0.3.2",
     "tailwindcss": "3",
-    "tsx": "^4.21.0"
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3"
   }
 }

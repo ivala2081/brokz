@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState, type RefObject } from 'react';
+import { useEffect, useId, useState, type RefObject } from 'react';
 
 interface AnimatedBeamProps {
   /** Container element (positioned ancestor) */

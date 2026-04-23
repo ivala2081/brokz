@@ -1,0 +1,7 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import TicketsTable from '../../../components/admin/DataTables/TicketsTable.tsx';
+---
+<AdminLayout title="Brokz Admin · Tickets">
+  <TicketsTable locale="tr" client:only="react" />
+</AdminLayout>

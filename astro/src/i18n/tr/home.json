@@ -9,33 +9,32 @@
     "titleLead": "Modern trading için",
     "titleAccent": "altyapı",
     "titleTail": ".",
-    "body": "Aracı kurumlar, prop trading firmaları ve likidite sağlayıcıları için kurumsal düzeyde sistemler tasarlıyoruz. Güvenilirlik, düşük latency ve ölçek için mühendislik."
+    "body": "Aracı kurumlar, prop firmaları ve likidite sağlayıcıları için kurumsal sistemler. Güvenilirlik, düşük latency, ölçek."
   },
   "capabilities": {
     "eyebrow": "Ne İnşa Ediyoruz",
     "titleLead": "Piyasayı",
     "titleAccent": "hareket ettiren",
     "titleTail": "sistemler için mühendislik.",
-    "body": "Dört yetenek alanı. Her biri sıfırdan tasarlanır — emir yönlendirme, risk yönetimi ve düzenleyici kısıtlar, işlem altyapısını bilen mühendislerin ellerindedir.",
+    "body": "Dört alan. Her biri işlem altyapısını bilen ellerde, sıfırdan.",
     "items": {
       "platforms": {
         "title": "İşlem Platformları",
-        "desc": "Gerçek zamanlı execution için özel web trader'lar, yönetim dashboard'ları ve aracı kurum arka ofis sistemleri."
+        "desc": "Özel web trader'lar, yönetim dashboard'ları, arka ofis sistemleri."
       },
       "algo": {
         "title": "Algoritmik Sistemler",
-        "desc": "Sistematik trader'lar için execution motoru, backtesting çerçeveleri ve kantitatif strateji altyapısı."
+        "desc": "Execution motoru, backtesting, kantitatif strateji altyapısı."
       },
       "mt": {
         "title": "MT4 / MT5 Eklentileri",
-        "desc": "MetaTrader ortamları için manager araçları, risk plug-in'leri, bridge sistemleri ve execution optimizasyonu."
+        "desc": "Manager araçları, risk plug-in'leri, bridge, execution optimizasyonu."
       },
       "data": {
         "title": "Veri Altyapısı",
-        "desc": "Kurumsal ölçekte kantitatif modelleme akışları, tick seviyesinde piyasa verisi ve işlem analitiği."
+        "desc": "Kantitatif modelleme akışları, tick seviyesi piyasa verisi, işlem analitiği."
       }
     },
-    "footer": "Bu kategorilerin dışında özel bir çözüm mü gerekiyor? İhtiyaca özel işlem altyapısı geliştiriyoruz.",
     "viewAll": "Tüm ürünleri gör"
   },
   "trust": {
@@ -53,7 +52,7 @@
     "titleLead": "Piyasa verisinden",
     "titleAccent": "execution'a",
     "titleTail": ".",
-    "body": "Üç katmanlı, modüler bir yığın. Upstream bağlantıyı, kurumsal çekirdeği ve müşteri yüzeylerini uçtan uca inşa ederiz — tamamı müşterinin.",
+    "body": "Üç katman. Uçtan uca, tamamı müşterinin.",
     "columns": {
       "upstream": "Upstream",
       "core": "Brokz Core",
@@ -70,21 +69,20 @@
       "term":      { "label": "İşlem Terminali",        "desc": "Web / kurumsal" },
       "dash":      { "label": "Yönetim Dashboard'u",    "desc": "Arka ofis, operasyon" },
       "analytics": { "label": "Analitik ve Raporlama",  "desc": "K/Z, execution kalitesi, uyum" }
-    },
-    "footnote": "Her proje uçtan uca teslim edilir. Belgeli. Bağımlılık bırakmaz."
+    }
   },
   "howWeEngage": {
     "eyebrow": "Nasıl Çalışırız",
     "titleLead": "Dört faz.",
     "titleAccent": "Tek teslimat.",
-    "body": "Her proje aynı yapılandırılmış yolu izler — taahhütten önce kapsam, koddan önce mimari, sahiplikle teslim.",
-    "typicalPrefix": "Tipik süre:",
+    "body": "Taahhütten önce kapsam. Koddan önce mimari. Sahiplikle teslim.",
+    "typicalPrefix": "Tipik:",
     "deliverablesLabel": "Çıktılar",
     "phases": {
       "discovery": {
         "title": "Keşif",
         "duration": "1–2 hafta",
-        "body": "Mühendislik ekibinizle teknik kapsam belirleme. Mevcut altyapıyı denetler, entegrasyon yüzeylerini tespit eder; latency, uyum ve operasyonel kısıtları belgeleriz.",
+        "body": "Mühendislik ekibinizle teknik kapsam. Altyapı denetimi, latency ve uyum kısıtları.",
         "deliverables": [
           "Mimari değerlendirme",
           "Entegrasyon haritası",
@@ -94,7 +92,7 @@
       "architecture": {
         "title": "Mimari",
         "duration": "2–3 hafta",
-        "body": "Uygulamadan önce sistem tasarımı. Modül sınırları, veri akışları, hata modları ve izleme yüzeyleri belirlenir. Her karar, kod yazılmadan önce ekibinizle gözden geçirilir.",
+        "body": "Uygulamadan önce sistem tasarımı. Modül sınırları, veri akışları, hata modları — ekibinizle birlikte.",
         "deliverables": [
           "Sistem tasarım dokümanı",
           "API + şema spesifikasyonları",
@@ -104,7 +102,7 @@
       "build": {
         "title": "İnşa",
         "duration": "8–16 hafta",
-        "body": "Haftalık demolarla yinelemeli teslimat. Çekirdek yığını kurar, upstream bağlantıyı entegre eder, risk katmanını sertleştirir; ilk haftadan itibaren production-benzeri ortamlarda müşteri yüzeylerini yayınlarız.",
+        "body": "Haftalık demolarla yinelemeli teslimat. Production-benzeri ortamlarda ilk haftadan itibaren.",
         "deliverables": [
           "Haftalık release temposu",
           "Belgeli, gözden geçirilmiş kod tabanı",
@@ -114,7 +112,7 @@
       "deploy": {
         "title": "Devreye Alma ve Devir",
         "duration": "2–4 hafta",
-        "body": "Tam bilgi aktarımıyla production'a geçiş. Sistem sizin ekibinizindir — kod tabanı, altyapı, operasyonel runbook. Tedarikçi bağımlılığı yok, gizli bağımlılık yok.",
+        "body": "Tam bilgi aktarımıyla production. Kod tabanı, altyapı, runbook — sizin.",
         "deliverables": [
           "Production dağıtımı",
           "Runbook + devir dokümanları",

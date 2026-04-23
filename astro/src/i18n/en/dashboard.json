@@ -1,0 +1,202 @@
+{
+  "common": {
+    "brokz": "Brokz",
+    "portal": "Portal",
+    "logout": "Sign out",
+    "loading": "Loading…",
+    "saving": "Saving…",
+    "submitting": "Submitting…",
+    "search": "Search",
+    "filter": "Filter",
+    "all": "All",
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "previous": "Previous",
+    "next": "Next",
+    "none": "None",
+    "retry": "Retry",
+    "errorGeneric": "Something went wrong. Please try again.",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "reveal": "Reveal key",
+    "hide": "Hide"
+  },
+  "shell": {
+    "roleCustomer": "Customer",
+    "primarySidebar": "Primary sidebar",
+    "openSidebar": "Open sidebar",
+    "closeSidebar": "Close sidebar"
+  },
+  "nav": {
+    "overview": "Overview",
+    "orders": "Orders",
+    "invoices": "Invoices",
+    "licenses": "Licenses",
+    "tickets": "Tickets",
+    "account": "Account"
+  },
+  "status": {
+    "active": "Active",
+    "pending": "Pending",
+    "cancelled": "Cancelled",
+    "expired": "Expired",
+    "revoked": "Revoked",
+    "draft": "Draft",
+    "sent": "Sent",
+    "paid": "Paid",
+    "overdue": "Overdue",
+    "open": "Open",
+    "closed": "Closed",
+    "low": "Low",
+    "med": "Medium",
+    "high": "High"
+  },
+  "overview": {
+    "title": "Overview",
+    "subtitle": "Your account at a glance",
+    "greeting": "Welcome, {{name}}",
+    "kpi": {
+      "activeLicenses": "Active licenses",
+      "unpaidInvoices": "Unpaid invoices",
+      "openTickets": "Open tickets"
+    },
+    "orgCard": {
+      "title": "Organization",
+      "country": "Country",
+      "contact": "Contact email",
+      "notSet": "Not set"
+    },
+    "recentOrders": {
+      "title": "Recent orders",
+      "empty": "No orders yet.",
+      "viewAll": "View all orders"
+    }
+  },
+  "orders": {
+    "title": "Orders",
+    "subtitle": "Your purchase history.",
+    "columns": {
+      "product": "Product",
+      "quantity": "Qty",
+      "total": "Total",
+      "status": "Status",
+      "createdAt": "Date"
+    },
+    "empty": {
+      "title": "No orders yet",
+      "description": "Your orders will appear here once placed by Brokz."
+    }
+  },
+  "invoices": {
+    "title": "Invoices",
+    "subtitle": "Billing history and payment status.",
+    "columns": {
+      "number": "Invoice",
+      "amount": "Amount",
+      "status": "Status",
+      "issuedAt": "Issued",
+      "dueAt": "Due"
+    },
+    "empty": {
+      "title": "No invoices yet",
+      "description": "Invoices will appear here when issued."
+    },
+    "detail": {
+      "back": "Back to invoices",
+      "notFound": "Invoice not found.",
+      "order": "Order",
+      "amount": "Amount",
+      "status": "Status",
+      "issuedAt": "Issued",
+      "dueAt": "Due",
+      "download": "Download PDF",
+      "noPdf": "PDF not yet available."
+    }
+  },
+  "licenses": {
+    "title": "Licenses",
+    "subtitle": "Your active license keys.",
+    "columns": {
+      "product": "Product",
+      "issuedAt": "Issued",
+      "expiresAt": "Expires",
+      "status": "Status",
+      "key": "Key"
+    },
+    "empty": {
+      "title": "No licenses",
+      "description": "Your licenses will appear here once an order is activated."
+    },
+    "revealDialog": {
+      "title": "License key",
+      "description": "Keep this key secure. Do not share it.",
+      "copySuccess": "License key copied."
+    }
+  },
+  "tickets": {
+    "title": "Support tickets",
+    "subtitle": "Raise and track support requests.",
+    "new": "New ticket",
+    "columns": {
+      "subject": "Subject",
+      "priority": "Priority",
+      "status": "Status",
+      "lastMessageAt": "Last update"
+    },
+    "empty": {
+      "title": "No tickets",
+      "description": "Open a new ticket if you need help."
+    },
+    "thread": {
+      "back": "Back to tickets",
+      "notFound": "Ticket not found.",
+      "composer": {
+        "label": "Reply",
+        "placeholder": "Write your message…",
+        "send": "Send",
+        "sending": "Sending…",
+        "attach": "Attach",
+        "attachDisabled": "Attachments coming in a future update.",
+        "success": "Reply sent.",
+        "error": "Couldn't send reply."
+      }
+    },
+    "newDialog": {
+      "title": "Open a new ticket",
+      "subject": "Subject",
+      "subjectPlaceholder": "Briefly describe your issue",
+      "priority": "Priority",
+      "message": "Message",
+      "messagePlaceholder": "Describe your issue in detail…",
+      "submit": "Submit ticket",
+      "success": "Ticket opened. We'll reply shortly.",
+      "error": "Couldn't open ticket."
+    }
+  },
+  "account": {
+    "title": "Account",
+    "subtitle": "Manage your profile and security settings.",
+    "profile": {
+      "title": "Profile",
+      "email": "Email",
+      "emailHint": "Contact support to change your email address.",
+      "fullName": "Full name",
+      "phone": "Phone",
+      "save": "Save changes",
+      "success": "Profile updated.",
+      "error": "Couldn't update profile."
+    },
+    "password": {
+      "title": "Change password",
+      "current": "Current password",
+      "new": "New password",
+      "confirm": "Confirm new password",
+      "mismatch": "Passwords do not match.",
+      "tooShort": "Password must be at least 8 characters.",
+      "submit": "Update password",
+      "success": "Password updated.",
+      "error": "Couldn't update password."
+    }
+  }
+}

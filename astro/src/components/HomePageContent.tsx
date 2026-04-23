@@ -159,10 +159,7 @@ export default function HomePageContent() {
           </Stagger>
 
           <AnimateIn>
-            <div className="mt-12 flex items-center justify-between gap-6 flex-wrap">
-              <p className="body text-ink-muted max-w-md">
-                {t('home:capabilities.footer')}
-              </p>
+            <div className="mt-12 flex justify-end">
               <LocalizedLink to="products" className="btn-link">
                 {t('home:capabilities.viewAll')}
                 {Icons.arrow}

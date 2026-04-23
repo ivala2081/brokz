@@ -17,6 +17,8 @@ import enProducts from './en/products.json';
 import enAbout from './en/about.json';
 import enContact from './en/contact.json';
 import enLegal from './en/legal.json';
+import enAuth from './en/auth.json';
+import enAdmin from './en/admin.json';
 
 import trCommon from './tr/common.json';
 import trHome from './tr/home.json';
@@ -25,9 +27,11 @@ import trProducts from './tr/products.json';
 import trAbout from './tr/about.json';
 import trContact from './tr/contact.json';
 import trLegal from './tr/legal.json';
+import trAuth from './tr/auth.json';
+import trAdmin from './tr/admin.json';
 
 export type Locale = 'en' | 'tr';
-export type Namespace = 'common' | 'home' | 'solutions' | 'products' | 'about' | 'contact' | 'legal';
+export type Namespace = 'common' | 'home' | 'solutions' | 'products' | 'about' | 'contact' | 'legal' | 'auth' | 'admin';
 
 const BUNDLES: Record<Locale, Record<Namespace, unknown>> = {
     en: {
@@ -38,6 +42,8 @@ const BUNDLES: Record<Locale, Record<Namespace, unknown>> = {
         about: enAbout,
         contact: enContact,
         legal: enLegal,
+        auth: enAuth,
+        admin: enAdmin,
     },
     tr: {
         common: trCommon,
@@ -47,6 +53,8 @@ const BUNDLES: Record<Locale, Record<Namespace, unknown>> = {
         about: trAbout,
         contact: trContact,
         legal: trLegal,
+        auth: trAuth,
+        admin: trAdmin,
     },
 };
 

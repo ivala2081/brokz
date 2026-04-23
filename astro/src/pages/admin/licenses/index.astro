@@ -1,0 +1,7 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import LicensesTable from '../../../components/admin/DataTables/LicensesTable.tsx';
+---
+<AdminLayout title="Brokz Admin · Licenses">
+  <LicensesTable locale="tr" client:only="react" />
+</AdminLayout>

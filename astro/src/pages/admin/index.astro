@@ -1,0 +1,11 @@
+---
+/**
+ * /admin — Overview page shell.
+ * All behaviour lives in the React island; the page is just a frame.
+ */
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import OverviewPanel from '../../components/admin/OverviewPanel.tsx';
+---
+<AdminLayout title="Brokz Admin · Overview">
+  <OverviewPanel locale="tr" client:only="react" />
+</AdminLayout>

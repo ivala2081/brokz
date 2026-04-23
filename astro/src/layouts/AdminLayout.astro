@@ -1,0 +1,34 @@
+---
+/**
+ * AdminLayout — neutral shell for every /admin/* page.
+ *
+ * Static: no auth check here (Brokz ships as a static build, no Node in
+ * prod). Auth + role gating happens inside the React `<AdminShell>` via
+ * `<AuthGuard requireRole="admin">`.
+ */
+
+import '../styles/global.css';
+
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Brokz admin panel' } = Astro.props;
+---
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {/* Admin surfaces must never be indexed. */}
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#00C033" />
+  </head>
+  <body class="min-h-screen bg-surface-muted text-ink antialiased">
+    <slot />
+  </body>
+</html>

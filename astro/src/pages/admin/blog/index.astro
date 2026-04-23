@@ -1,0 +1,7 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import BlogTable from '../../../components/admin/DataTables/BlogTable.tsx';
+---
+<AdminLayout title="Brokz Admin · Blog">
+  <BlogTable locale="tr" client:only="react" />
+</AdminLayout>

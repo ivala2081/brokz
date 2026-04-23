@@ -1,0 +1,7 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import CustomersTable from '../../../components/admin/DataTables/CustomersTable.tsx';
+---
+<AdminLayout title="Brokz Admin · Customers">
+  <CustomersTable locale="tr" client:only="react" />
+</AdminLayout>

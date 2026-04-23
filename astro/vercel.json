@@ -2,5 +2,10 @@
   "buildCommand": "bun run build",
   "outputDirectory": "dist",
   "installCommand": "bun install",
-  "framework": "astro"
+  "framework": "astro",
+  "rewrites": [
+    { "source": "/admin/customers/:id", "destination": "/admin/customers/placeholder/index.html" },
+    { "source": "/admin/tickets/:id", "destination": "/admin/tickets/placeholder/index.html" },
+    { "source": "/admin/blog/:slug/edit", "destination": "/admin/blog/new/edit/index.html" }
+  ]
 }

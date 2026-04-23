@@ -67,16 +67,34 @@ export default function ContactPageContent() {
     setErrorMsg('');
     setFieldErrors({});
 
+    // Supabase Edge Function endpoint. Env vars are injected at build time
+    // by Astro/Vite (PUBLIC_* prefix ships to the client — safe by design).
+    const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL as string | undefined;
+    const supabaseAnon = import.meta.env.PUBLIC_SUPABASE_ANON_KEY as string | undefined;
+
+    if (!supabaseUrl || !supabaseAnon) {
+      setErrorMsg(t('form.errors.generic'));
+      setStatus('error');
+      return;
+    }
+
     try {
-      const res = await fetch('/api/contact', {
+      const res = await fetch(`${supabaseUrl}/functions/v1/contact-lead-capture`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': supabaseAnon,
+          'Authorization': `Bearer ${supabaseAnon}`,
+        },
+        body: JSON.stringify({
+          ...formData,
+          source: 'contact_page',
+        }),
       });
 
       const data = await res.json().catch(() => ({}));
 
-      if (!res.ok) {
+      if (!res.ok || data.ok === false) {
         if (data.fields) setFieldErrors(data.fields);
         setErrorMsg(data.error || t('form.errors.generic'));
         setStatus('error');

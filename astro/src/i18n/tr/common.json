@@ -5,13 +5,15 @@
     "products": "Ürünler",
     "about": "Hakkımızda",
     "blog": "Blog",
-    "contact": "İletişim"
+    "contact": "İletişim",
+    "portal": "Müşteri Girişi"
   },
   "cta": {
     "startProject": "Projeye Başla",
     "exploreSolutions": "Çözümleri Keşfet",
     "learnMore": "Daha fazlası",
-    "readMore": "Devamını oku"
+    "readMore": "Devamını oku",
+    "signIn": "Giriş Yap"
   },
   "a11y": {
     "skipToMain": "Ana içeriğe geç",

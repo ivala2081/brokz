@@ -1,0 +1,7 @@
+---
+import DashboardLayout from '../../layouts/DashboardLayout.astro';
+import OverviewPanel from '../../components/dashboard/OverviewPanel.tsx';
+---
+<DashboardLayout title="Brokz Portal">
+  <OverviewPanel locale="tr" client:only="react" />
+</DashboardLayout>

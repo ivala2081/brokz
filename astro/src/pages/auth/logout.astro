@@ -1,0 +1,15 @@
+---
+/**
+ * Logout page — static shell. The `LogoutHandler` island calls
+ * `supabase.auth.signOut()` on mount and redirects to `/`.
+ *
+ * No server-side logic: Brokz deploys as a static build with no Node
+ * runtime, so sign-out has to happen in the browser. Supabase clears the
+ * session from localStorage / its cookies client-side anyway.
+ */
+import AuthLayout from '../../layouts/AuthLayout.astro';
+import LogoutHandler from '../../components/auth/LogoutHandler.tsx';
+---
+<AuthLayout title="Signing out" description="Signing you out of Brokz.">
+  <LogoutHandler client:load />
+</AuthLayout>

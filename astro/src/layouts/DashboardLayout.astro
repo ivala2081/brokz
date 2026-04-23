@@ -1,0 +1,33 @@
+---
+/**
+ * DashboardLayout — neutral shell for every /dashboard/* page.
+ *
+ * Static: no auth check here. Auth + role gating happens inside the React
+ * `<DashboardShell>` via `<AuthGuard requireRole="customer">`.
+ */
+
+import '../styles/global.css';
+
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Brokz customer portal' } = Astro.props;
+---
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {/* Portal surfaces must never be indexed. */}
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#00C033" />
+  </head>
+  <body class="min-h-screen bg-surface-muted text-ink antialiased">
+    <slot />
+  </body>
+</html>

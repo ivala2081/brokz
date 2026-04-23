@@ -1,0 +1,11 @@
+---
+import AuthLayout from '../../layouts/AuthLayout.astro';
+import AcceptInviteForm from '../../components/auth/AcceptInviteForm.tsx';
+import { getT, localeFromPath } from '../../i18n/t';
+
+const locale = localeFromPath(Astro.url.pathname);
+const t = getT(locale, 'auth');
+---
+<AuthLayout title={t('acceptInvite.seoTitle')} description={t('acceptInvite.seoDescription')}>
+  <AcceptInviteForm locale={locale} client:load />
+</AuthLayout>

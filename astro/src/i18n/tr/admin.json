@@ -1,0 +1,432 @@
+{
+  "common": {
+    "brokz": "Brokz",
+    "admin": "Yönetim",
+    "search": "Ara",
+    "filter": "Filtre",
+    "all": "Tümü",
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "confirm": "Onayla",
+    "delete": "Sil",
+    "edit": "Düzenle",
+    "view": "Görüntüle",
+    "refresh": "Yenile",
+    "close": "Kapat",
+    "previous": "Önceki",
+    "next": "Sonraki",
+    "loading": "Yükleniyor…",
+    "saving": "Kaydediliyor…",
+    "submitting": "Gönderiliyor…",
+    "none": "Yok",
+    "notSet": "Belirtilmemiş",
+    "required": "Zorunlu",
+    "optional": "İsteğe bağlı",
+    "yes": "Evet",
+    "no": "Hayır",
+    "retry": "Tekrar dene",
+    "errorGeneric": "Bir sorun oluştu. Lütfen tekrar deneyin.",
+    "copy": "Kopyala",
+    "copied": "Kopyalandı",
+    "reveal": "Göster",
+    "hide": "Gizle",
+    "logout": "Çıkış"
+  },
+  "nav": {
+    "overview": "Genel Bakış",
+    "customers": "Müşteriler",
+    "products": "Ürünler",
+    "orders": "Siparişler",
+    "licenses": "Lisanslar",
+    "invoices": "Faturalar",
+    "tickets": "Talepler",
+    "leads": "Potansiyeller",
+    "blog": "Blog",
+    "audit": "Denetim",
+    "account": "Hesabım",
+    "settings": "Ayarlar"
+  },
+  "account": {
+    "title": "Hesap Ayarları",
+    "subtitle": "Profil bilgilerinizi ve şifrenizi güncelleyin",
+    "profile": {
+      "title": "Profil",
+      "email": "E-posta",
+      "emailHint": "E-posta değişikliği için ekiple iletişime geçin.",
+      "fullName": "Ad Soyad",
+      "phone": "Telefon",
+      "save": "Kaydet",
+      "success": "Profil güncellendi.",
+      "error": "Güncellenemedi."
+    },
+    "password": {
+      "title": "Şifre Değiştir",
+      "new": "Yeni şifre",
+      "confirm": "Yeni şifre (tekrar)",
+      "submit": "Şifreyi güncelle",
+      "success": "Şifre güncellendi.",
+      "error": "Şifre güncellenemedi.",
+      "tooShort": "En az 8 karakter olmalı",
+      "mismatch": "Şifreler eşleşmiyor"
+    }
+  },
+  "audit": {
+    "title": "Denetim Günlüğü",
+    "subtitle": "Yönetici eylemlerinin kronolojik kaydı",
+    "columns": {
+      "createdAt": "Zaman",
+      "actor": "Yönetici",
+      "action": "Eylem",
+      "entityType": "Varlık",
+      "entityId": "Varlık ID",
+      "diff": "Detay"
+    },
+    "filters": {
+      "actor": "Yönetici ara…",
+      "action": "Eylem",
+      "entityType": "Varlık tipi",
+      "allActions": "Tüm eylemler",
+      "allEntities": "Tüm varlıklar"
+    },
+    "empty": {
+      "title": "Denetim kaydı yok",
+      "description": "Yönetici panelinden bir eylem yapıldığında burada listelenir."
+    },
+    "viewDiff": "Detayları gör",
+    "hideDiff": "Gizle"
+  },
+  "status": {
+    "active": "Aktif",
+    "pending": "Beklemede",
+    "cancelled": "İptal",
+    "expired": "Süresi dolmuş",
+    "revoked": "İptal edildi",
+    "draft": "Taslak",
+    "sent": "Gönderildi",
+    "paid": "Ödendi",
+    "overdue": "Gecikmiş",
+    "open": "Açık",
+    "closed": "Kapalı",
+    "new": "Yeni",
+    "qualified": "Nitelikli",
+    "rejected": "Reddedildi",
+    "suspended": "Askıda",
+    "published": "Yayında",
+    "low": "Düşük",
+    "med": "Orta",
+    "high": "Yüksek"
+  },
+  "shell": {
+    "accountMenu": "Hesap menüsü",
+    "roleAdmin": "Yönetici",
+    "primarySidebar": "Ana kenar menü",
+    "openSidebar": "Kenar menüyü aç",
+    "closeSidebar": "Kenar menüyü kapat"
+  },
+  "overview": {
+    "title": "Genel Bakış",
+    "subtitle": "Operasyonel özet",
+    "kpi": {
+      "activeOrders": "Aktif Sipariş",
+      "openTickets": "Açık Talep",
+      "newLeads7d": "Yeni Potansiyel (7g)",
+      "revenueMtd": "Bu Ay Gelir"
+    },
+    "recent": {
+      "title": "Son Aktiviteler",
+      "empty": "Henüz aktivite yok."
+    }
+  },
+  "customers": {
+    "title": "Müşteriler",
+    "subtitle": "Organizasyonları yönetin ve yeni müşteri davet edin.",
+    "invite": "Müşteri Davet Et",
+    "columns": {
+      "name": "Ad",
+      "country": "Ülke",
+      "email": "E-posta",
+      "status": "Durum",
+      "licenses": "Lisans",
+      "tickets": "Açık Talep",
+      "createdAt": "Oluşturulma"
+    },
+    "empty": {
+      "title": "Henüz müşteri yok",
+      "description": "İlk müşterinizi davet ederek başlayın.",
+      "cta": "Müşteri Davet Et"
+    },
+    "inviteDialog": {
+      "title": "Müşteri Davet Et",
+      "description": "Organizasyon oluşturulur ve kullanıcıya giriş bağlantısı e-posta ile gönderilir.",
+      "organizationName": "Organizasyon adı",
+      "organizationNameHint": "Boş bırakırsanız mevcut bir organizasyona eklenir.",
+      "country": "Ülke",
+      "website": "Web sitesi",
+      "email": "E-posta",
+      "role": "Rol",
+      "roleCustomer": "Müşteri",
+      "roleAdmin": "Yönetici",
+      "useExisting": "Mevcut organizasyona ekle",
+      "selectOrg": "Organizasyon seçin",
+      "submit": "Daveti Gönder",
+      "success": "Davet gönderildi.",
+      "error": "Davet gönderilemedi."
+    },
+    "detail": {
+      "tabs": {
+        "overview": "Genel",
+        "orders": "Siparişler",
+        "licenses": "Lisanslar",
+        "invoices": "Faturalar",
+        "tickets": "Talepler",
+        "users": "Kullanıcılar"
+      },
+      "notFound": "Müşteri bulunamadı.",
+      "back": "Müşterilere dön"
+    }
+  },
+  "products": {
+    "title": "Ürünler",
+    "subtitle": "Katalog yönetimi ve fiyatlandırma.",
+    "new": "Yeni Ürün",
+    "columns": {
+      "name": "Ad",
+      "category": "Kategori",
+      "basePrice": "Temel Fiyat",
+      "currency": "Para Birimi",
+      "active": "Aktif",
+      "updatedAt": "Güncellendi"
+    },
+    "empty": {
+      "title": "Henüz ürün yok",
+      "description": "Kataloğunuza ilk ürünü ekleyin.",
+      "cta": "Yeni Ürün"
+    },
+    "dialog": {
+      "titleNew": "Yeni Ürün",
+      "titleEdit": "Ürünü Düzenle",
+      "slug": "Slug",
+      "slugHint": "URL için benzersiz tanımlayıcı",
+      "name": "Ad",
+      "description": "Açıklama",
+      "category": "Kategori",
+      "basePrice": "Temel Fiyat",
+      "currency": "Para Birimi",
+      "isActive": "Katalogta aktif",
+      "submit": "Kaydet",
+      "success": "Ürün kaydedildi.",
+      "error": "Ürün kaydedilemedi."
+    }
+  },
+  "orders": {
+    "title": "Siparişler",
+    "subtitle": "Tüm siparişler ve durumları.",
+    "new": "Yeni Sipariş",
+    "columns": {
+      "organization": "Organizasyon",
+      "product": "Ürün",
+      "quantity": "Adet",
+      "total": "Toplam",
+      "status": "Durum",
+      "createdAt": "Oluşturulma"
+    },
+    "empty": {
+      "title": "Henüz sipariş yok",
+      "description": "Bir müşteri için ilk siparişi oluşturun.",
+      "cta": "Yeni Sipariş"
+    },
+    "dialog": {
+      "title": "Yeni Sipariş",
+      "description": "Sipariş oluşturulur; aktif statüye geçirildiğinde lisans otomatik üretilir.",
+      "organization": "Organizasyon",
+      "product": "Ürün",
+      "quantity": "Adet",
+      "unitPrice": "Birim Fiyat",
+      "notes": "Notlar",
+      "submit": "Siparişi Oluştur",
+      "success": "Sipariş oluşturuldu.",
+      "error": "Sipariş oluşturulamadı."
+    },
+    "actions": {
+      "activate": "Aktif yap",
+      "activateConfirm": "Bu siparişi aktif yapıp lisansı oluşturmak istiyor musunuz?",
+      "activateSuccess": "Sipariş aktif edildi ve lisans oluşturuldu.",
+      "activateError": "İşlem tamamlanamadı.",
+      "cancel": "Siparişi iptal et",
+      "cancelConfirm": "Bu siparişi iptal etmek istiyor musunuz?",
+      "cancelSuccess": "Sipariş iptal edildi.",
+      "cancelError": "Sipariş iptal edilemedi."
+    }
+  },
+  "licenses": {
+    "title": "Lisanslar",
+    "subtitle": "Lisans anahtarları ve süreleri.",
+    "columns": {
+      "organization": "Organizasyon",
+      "product": "Ürün",
+      "key": "Lisans Anahtarı",
+      "issuedAt": "Verilme",
+      "expiresAt": "Bitiş",
+      "status": "Durum"
+    },
+    "empty": {
+      "title": "Lisans yok",
+      "description": "Aktif bir sipariş lisans üretecektir."
+    },
+    "extendDialog": {
+      "title": "Lisans Süresini Uzat",
+      "expiresAt": "Yeni bitiş tarihi",
+      "submit": "Uzat",
+      "success": "Lisans süresi güncellendi.",
+      "error": "Süre güncellenemedi."
+    },
+    "revoke": {
+      "action": "İptal et",
+      "confirm": "Bu lisansı iptal etmek istediğinize emin misiniz?",
+      "success": "Lisans iptal edildi.",
+      "error": "Lisans iptal edilemedi."
+    }
+  },
+  "invoices": {
+    "title": "Faturalar",
+    "subtitle": "Siparişlere karşı oluşturulan faturalar.",
+    "issue": "Fatura Oluştur",
+    "columns": {
+      "number": "Fatura No",
+      "organization": "Organizasyon",
+      "amount": "Tutar",
+      "status": "Durum",
+      "issuedAt": "Kesim",
+      "dueAt": "Vade"
+    },
+    "empty": {
+      "title": "Fatura yok",
+      "description": "Aktif bir sipariş için ilk faturayı oluşturun.",
+      "cta": "Fatura Oluştur"
+    },
+    "issueDialog": {
+      "title": "Fatura Oluştur",
+      "order": "Sipariş",
+      "dueAt": "Vade tarihi",
+      "submit": "Oluştur",
+      "success": "Fatura oluşturuldu.",
+      "error": "Fatura oluşturulamadı."
+    },
+    "markPaid": {
+      "action": "Ödendi olarak işaretle",
+      "success": "Fatura ödendi olarak işaretlendi.",
+      "error": "İşlem yapılamadı."
+    },
+    "preview": {
+      "title": "Fatura önizleme",
+      "noPdf": "Henüz PDF üretilmedi.",
+      "close": "Kapat",
+      "error": "Fatura bağlantısı alınamadı."
+    },
+    "generatePdf": {
+      "action": "PDF oluştur",
+      "success": "PDF oluşturuldu.",
+      "error": "PDF oluşturulamadı."
+    }
+  },
+  "tickets": {
+    "title": "Destek Talepleri",
+    "subtitle": "Müşterilerden gelen talepleri yönetin.",
+    "columns": {
+      "subject": "Konu",
+      "organization": "Organizasyon",
+      "priority": "Öncelik",
+      "status": "Durum",
+      "assignedTo": "Atanan",
+      "lastMessageAt": "Son Mesaj"
+    },
+    "empty": {
+      "title": "Açık talep yok",
+      "description": "Tüm talepler okundu ya da kapatıldı."
+    },
+    "thread": {
+      "back": "Talep listesine dön",
+      "notFound": "Talep bulunamadı.",
+      "assign": "Atama",
+      "unassigned": "Atanmamış",
+      "changeStatus": "Durum",
+      "changePriority": "Öncelik",
+      "composer": {
+        "label": "Yanıt yazın",
+        "placeholder": "Yanıtınızı buraya yazın…",
+        "send": "Gönder",
+        "sending": "Gönderiliyor…",
+        "attach": "Ek",
+        "attachDisabled": "Dosya ekleme 3. fazda gelecek.",
+        "success": "Yanıt gönderildi.",
+        "error": "Yanıt gönderilemedi."
+      }
+    }
+  },
+  "leads": {
+    "title": "Potansiyel Müşteriler",
+    "subtitle": "İletişim formu kayıtları.",
+    "columns": {
+      "company": "Şirket",
+      "name": "Ad",
+      "email": "E-posta",
+      "source": "Kaynak",
+      "message": "Mesaj",
+      "status": "Durum",
+      "createdAt": "Tarih"
+    },
+    "empty": {
+      "title": "Henüz kayıt yok",
+      "description": "İletişim formundan gelen kayıtlar burada görünecek."
+    },
+    "actions": {
+      "qualify": "Nitelikli işaretle",
+      "reject": "Reddet",
+      "convert": "Müşteriye dönüştür"
+    },
+    "mutations": {
+      "qualifySuccess": "Kayıt nitelikli olarak işaretlendi.",
+      "rejectSuccess": "Kayıt reddedildi.",
+      "error": "İşlem tamamlanamadı."
+    }
+  },
+  "blog": {
+    "title": "Blog Yazıları",
+    "subtitle": "İçerik yönetimi.",
+    "new": "Yeni Yazı",
+    "columns": {
+      "title": "Başlık",
+      "status": "Durum",
+      "author": "Yazar",
+      "publishedAt": "Yayın",
+      "updatedAt": "Güncellendi"
+    },
+    "empty": {
+      "title": "Yazı yok",
+      "description": "İlk blog yazınızı oluşturun.",
+      "cta": "Yeni Yazı"
+    },
+    "editor": {
+      "title": "Başlık",
+      "slug": "Slug",
+      "excerpt": "Özet",
+      "coverImage": "Kapak görseli URL",
+      "body": "İçerik (MDX)",
+      "bodyHint": "Markdown + MDX desteklenir.",
+      "tags": "Etiketler",
+      "tagsHint": "Virgülle ayırın",
+      "status": "Durum",
+      "save": "Kaydet",
+      "saveAndPublish": "Kaydet & Yayınla",
+      "unpublish": "Yayından kaldır",
+      "delete": "Sil",
+      "deleteConfirm": "Bu yazı silinsin mi?",
+      "success": "Yazı kaydedildi.",
+      "publishedSuccess": "Yazı yayınlandı.",
+      "unpublishedSuccess": "Yazı yayından kaldırıldı.",
+      "deletedSuccess": "Yazı silindi.",
+      "error": "Yazı kaydedilemedi.",
+      "back": "Blog listesine dön"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import BlogEditorIsland from '../../../components/admin/BlogEditorIsland.tsx';
+---
+<AdminLayout title="Brokz Admin · Blog editor">
+  <BlogEditorIsland locale="tr" client:only="react" />
+</AdminLayout>

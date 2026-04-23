@@ -1,0 +1,53 @@
+---
+/**
+ * AuthLayout — neutral centered-card shell for auth pages.
+ *
+ * Distinct from BaseLayout: no nav, no footer, minimal distractions.
+ * Brand comes through via the wordmark, the #00C033 focus accents on
+ * the form, and Geist typography from the global stylesheet.
+ */
+
+import '../styles/global.css';
+
+export interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+
+const BASE_URL = 'https://brokztech.com';
+const canonicalUrl = `${BASE_URL}${Astro.url.pathname}`;
+---
+<!doctype html>
+<html lang={Astro.url.pathname.startsWith('/tr') ? 'tr' : 'en'}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {/* Auth surfaces should never be indexed. */}
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#00C033" />
+  </head>
+  <body class="min-h-screen bg-surface text-ink antialiased">
+    <main class="min-h-screen flex flex-col items-center justify-center px-4 py-12">
+      <a
+        href="/"
+        class="mb-8 text-lg font-semibold tracking-tight text-ink hover:text-brand transition-colors"
+      >
+        Brokz
+      </a>
+      <div class="w-full max-w-md">
+        <div class="bg-white border border-ink/10 rounded-2xl p-8 sm:p-10 shadow-sm">
+          <slot />
+        </div>
+        <p class="mt-6 text-center text-sm text-ink/60">
+          <a href="/" class="hover:text-ink transition-colors">← Back to brokztech.com</a>
+        </p>
+      </div>
+    </main>
+  </body>
+</html>

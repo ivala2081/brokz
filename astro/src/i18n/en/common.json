@@ -5,13 +5,15 @@
     "products": "Products",
     "about": "About",
     "blog": "Blog",
-    "contact": "Contact"
+    "contact": "Contact",
+    "portal": "Client Portal"
   },
   "cta": {
     "startProject": "Start a Project",
     "exploreSolutions": "Explore Solutions",
     "learnMore": "Learn more",
-    "readMore": "Read more"
+    "readMore": "Read more",
+    "signIn": "Sign in"
   },
   "a11y": {
     "skipToMain": "Skip to main content",

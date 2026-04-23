@@ -1,0 +1,7 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import AdminAccountForm from '../../components/admin/AdminAccountForm.tsx';
+---
+<AdminLayout title="Brokz Admin · Account">
+  <AdminAccountForm locale="tr" client:only="react" />
+</AdminLayout>

@@ -1,0 +1,202 @@
+{
+  "common": {
+    "brokz": "Brokz",
+    "portal": "Portal",
+    "logout": "Çıkış",
+    "loading": "Yükleniyor…",
+    "saving": "Kaydediliyor…",
+    "submitting": "Gönderiliyor…",
+    "search": "Ara",
+    "filter": "Filtre",
+    "all": "Tümü",
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "close": "Kapat",
+    "previous": "Önceki",
+    "next": "Sonraki",
+    "none": "Yok",
+    "retry": "Tekrar dene",
+    "errorGeneric": "Bir sorun oluştu. Lütfen tekrar deneyin.",
+    "copy": "Kopyala",
+    "copied": "Kopyalandı!",
+    "reveal": "Anahtarı göster",
+    "hide": "Gizle"
+  },
+  "shell": {
+    "roleCustomer": "Müşteri",
+    "primarySidebar": "Ana kenar menü",
+    "openSidebar": "Kenar menüyü aç",
+    "closeSidebar": "Kenar menüyü kapat"
+  },
+  "nav": {
+    "overview": "Genel Bakış",
+    "orders": "Siparişler",
+    "invoices": "Faturalar",
+    "licenses": "Lisanslar",
+    "tickets": "Talepler",
+    "account": "Hesap"
+  },
+  "status": {
+    "active": "Aktif",
+    "pending": "Beklemede",
+    "cancelled": "İptal",
+    "expired": "Süresi dolmuş",
+    "revoked": "İptal edildi",
+    "draft": "Taslak",
+    "sent": "Gönderildi",
+    "paid": "Ödendi",
+    "overdue": "Gecikmiş",
+    "open": "Açık",
+    "closed": "Kapalı",
+    "low": "Düşük",
+    "med": "Orta",
+    "high": "Yüksek"
+  },
+  "overview": {
+    "title": "Genel Bakış",
+    "subtitle": "Hesabınıza genel bakış",
+    "greeting": "Hoş geldiniz, {{name}}",
+    "kpi": {
+      "activeLicenses": "Aktif lisans",
+      "unpaidInvoices": "Ödenmemiş fatura",
+      "openTickets": "Açık talep"
+    },
+    "orgCard": {
+      "title": "Organizasyon",
+      "country": "Ülke",
+      "contact": "İletişim e-postası",
+      "notSet": "Belirtilmemiş"
+    },
+    "recentOrders": {
+      "title": "Son siparişler",
+      "empty": "Henüz sipariş yok.",
+      "viewAll": "Tüm siparişleri gör"
+    }
+  },
+  "orders": {
+    "title": "Siparişler",
+    "subtitle": "Satın alma geçmişiniz.",
+    "columns": {
+      "product": "Ürün",
+      "quantity": "Adet",
+      "total": "Toplam",
+      "status": "Durum",
+      "createdAt": "Tarih"
+    },
+    "empty": {
+      "title": "Henüz sipariş yok",
+      "description": "Siparişleriniz burada görünecektir."
+    }
+  },
+  "invoices": {
+    "title": "Faturalar",
+    "subtitle": "Fatura geçmişi ve ödeme durumu.",
+    "columns": {
+      "number": "Fatura",
+      "amount": "Tutar",
+      "status": "Durum",
+      "issuedAt": "Kesim",
+      "dueAt": "Vade"
+    },
+    "empty": {
+      "title": "Henüz fatura yok",
+      "description": "Faturalarınız burada görünecektir."
+    },
+    "detail": {
+      "back": "Faturalara dön",
+      "notFound": "Fatura bulunamadı.",
+      "order": "Sipariş",
+      "amount": "Tutar",
+      "status": "Durum",
+      "issuedAt": "Kesim tarihi",
+      "dueAt": "Vade tarihi",
+      "download": "PDF İndir",
+      "noPdf": "PDF henüz hazır değil."
+    }
+  },
+  "licenses": {
+    "title": "Lisanslar",
+    "subtitle": "Aktif lisans anahtarlarınız.",
+    "columns": {
+      "product": "Ürün",
+      "issuedAt": "Verilme",
+      "expiresAt": "Bitiş",
+      "status": "Durum",
+      "key": "Anahtar"
+    },
+    "empty": {
+      "title": "Lisans yok",
+      "description": "Siparişiniz aktif edildiğinde lisanslarınız burada görünecektir."
+    },
+    "revealDialog": {
+      "title": "Lisans anahtarı",
+      "description": "Bu anahtarı güvende tutun. Başkalarıyla paylaşmayın.",
+      "copySuccess": "Lisans anahtarı kopyalandı."
+    }
+  },
+  "tickets": {
+    "title": "Destek Talepleri",
+    "subtitle": "Destek talepleri açın ve takip edin.",
+    "new": "Yeni Talep",
+    "columns": {
+      "subject": "Konu",
+      "priority": "Öncelik",
+      "status": "Durum",
+      "lastMessageAt": "Son güncelleme"
+    },
+    "empty": {
+      "title": "Talep yok",
+      "description": "Yardıma ihtiyaç duyduğunuzda yeni bir talep açabilirsiniz."
+    },
+    "thread": {
+      "back": "Talep listesine dön",
+      "notFound": "Talep bulunamadı.",
+      "composer": {
+        "label": "Yanıt yazın",
+        "placeholder": "Mesajınızı buraya yazın…",
+        "send": "Gönder",
+        "sending": "Gönderiliyor…",
+        "attach": "Ek",
+        "attachDisabled": "Dosya ekleme ilerideki bir güncellemede gelecek.",
+        "success": "Yanıt gönderildi.",
+        "error": "Yanıt gönderilemedi."
+      }
+    },
+    "newDialog": {
+      "title": "Yeni talep aç",
+      "subject": "Konu",
+      "subjectPlaceholder": "Sorununuzu kısaca açıklayın",
+      "priority": "Öncelik",
+      "message": "Mesaj",
+      "messagePlaceholder": "Sorununuzu ayrıntılı olarak açıklayın…",
+      "submit": "Talep gönder",
+      "success": "Talebiniz alındı. Kısa sürede yanıt vereceğiz.",
+      "error": "Talep açılamadı."
+    }
+  },
+  "account": {
+    "title": "Hesap",
+    "subtitle": "Profil ve güvenlik ayarlarınızı yönetin.",
+    "profile": {
+      "title": "Profil",
+      "email": "E-posta",
+      "emailHint": "E-posta adresinizi değiştirmek için destek ekibiyle iletişime geçin.",
+      "fullName": "Ad Soyad",
+      "phone": "Telefon",
+      "save": "Değişiklikleri kaydet",
+      "success": "Profil güncellendi.",
+      "error": "Profil güncellenemedi."
+    },
+    "password": {
+      "title": "Şifre değiştir",
+      "current": "Mevcut şifre",
+      "new": "Yeni şifre",
+      "confirm": "Yeni şifre (tekrar)",
+      "mismatch": "Şifreler eşleşmiyor.",
+      "tooShort": "Şifre en az 8 karakter olmalıdır.",
+      "submit": "Şifreyi güncelle",
+      "success": "Şifre güncellendi.",
+      "error": "Şifre güncellenemedi."
+    }
+  }
+}

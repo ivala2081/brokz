@@ -9,33 +9,32 @@
     "titleLead": "Infrastructure",
     "titleAccent": "for modern",
     "titleTail": "trading.",
-    "body": "We engineer institutional-grade systems for brokerages, proprietary trading firms, and liquidity providers. Built for reliability, latency, and scale."
+    "body": "Institutional systems for brokerages, prop firms, and liquidity providers. Built for reliability, latency, and scale."
   },
   "capabilities": {
     "eyebrow": "What We Build",
     "titleLead": "Engineered for the systems that",
     "titleAccent": "move markets",
     "titleTail": ".",
-    "body": "Four capability areas. Each one built from first principles — order routing, risk management, and regulatory constraints handled by engineers who understand trading infrastructure.",
+    "body": "Four areas. Built from first principles by engineers who understand trading infrastructure.",
     "items": {
       "platforms": {
         "title": "Trading Platforms",
-        "desc": "Custom web traders, management dashboards, and broker back-office systems engineered for real-time execution."
+        "desc": "Custom web traders, management dashboards, broker back-office systems."
       },
       "algo": {
         "title": "Algorithmic Systems",
-        "desc": "Execution engines, backtesting frameworks, and quantitative strategy infrastructure for systematic traders."
+        "desc": "Execution engines, backtesting, quantitative strategy infrastructure."
       },
       "mt": {
         "title": "MT4 / MT5 Extensions",
-        "desc": "Manager tools, risk plugins, bridge systems, and execution optimization for MetaTrader environments."
+        "desc": "Manager tools, risk plugins, bridges, execution optimization for MetaTrader."
       },
       "data": {
         "title": "Data Infrastructure",
-        "desc": "Quantitative modeling pipelines, tick-level market data, and trading analytics at institutional scale."
+        "desc": "Quantitative modeling pipelines, tick-level market data, trading analytics."
       }
     },
-    "footer": "Need a custom solution outside these categories? We build bespoke trading infrastructure.",
     "viewAll": "View all products"
   },
   "trust": {
@@ -53,7 +52,7 @@
     "titleLead": "From market data to",
     "titleAccent": "execution",
     "titleTail": ".",
-    "body": "A composable three-layer stack. We build upstream connectivity, the institutional core, and client-facing surfaces — end to end, fully owned by the client.",
+    "body": "Three layers. End to end, fully owned by the client.",
     "columns": {
       "upstream": "Upstream",
       "core": "Brokz Core",
@@ -70,21 +69,20 @@
       "term":      { "label": "Trading Terminal",          "desc": "Web / institutional" },
       "dash":      { "label": "Management Dashboard",      "desc": "Back-office, ops" },
       "analytics": { "label": "Analytics & Reporting",     "desc": "P&L, execution quality, compliance" }
-    },
-    "footnote": "Every engagement delivered end-to-end. Documented. Unlocked."
+    }
   },
   "howWeEngage": {
     "eyebrow": "How We Engage",
     "titleLead": "Four phases.",
     "titleAccent": "One delivery.",
-    "body": "Every engagement moves through the same structured path — scoped before commitment, architected before code, delivered with ownership.",
+    "body": "Scoped before commitment. Architected before code. Delivered with ownership.",
     "typicalPrefix": "Typical:",
     "deliverablesLabel": "Deliverables",
     "phases": {
       "discovery": {
         "title": "Discovery",
         "duration": "1–2 weeks",
-        "body": "Technical scoping with your engineering team. We audit existing infrastructure, identify integration surfaces, and document latency, compliance, and operational constraints.",
+        "body": "Technical scoping with your engineering team. Infrastructure audit, latency and compliance constraints.",
         "deliverables": [
           "Architecture assessment",
           "Integration map",
@@ -94,7 +92,7 @@
       "architecture": {
         "title": "Architecture",
         "duration": "2–3 weeks",
-        "body": "System design before implementation. We specify module boundaries, data flows, failure modes, and monitoring surfaces. Every decision is reviewed with your team before code is written.",
+        "body": "System design before implementation. Module boundaries, data flows, failure modes — reviewed with your team.",
         "deliverables": [
           "System design document",
           "API + schema specifications",
@@ -104,7 +102,7 @@
       "build": {
         "title": "Build",
         "duration": "8–16 weeks",
-        "body": "Iterative delivery with weekly demos. We build the core stack, integrate upstream connectivity, harden the risk layer, and ship client-facing surfaces against production-like environments from week one.",
+        "body": "Iterative delivery with weekly demos. Against production-like environments from week one.",
         "deliverables": [
           "Weekly release cadence",
           "Documented, reviewed codebase",
@@ -114,7 +112,7 @@
       "deploy": {
         "title": "Deploy & Handover",
         "duration": "2–4 weeks",
-        "body": "Production cutover with full knowledge transfer. Your team owns the system — the codebase, the infrastructure, the operational runbook. No vendor lock, no hidden dependencies.",
+        "body": "Production cutover with full knowledge transfer. Codebase, infrastructure, runbook — yours.",
         "deliverables": [
           "Production deployment",
           "Runbook + handover docs",

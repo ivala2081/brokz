@@ -1,0 +1,8 @@
+---
+import DashboardLayout from '../../../layouts/DashboardLayout.astro';
+import InvoiceDetail from '../../../components/dashboard/InvoiceDetail.tsx';
+
+---
+<DashboardLayout title="Brokz Portal · Fatura">
+  <InvoiceDetail locale="tr" client:only="react" />
+</DashboardLayout>

@@ -1,0 +1,16 @@
+---
+/**
+ * Login page — static shell. The React form owns all auth logic, including
+ * redirecting an already-authenticated user. No `Astro.locals` access: this
+ * site ships as a static build with no Node runtime in production.
+ */
+import AuthLayout from '../../layouts/AuthLayout.astro';
+import LoginForm from '../../components/auth/LoginForm.tsx';
+import { getT, localeFromPath } from '../../i18n/t';
+
+const locale = localeFromPath(Astro.url.pathname);
+const t = getT(locale, 'auth');
+---
+<AuthLayout title={t('login.seoTitle')} description={t('login.seoDescription')}>
+  <LoginForm locale={locale} client:load />
+</AuthLayout>

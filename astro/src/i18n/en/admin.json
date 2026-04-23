@@ -1,0 +1,432 @@
+{
+  "common": {
+    "brokz": "Brokz",
+    "admin": "Admin",
+    "search": "Search",
+    "filter": "Filter",
+    "all": "All",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "refresh": "Refresh",
+    "close": "Close",
+    "previous": "Previous",
+    "next": "Next",
+    "loading": "Loading…",
+    "saving": "Saving…",
+    "submitting": "Submitting…",
+    "none": "None",
+    "notSet": "Not set",
+    "required": "Required",
+    "optional": "Optional",
+    "yes": "Yes",
+    "no": "No",
+    "retry": "Retry",
+    "errorGeneric": "Something went wrong. Please try again.",
+    "copy": "Copy",
+    "copied": "Copied",
+    "reveal": "Reveal",
+    "hide": "Hide",
+    "logout": "Sign out"
+  },
+  "nav": {
+    "overview": "Overview",
+    "customers": "Customers",
+    "products": "Products",
+    "orders": "Orders",
+    "licenses": "Licenses",
+    "invoices": "Invoices",
+    "tickets": "Tickets",
+    "leads": "Leads",
+    "blog": "Blog",
+    "audit": "Audit",
+    "account": "Account",
+    "settings": "Settings"
+  },
+  "account": {
+    "title": "Account settings",
+    "subtitle": "Update your profile and password",
+    "profile": {
+      "title": "Profile",
+      "email": "Email",
+      "emailHint": "Contact the team to change email.",
+      "fullName": "Full name",
+      "phone": "Phone",
+      "save": "Save",
+      "success": "Profile updated.",
+      "error": "Could not update."
+    },
+    "password": {
+      "title": "Change password",
+      "new": "New password",
+      "confirm": "Confirm new password",
+      "submit": "Update password",
+      "success": "Password updated.",
+      "error": "Could not update password.",
+      "tooShort": "At least 8 characters",
+      "mismatch": "Passwords do not match"
+    }
+  },
+  "audit": {
+    "title": "Audit log",
+    "subtitle": "Chronological record of admin actions",
+    "columns": {
+      "createdAt": "When",
+      "actor": "Admin",
+      "action": "Action",
+      "entityType": "Entity",
+      "entityId": "Entity ID",
+      "diff": "Detail"
+    },
+    "filters": {
+      "actor": "Search admin…",
+      "action": "Action",
+      "entityType": "Entity type",
+      "allActions": "All actions",
+      "allEntities": "All entities"
+    },
+    "empty": {
+      "title": "No audit records yet",
+      "description": "Admin actions will appear here as they happen."
+    },
+    "viewDiff": "View detail",
+    "hideDiff": "Hide"
+  },
+  "status": {
+    "active": "Active",
+    "pending": "Pending",
+    "cancelled": "Cancelled",
+    "expired": "Expired",
+    "revoked": "Revoked",
+    "draft": "Draft",
+    "sent": "Sent",
+    "paid": "Paid",
+    "overdue": "Overdue",
+    "open": "Open",
+    "closed": "Closed",
+    "new": "New",
+    "qualified": "Qualified",
+    "rejected": "Rejected",
+    "suspended": "Suspended",
+    "published": "Published",
+    "low": "Low",
+    "med": "Medium",
+    "high": "High"
+  },
+  "shell": {
+    "accountMenu": "Account menu",
+    "roleAdmin": "Administrator",
+    "primarySidebar": "Primary sidebar",
+    "openSidebar": "Open sidebar",
+    "closeSidebar": "Close sidebar"
+  },
+  "overview": {
+    "title": "Overview",
+    "subtitle": "Operational summary",
+    "kpi": {
+      "activeOrders": "Active orders",
+      "openTickets": "Open tickets",
+      "newLeads7d": "New leads (7d)",
+      "revenueMtd": "Revenue MTD"
+    },
+    "recent": {
+      "title": "Recent activity",
+      "empty": "No activity yet."
+    }
+  },
+  "customers": {
+    "title": "Customers",
+    "subtitle": "Manage organizations and invite new customers.",
+    "invite": "Invite customer",
+    "columns": {
+      "name": "Name",
+      "country": "Country",
+      "email": "Email",
+      "status": "Status",
+      "licenses": "Licenses",
+      "tickets": "Open tickets",
+      "createdAt": "Created"
+    },
+    "empty": {
+      "title": "No customers yet",
+      "description": "Start by inviting your first customer.",
+      "cta": "Invite customer"
+    },
+    "inviteDialog": {
+      "title": "Invite customer",
+      "description": "Creates an organization and emails the user a sign-in link.",
+      "organizationName": "Organization name",
+      "organizationNameHint": "Leave blank to add to an existing organization.",
+      "country": "Country",
+      "website": "Website",
+      "email": "Email",
+      "role": "Role",
+      "roleCustomer": "Customer",
+      "roleAdmin": "Admin",
+      "useExisting": "Add to existing organization",
+      "selectOrg": "Select organization",
+      "submit": "Send invitation",
+      "success": "Invitation sent.",
+      "error": "Couldn't send invitation."
+    },
+    "detail": {
+      "tabs": {
+        "overview": "Overview",
+        "orders": "Orders",
+        "licenses": "Licenses",
+        "invoices": "Invoices",
+        "tickets": "Tickets",
+        "users": "Users"
+      },
+      "notFound": "Customer not found.",
+      "back": "Back to customers"
+    }
+  },
+  "products": {
+    "title": "Products",
+    "subtitle": "Catalog and pricing.",
+    "new": "New product",
+    "columns": {
+      "name": "Name",
+      "category": "Category",
+      "basePrice": "Base price",
+      "currency": "Currency",
+      "active": "Active",
+      "updatedAt": "Updated"
+    },
+    "empty": {
+      "title": "No products yet",
+      "description": "Add your first product to the catalog.",
+      "cta": "New product"
+    },
+    "dialog": {
+      "titleNew": "New product",
+      "titleEdit": "Edit product",
+      "slug": "Slug",
+      "slugHint": "Unique identifier used in URLs",
+      "name": "Name",
+      "description": "Description",
+      "category": "Category",
+      "basePrice": "Base price",
+      "currency": "Currency",
+      "isActive": "Active in catalog",
+      "submit": "Save",
+      "success": "Product saved.",
+      "error": "Couldn't save product."
+    }
+  },
+  "orders": {
+    "title": "Orders",
+    "subtitle": "All orders and their status.",
+    "new": "New order",
+    "columns": {
+      "organization": "Organization",
+      "product": "Product",
+      "quantity": "Quantity",
+      "total": "Total",
+      "status": "Status",
+      "createdAt": "Created"
+    },
+    "empty": {
+      "title": "No orders yet",
+      "description": "Create your first order for a customer.",
+      "cta": "New order"
+    },
+    "dialog": {
+      "title": "New order",
+      "description": "Creates an order; activating it auto-generates a license.",
+      "organization": "Organization",
+      "product": "Product",
+      "quantity": "Quantity",
+      "unitPrice": "Unit price",
+      "notes": "Notes",
+      "submit": "Create order",
+      "success": "Order created.",
+      "error": "Couldn't create order."
+    },
+    "actions": {
+      "activate": "Activate",
+      "activateConfirm": "Activate this order and generate its license?",
+      "activateSuccess": "Order activated and license generated.",
+      "activateError": "Couldn't complete the action.",
+      "cancel": "Cancel order",
+      "cancelConfirm": "Cancel this order?",
+      "cancelSuccess": "Order cancelled.",
+      "cancelError": "Couldn't cancel order."
+    }
+  },
+  "licenses": {
+    "title": "Licenses",
+    "subtitle": "License keys and expirations.",
+    "columns": {
+      "organization": "Organization",
+      "product": "Product",
+      "key": "Key",
+      "issuedAt": "Issued",
+      "expiresAt": "Expires",
+      "status": "Status"
+    },
+    "empty": {
+      "title": "No licenses",
+      "description": "Activating an order will generate a license."
+    },
+    "extendDialog": {
+      "title": "Extend license",
+      "expiresAt": "New expiry date",
+      "submit": "Extend",
+      "success": "License updated.",
+      "error": "Couldn't update license."
+    },
+    "revoke": {
+      "action": "Revoke",
+      "confirm": "Revoke this license?",
+      "success": "License revoked.",
+      "error": "Couldn't revoke license."
+    }
+  },
+  "invoices": {
+    "title": "Invoices",
+    "subtitle": "Invoices raised against orders.",
+    "issue": "Issue invoice",
+    "columns": {
+      "number": "Number",
+      "organization": "Organization",
+      "amount": "Amount",
+      "status": "Status",
+      "issuedAt": "Issued",
+      "dueAt": "Due"
+    },
+    "empty": {
+      "title": "No invoices",
+      "description": "Issue your first invoice against an active order.",
+      "cta": "Issue invoice"
+    },
+    "issueDialog": {
+      "title": "Issue invoice",
+      "order": "Order",
+      "dueAt": "Due date",
+      "submit": "Issue",
+      "success": "Invoice issued.",
+      "error": "Couldn't issue invoice."
+    },
+    "markPaid": {
+      "action": "Mark paid",
+      "success": "Marked as paid.",
+      "error": "Couldn't update."
+    },
+    "preview": {
+      "title": "Invoice preview",
+      "noPdf": "No PDF generated yet.",
+      "close": "Close",
+      "error": "Could not fetch invoice link."
+    },
+    "generatePdf": {
+      "action": "Generate PDF",
+      "success": "PDF generated.",
+      "error": "PDF generation failed."
+    }
+  },
+  "tickets": {
+    "title": "Tickets",
+    "subtitle": "Customer support inbox.",
+    "columns": {
+      "subject": "Subject",
+      "organization": "Organization",
+      "priority": "Priority",
+      "status": "Status",
+      "assignedTo": "Assigned",
+      "lastMessageAt": "Last message"
+    },
+    "empty": {
+      "title": "No open tickets",
+      "description": "All tickets have been resolved."
+    },
+    "thread": {
+      "back": "Back to tickets",
+      "notFound": "Ticket not found.",
+      "assign": "Assign",
+      "unassigned": "Unassigned",
+      "changeStatus": "Status",
+      "changePriority": "Priority",
+      "composer": {
+        "label": "Reply",
+        "placeholder": "Write your reply…",
+        "send": "Send",
+        "sending": "Sending…",
+        "attach": "Attach",
+        "attachDisabled": "Attachments coming in phase 3.",
+        "success": "Reply sent.",
+        "error": "Couldn't send reply."
+      }
+    }
+  },
+  "leads": {
+    "title": "Leads",
+    "subtitle": "Contact form submissions.",
+    "columns": {
+      "company": "Company",
+      "name": "Name",
+      "email": "Email",
+      "source": "Source",
+      "message": "Message",
+      "status": "Status",
+      "createdAt": "Date"
+    },
+    "empty": {
+      "title": "No leads yet",
+      "description": "Contact form submissions will appear here."
+    },
+    "actions": {
+      "qualify": "Mark qualified",
+      "reject": "Reject",
+      "convert": "Convert to customer"
+    },
+    "mutations": {
+      "qualifySuccess": "Lead marked qualified.",
+      "rejectSuccess": "Lead rejected.",
+      "error": "Couldn't complete the action."
+    }
+  },
+  "blog": {
+    "title": "Blog posts",
+    "subtitle": "Content management.",
+    "new": "New post",
+    "columns": {
+      "title": "Title",
+      "status": "Status",
+      "author": "Author",
+      "publishedAt": "Published",
+      "updatedAt": "Updated"
+    },
+    "empty": {
+      "title": "No posts yet",
+      "description": "Create your first blog post.",
+      "cta": "New post"
+    },
+    "editor": {
+      "title": "Title",
+      "slug": "Slug",
+      "excerpt": "Excerpt",
+      "coverImage": "Cover image URL",
+      "body": "Body (MDX)",
+      "bodyHint": "Markdown + MDX supported.",
+      "tags": "Tags",
+      "tagsHint": "Comma-separated",
+      "status": "Status",
+      "save": "Save",
+      "saveAndPublish": "Save & Publish",
+      "unpublish": "Unpublish",
+      "delete": "Delete",
+      "deleteConfirm": "Delete this post?",
+      "success": "Post saved.",
+      "publishedSuccess": "Post published.",
+      "unpublishedSuccess": "Post unpublished.",
+      "deletedSuccess": "Post deleted.",
+      "error": "Couldn't save post.",
+      "back": "Back to posts"
+    }
+  }
+}

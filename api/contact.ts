@@ -1,3 +1,21 @@
+/**
+ * ⚠ DEPRECATED — MOVED TO A SUPABASE EDGE FUNCTION (2026-04-22)
+ * ----------------------------------------------------------------------
+ * This Vercel serverless endpoint is kept only so local `vercel dev` and
+ * existing preview deploys (brokztech.vercel.app) keep working until the
+ * frontend migrates to shared hosting.
+ *
+ * New canonical implementation:
+ *   supabase/functions/contact-lead-capture/index.ts
+ *
+ * In production this file returns **410 Gone** so anything still pointing
+ * at /api/contact learns quickly to migrate. In development
+ * (`NODE_ENV !== 'production'`) we keep the legacy behavior so engineers
+ * can still iterate locally if they need to.
+ *
+ * DO NOT add new logic here. Changes belong in the Edge Function.
+ */
+
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { Resend } from 'resend';
 
@@ -124,6 +142,19 @@ Reply directly to this email to respond.
 // ─── handler ─────────────────────────────────────────────────────────
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  // ─── Deprecation guard ─────────────────────────────────────────────
+  // In production, refuse to serve. The frontend has been updated to call
+  // the Supabase Edge Function directly; any traffic here is legacy.
+  if (process.env.NODE_ENV === 'production') {
+    res.setHeader('Deprecation', 'true');
+    res.setHeader('Link', '<https://brokztech.com/docs/api-migration>; rel="deprecation"');
+    return res.status(410).json({
+      error:
+        'This endpoint has been retired. The contact form is now served by the contact-lead-capture Supabase Edge Function.',
+      migration: 'supabase/functions/contact-lead-capture',
+    });
+  }
+
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ error: 'Method not allowed' });
