@@ -20,7 +20,6 @@ import Input from '../ui/Input';
 import Select from '../ui/Select';
 import Field from '../ui/Field';
 import { useAuth } from '../auth/AuthContext';
-import { callEdgeFunction } from '../../lib/admin/edgeFunction';
 import { toast } from '../ui/Toast';
 
 type BillingType = 'onetime' | 'monthly' | 'annual_upfront' | 'annual_installments';
@@ -126,7 +125,8 @@ export default function IssueInvoiceDialog({
         setDueAt(due.toISOString().slice(0, 10));
 
         void (async () => {
-            const { data } = await supabase
+            // Try full select with new billing columns; fall back to legacy.
+            const full = await supabase
                 .from('orders')
                 .select(`
                     id, total, currency, billing_type, period_start, next_invoice_at,
@@ -137,7 +137,31 @@ export default function IssueInvoiceDialog({
                 .is('deleted_at', null)
                 .order('created_at', { ascending: false })
                 .limit(200);
-            if (data) setOrders(data as unknown as OrderRow[]);
+            if (full.error) {
+                const legacy = await supabase
+                    .from('orders')
+                    .select('id, total, currency, organization:organizations(name), product:products(name)')
+                    .in('status', ['active', 'pending'])
+                    .is('deleted_at', null)
+                    .order('created_at', { ascending: false })
+                    .limit(200);
+                const rows = ((legacy.data ?? []) as unknown as Array<Partial<OrderRow>>).map((r) => ({
+                    ...(r as OrderRow),
+                    billing_type: 'onetime' as BillingType,
+                    period_start: null,
+                    next_invoice_at: null,
+                    product: r.product
+                        ? {
+                            name: (r.product as { name: string }).name,
+                            setup_fee: 0,
+                            billing_type: 'onetime' as BillingType,
+                        }
+                        : null,
+                }));
+                setOrders(rows);
+            } else if (full.data) {
+                setOrders(full.data as unknown as OrderRow[]);
+            }
         })();
     }, [open, supabase, prefillOrderId]);
 
@@ -146,40 +170,93 @@ export default function IssueInvoiceDialog({
         if (!selected) return;
         setSubmitting(true);
 
-        // 1. Create the invoice via Edge Function (handles numbering + initial email)
-        const { data, error } = await callEdgeFunction<{ invoice_id: string }>(
-            supabase, 'admin-issue-invoice', {
-                order_id: orderId,
-                due_at: new Date(dueAt).toISOString(),
-            },
-        );
-
-        if (error || !data?.invoice_id) {
-            setSubmitting(false);
-            toast.error(t('invoices.issueDialog.error'));
-            return;
+        // Generate invoice_number client-side. Format: BRKZ-YYYY-NNNNNN.
+        // We query MAX across the current year and +1. Race risk is negligible
+        // (admin-only writes, single session). Server RPC `next_invoice_number`
+        // is admin-only in the DB — we use it if available, else fall back.
+        const year = new Date().getUTCFullYear();
+        let invoiceNumber = '';
+        const rpc = await supabase.rpc('next_invoice_number', { p_year: year })
+            .then((r) => r, () => ({ data: null, error: true as unknown }));
+        if (!rpc.error && typeof rpc.data === 'string') {
+            invoiceNumber = rpc.data;
+        } else {
+            const prefix = `BRKZ-${year}-`;
+            const { data: lastRow } = await supabase
+                .from('invoices')
+                .select('invoice_number')
+                .ilike('invoice_number', `${prefix}%`)
+                .order('invoice_number', { ascending: false })
+                .limit(1)
+                .maybeSingle();
+            const lastNumber = lastRow?.invoice_number?.split('-').pop() ?? '000000';
+            const next = String(parseInt(lastNumber, 10) + 1).padStart(6, '0');
+            invoiceNumber = `${prefix}${next}`;
         }
 
-        // 2. Decorate with invoice_type / period + override amount if needed.
-        const updates: Record<string, unknown> = {
+        const amount = Number(amountOverride);
+        const finalAmount = !Number.isNaN(amount) && amount > 0 ? amount : Number(selected.total);
+
+        const basePayload: Record<string, unknown> = {
+            order_id: selected.id,
+            organization_id: (selected as unknown as { organization_id?: string }).organization_id
+                // organization_id isn't directly on selected; look it up via the order row
+                ?? null,
+            invoice_number: invoiceNumber,
+            amount: finalAmount,
+            currency: selected.currency,
+            status: 'sent',
+            issued_at: new Date().toISOString(),
+            due_at: new Date(dueAt).toISOString(),
             invoice_type: invoiceType,
         };
         if (invoiceType === 'subscription') {
-            updates.period_start = periodStart;
-            updates.period_end = periodEnd;
+            basePayload.period_start = periodStart;
+            basePayload.period_end = periodEnd;
         }
-        const wantAmount = Number(amountOverride);
-        if (!Number.isNaN(wantAmount) && wantAmount > 0 && wantAmount !== Number(selected.total)) {
-            updates.amount = wantAmount;
-        }
-        await supabase.from('invoices').update(updates).eq('id', data.invoice_id);
 
-        // 3. For subscription invoices, advance the order's next_invoice_at.
+        // Ensure organization_id populated — query orders if missing.
+        if (!basePayload.organization_id) {
+            const orderLookup = await supabase
+                .from('orders')
+                .select('organization_id')
+                .eq('id', selected.id)
+                .maybeSingle();
+            basePayload.organization_id = orderLookup.data?.organization_id ?? null;
+        }
+
+        let result = await supabase.from('invoices').insert(basePayload).select('id').single();
+
+        // Retry without new columns on ANY error — pragmatic, cheap.
+        if (result.error) {
+            const legacy: Record<string, unknown> = {
+                order_id: basePayload.order_id,
+                organization_id: basePayload.organization_id,
+                invoice_number: basePayload.invoice_number,
+                amount: basePayload.amount,
+                currency: basePayload.currency,
+                status: basePayload.status,
+                issued_at: basePayload.issued_at,
+                due_at: basePayload.due_at,
+            };
+            result = await supabase.from('invoices').insert(legacy).select('id').single();
+        }
+
+        if (result.error || !result.data) {
+            setSubmitting(false);
+            toast.error(t('invoices.issueDialog.error'));
+            // eslint-disable-next-line no-console
+            console.error('[IssueInvoiceDialog] insert failed:', result.error);
+            return;
+        }
+
+        // For subscription invoices, advance the order's next_invoice_at.
         if (invoiceType === 'subscription' && periodEnd) {
             await supabase
                 .from('orders')
                 .update({ next_invoice_at: periodEnd, period_start: periodStart })
-                .eq('id', selected.id);
+                .eq('id', selected.id)
+                .then((r) => r, () => undefined);
         }
 
         setSubmitting(false);

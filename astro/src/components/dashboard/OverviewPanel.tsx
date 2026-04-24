@@ -66,10 +66,30 @@ interface LastPaid {
 export default function OverviewPanel({ locale: localeProp = 'tr' }: { locale?: Locale }) {
     const locale = resolveAdminLocale(localeProp);
     return (
-        <DashboardShell locale={locale} activeKey="overview" title="">
+        <DashboardShell
+            locale={locale}
+            activeKey="overview"
+            title={useHeroTitle()}
+            subtitle={useHeroSubtitle()}
+        >
             <OverviewInner locale={locale} />
         </DashboardShell>
     );
+}
+
+function useHeroTitle() {
+    const { t } = useTranslation('dashboard');
+    const { profile } = useAuth();
+    // We want the greeting "Hoş geldiniz, Vantage Markets Test" but profile
+    // holds only the user's name, not the org. Use generic welcome + pull
+    // org name inside inner panel if needed.
+    return profile.full_name
+        ? t('overview.greeting', { name: profile.full_name })
+        : t('overview.title');
+}
+function useHeroSubtitle() {
+    const { t } = useTranslation('dashboard');
+    return t('overview.subtitle');
 }
 
 function OverviewInner({ locale }: { locale: Locale }) {
@@ -91,6 +111,8 @@ function OverviewInner({ locale }: { locale: Locale }) {
         let cancelled = false;
         async function load() {
             setLoading(true);
+            const { hasOrdersBilling } = await import('../../lib/admin/schemaProbe');
+            const ordersHasBilling = await hasOrdersBilling(supabase);
 
             const [
                 activeLicenses, unpaidInvoices, openTickets, orgData, ordersData,
@@ -113,12 +135,14 @@ function OverviewInner({ locale }: { locale: Locale }) {
                     .select('id, status, total, currency, created_at, product:products(name)')
                     .is('deleted_at', null)
                     .order('created_at', { ascending: false }).limit(5),
-                supabase.from('orders')
-                    .select('id, total, currency, billing_type, next_invoice_at, cancelled_at, product:products(name)')
-                    .neq('billing_type', 'onetime')
-                    .is('deleted_at', null)
-                    .is('cancelled_at', null)
-                    .order('created_at', { ascending: false }),
+                ordersHasBilling
+                    ? supabase.from('orders')
+                        .select('id, total, currency, billing_type, next_invoice_at, cancelled_at, product:products(name)')
+                        .neq('billing_type', 'onetime')
+                        .is('deleted_at', null)
+                        .is('cancelled_at', null)
+                        .order('created_at', { ascending: false })
+                    : Promise.resolve({ data: [], error: null }),
                 supabase.from('invoices')
                     .select('id, order_id, invoice_number, due_at, status, amount, currency')
                     .in('status', ['sent', 'overdue'])
@@ -169,17 +193,8 @@ function OverviewInner({ locale }: { locale: Locale }) {
 
     const localeTag = locale === 'tr' ? 'tr-TR' : 'en-US';
 
-    const greeting = org
-        ? t('overview.greeting', { name: org.name })
-        : t('overview.title');
-
     return (
-        <div className="space-y-8">
-            <header>
-                <h2 className="text-2xl font-semibold tracking-tight text-ink">{greeting}</h2>
-                <p className="text-sm text-ink-muted mt-1">{t('overview.subtitle')}</p>
-            </header>
-
+        <div className="space-y-10">
             {subscriptions.length > 0 && (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     {subscriptions.map((sub) => (

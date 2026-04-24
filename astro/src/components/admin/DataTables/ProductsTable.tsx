@@ -10,6 +10,7 @@ import Button from '../../ui/Button';
 import Badge from '../../ui/Badge';
 import EmptyState from '../../ui/EmptyState';
 import { resolveAdminLocale } from '../../../lib/admin/locale';
+import { hasProductsBilling } from '../../../lib/admin/schemaProbe';
 import ProductDialog, { type ProductRow } from '../ProductDialog';
 import { useAuth } from '../../auth/AuthContext';
 import { formatDate, formatMoney } from '../../../lib/admin/format';
@@ -55,11 +56,18 @@ function ProductsInner({ locale }: { locale: Locale }) {
 
     const load = useCallback(async () => {
         setLoading(true);
-        const { data } = await supabase
-            .from('products')
-            .select('id, slug, name, description, category, base_price, currency, is_active, billing_type, setup_fee, updated_at')
-            .order('name', { ascending: true });
-        setRows((data as Row[]) ?? []);
+        // Probe once — skip billing columns if the migration hasn't landed.
+        const hasBilling = await hasProductsBilling(supabase);
+        const columns = hasBilling
+            ? 'id, slug, name, description, category, base_price, currency, is_active, billing_type, setup_fee, updated_at'
+            : 'id, slug, name, description, category, base_price, currency, is_active, updated_at';
+        const { data } = await supabase.from('products').select(columns).order('name', { ascending: true });
+        const raw = (data as Array<Partial<Row>>) ?? [];
+        setRows(raw.map((r) => ({
+            ...(r as Row),
+            billing_type: r.billing_type ?? 'onetime',
+            setup_fee: r.setup_fee ?? 0,
+        })));
         setLoading(false);
     }, [supabase]);
 

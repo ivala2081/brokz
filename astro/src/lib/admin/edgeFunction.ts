@@ -91,12 +91,19 @@ export async function callEdgeFunction<T = unknown>(
         const payload = (await res.json()) as T;
         return { data: payload, error: null };
     } catch (err) {
+        // Most common cause is CORS preflight rejection — the Edge Function
+        // doesn't have ALLOWED_ORIGINS set or wasn't deployed. Tag it so UI
+        // can show a specific message.
+        const message = err instanceof Error ? err.message : 'Network error';
+        const isCors = /cors|fetch|network/i.test(message);
         return {
             data: null,
             error: {
                 status: 0,
-                code: 'network_error',
-                message: err instanceof Error ? err.message : 'Network error',
+                code: isCors ? 'cors_or_network' : 'network_error',
+                message: isCors
+                    ? 'Sunucu ulaşılamıyor (CORS / secret eksikliği olabilir). Supabase dashboard → Edge Functions → Secrets ayarını kontrol et.'
+                    : message,
             },
         };
     }

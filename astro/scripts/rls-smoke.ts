@@ -56,6 +56,10 @@ async function signIn(email: string, password: string): Promise<ReturnType<typeo
     return c;
 }
 
+async function trySignIn(email: string, password: string): Promise<ReturnType<typeof client> | null> {
+    try { return await signIn(email, password); } catch { return null; }
+}
+
 async function main() {
     // ─── Anon (not-logged-in) ──────────────────────────────────────────
     const anon = client();
@@ -87,7 +91,17 @@ async function main() {
     else fail('anon cannot read leads back', `leaked ${anonLeadRead.data!.length} leads`);
 
     // ─── Customer ──────────────────────────────────────────────────────
-    const cust = await signIn('test-customer@brokz.local', 'Brokz2026!Customer');
+    const cust = await trySignIn('test-customer@brokz.local', 'Brokz2026!Customer');
+    if (!cust) {
+        fail('customer login', 'test-customer@brokz.local / Brokz2026!Customer rejected — password may have changed');
+        let passedEarly = 0, failedEarly = 0;
+        for (const r of results) { r.pass ? passedEarly++ : failedEarly++; }
+        for (const r of results) {
+            console.log(`${r.pass ? '✓' : '✗'} ${r.name}${r.detail ? ` — ${r.detail}` : ''}`);
+        }
+        console.log(`\n${passedEarly} passed, ${failedEarly} failed (customer section skipped)`);
+        process.exit(failedEarly > 0 ? 1 : 0);
+    }
 
     const custProfile = await cust.from('profiles').select('id, role, organization_id, full_name');
     if ((custProfile.data?.length ?? 0) === 1 && custProfile.data![0].role === 'customer') {

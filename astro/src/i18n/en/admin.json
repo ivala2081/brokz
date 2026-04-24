@@ -457,7 +457,8 @@
     "generatePdf": {
       "action": "Generate PDF",
       "success": "PDF generated.",
-      "error": "PDF generation failed."
+      "error": "PDF generation failed.",
+      "pendingSetup": "PDF generation needs the Edge Function deployed + ALLOWED_ORIGINS secret set in Supabase dashboard."
     }
   },
   "tickets": {

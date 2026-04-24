@@ -16,6 +16,7 @@ import { toast } from '../ui/Toast';
 import Button from '../ui/Button';
 import PaymentProofDialog from './PaymentProofDialog';
 import { NETWORKS, maskAddress, type NetworkCode } from '../../lib/payments';
+import { hasPaymentSubmissions } from '../../lib/admin/schemaProbe';
 
 type Locale = 'en' | 'tr';
 
@@ -112,26 +113,31 @@ function InvoiceDetailInner({ invoiceId, locale }: { invoiceId: string; locale: 
 
     const load = useCallback(async () => {
         setLoading(true);
-        const [{ data: inv }, { data: walletRows }, { data: subRows }] = await Promise.all([
+        const paymentsReady = await hasPaymentSubmissions(supabase);
+        const [invRes, walletRes, subRes] = await Promise.all([
             supabase
                 .from('invoices')
                 .select('id, invoice_number, amount, currency, status, issued_at, due_at, pdf_url, organization_id, order:orders(id, product:products(name))')
                 .eq('id', invoiceId)
                 .maybeSingle(),
-            supabase
-                .from('payment_wallets')
-                .select('id, network, address, label, memo, display_order')
-                .eq('is_active', true)
-                .order('display_order', { ascending: true }),
-            supabase
-                .from('payment_submissions')
-                .select('id, network, tx_hash, amount_paid, currency, status, submitted_at, reviewed_at, rejection_reason')
-                .eq('invoice_id', invoiceId)
-                .order('submitted_at', { ascending: false }),
+            paymentsReady
+                ? supabase
+                      .from('payment_wallets')
+                      .select('id, network, address, label, memo, display_order')
+                      .eq('is_active', true)
+                      .order('display_order', { ascending: true })
+                : Promise.resolve({ data: [], error: null }),
+            paymentsReady
+                ? supabase
+                      .from('payment_submissions')
+                      .select('id, network, tx_hash, amount_paid, currency, status, submitted_at, reviewed_at, rejection_reason')
+                      .eq('invoice_id', invoiceId)
+                      .order('submitted_at', { ascending: false })
+                : Promise.resolve({ data: [], error: null }),
         ]);
-        setInvoice((inv as unknown as Invoice | null) ?? null);
-        setWallets((walletRows as Wallet[] | null) ?? []);
-        setSubmissions((subRows as Submission[] | null) ?? []);
+        setInvoice((invRes.data as unknown as Invoice | null) ?? null);
+        setWallets((walletRes.data as Wallet[] | null) ?? []);
+        setSubmissions((subRes.data as Submission[] | null) ?? []);
         setLoading(false);
     }, [supabase, invoiceId]);
 

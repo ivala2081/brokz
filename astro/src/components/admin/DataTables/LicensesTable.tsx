@@ -10,6 +10,7 @@ import DataTable, { type DataTableColumn } from '../../ui/DataTable';
 import Button from '../../ui/Button';
 import EmptyState from '../../ui/EmptyState';
 import { resolveAdminLocale } from '../../../lib/admin/locale';
+import { hasOrdersBilling } from '../../../lib/admin/schemaProbe';
 import ExtendLicenseDialog from '../ExtendLicenseDialog';
 import { useAuth } from '../../auth/AuthContext';
 import { toast } from '../../ui/Toast';
@@ -81,21 +82,35 @@ function LicensesInner({ locale }: { locale: Locale }) {
 
     const load = useCallback(async () => {
         setLoading(true);
-        let query = supabase
+        const ordersHasBilling = await hasOrdersBilling(supabase);
+        const selectCols = ordersHasBilling
+            ? 'id, license_key, status, issued_at, expires_at, order:orders(id, billing_type, cancelled_at, next_invoice_at, product:products(name), organization:organizations(id, name))'
+            : 'id, license_key, status, issued_at, expires_at, order:orders(id, product:products(name), organization:organizations(id, name))';
+        const q = supabase
             .from('licenses')
-            .select('id, license_key, status, issued_at, expires_at, order:orders(id, billing_type, cancelled_at, next_invoice_at, product:products(name), organization:organizations(id, name))')
+            .select(selectCols)
             .is('deleted_at', null)
             .order('issued_at', { ascending: false });
-        if (status !== 'all') query = query.eq('status', status);
-        const [{ data }, invRes] = await Promise.all([
-            query,
-            supabase
-                .from('invoices')
-                .select('id, order_id, due_at, status')
-                .in('status', ['sent', 'overdue'])
-                .is('deleted_at', null),
-        ]);
-        setRows((data as unknown as Row[]) ?? []);
+        const { data } = status !== 'all' ? await q.eq('status', status) : await q;
+        const licRows = ((data ?? []) as unknown as Array<Partial<Row>>).map((r) => ({
+            ...(r as Row),
+            order: r.order
+                ? {
+                    ...(r.order as NonNullable<Row['order']>),
+                    billing_type: (r.order as NonNullable<Row['order']>).billing_type ?? null,
+                    cancelled_at: (r.order as NonNullable<Row['order']>).cancelled_at ?? null,
+                    next_invoice_at: (r.order as NonNullable<Row['order']>).next_invoice_at ?? null,
+                }
+                : null,
+        }));
+
+        const invRes = await supabase
+            .from('invoices')
+            .select('id, order_id, due_at, status')
+            .in('status', ['sent', 'overdue'])
+            .is('deleted_at', null);
+
+        setRows(licRows);
         const map: Record<string, OpenInv> = {};
         for (const inv of (invRes.data as OpenInv[] | null) ?? []) {
             if (!map[inv.order_id]) map[inv.order_id] = inv;

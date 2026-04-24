@@ -14,6 +14,7 @@ import StatCard from './StatCard';
 import StatusBadge from './StatusBadge';
 import { useAuth } from '../auth/AuthContext';
 import { formatDateTime, formatMoney } from '../../lib/admin/format';
+import { hasPaymentSubmissions } from '../../lib/admin/schemaProbe';
 
 type Locale = 'en' | 'tr';
 
@@ -26,7 +27,7 @@ interface Kpis {
 
 interface ActivityItem {
     id: string;
-    kind: 'order' | 'ticket';
+    kind: 'order' | 'ticket' | 'payment';
     title: string;
     status: string;
     createdAt: string;
@@ -35,10 +36,24 @@ interface ActivityItem {
 export default function OverviewPanel({ locale: localeProp = 'tr' }: { locale?: Locale }) {
     const locale = resolveAdminLocale(localeProp);
     return (
-        <AdminShell locale={locale} activeKey="overview" title="" subtitle="">
+        <AdminShell
+            locale={locale}
+            activeKey="overview"
+            title={useOverviewTitle()}
+            subtitle={useOverviewSubtitle()}
+        >
             <OverviewInner locale={locale} />
         </AdminShell>
     );
+}
+
+function useOverviewTitle() {
+    const { t } = useTranslation('admin');
+    return t('overview.title');
+}
+function useOverviewSubtitle() {
+    const { t } = useTranslation('admin');
+    return t('overview.subtitle');
 }
 
 function OverviewInner({ locale }: { locale: Locale }) {
@@ -63,7 +78,8 @@ function OverviewInner({ locale }: { locale: Locale }) {
             mtd.setDate(1);
             mtd.setHours(0, 0, 0, 0);
 
-            const [activeOrders, openTickets, newLeads, paidInvoices, recentOrders, recentTickets] =
+            const paymentsReady = await hasPaymentSubmissions(supabase);
+            const [activeOrders, openTickets, newLeads, paidInvoices, recentOrders, recentTickets, pendingPayments] =
                 await Promise.all([
                     supabase
                         .from('orders')
@@ -97,6 +113,14 @@ function OverviewInner({ locale }: { locale: Locale }) {
                         .is('deleted_at', null)
                         .order('created_at', { ascending: false })
                         .limit(5),
+                    paymentsReady
+                        ? supabase
+                              .from('payment_submissions')
+                              .select('id, network, amount_paid, currency, status, submitted_at, organization:organizations(name), invoice:invoices(invoice_number)')
+                              .eq('status', 'pending_review')
+                              .order('submitted_at', { ascending: false })
+                              .limit(5)
+                        : Promise.resolve({ data: [], error: null }),
                 ]);
 
             if (cancelled) return;
@@ -147,10 +171,27 @@ function OverviewInner({ locale }: { locale: Locale }) {
                 };
             });
 
+            const paymentItems: ActivityItem[] = ((pendingPayments.data ?? []) as unknown as Array<{
+                id: string;
+                network: string;
+                amount_paid: number;
+                currency: string;
+                status: string;
+                submitted_at: string;
+                organization: { name: string } | null;
+                invoice: { invoice_number: string } | null;
+            }>).map((r) => ({
+                id: `payment-${r.id}`,
+                kind: 'payment',
+                title: `${r.organization?.name ?? '—'} · ${r.invoice?.invoice_number ?? '—'} · ${r.amount_paid} ${r.currency}`,
+                status: r.status,
+                createdAt: r.submitted_at,
+            }));
+
             setActivity(
-                [...orderItems, ...ticketItems]
+                [...paymentItems, ...orderItems, ...ticketItems]
                     .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
-                    .slice(0, 10),
+                    .slice(0, 12),
             );
             setLoading(false);
         }
@@ -164,12 +205,7 @@ function OverviewInner({ locale }: { locale: Locale }) {
     const localeTag = locale === 'tr' ? 'tr-TR' : 'en-US';
 
     return (
-        <div className="space-y-8">
-            <header>
-                <h2 className="text-2xl font-semibold tracking-tight text-ink">{t('overview.title')}</h2>
-                <p className="text-sm text-ink-muted mt-1">{t('overview.subtitle')}</p>
-            </header>
-
+        <div className="space-y-10">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <StatCard label={t('overview.kpi.activeOrders')} value={kpis.activeOrders ?? '—'} loading={loading} />
                 <StatCard label={t('overview.kpi.openTickets')} value={kpis.openTickets ?? '—'} loading={loading} />

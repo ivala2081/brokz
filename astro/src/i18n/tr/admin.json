@@ -457,7 +457,8 @@
     "generatePdf": {
       "action": "PDF oluştur",
       "success": "PDF oluşturuldu.",
-      "error": "PDF oluşturulamadı."
+      "error": "PDF oluşturulamadı.",
+      "pendingSetup": "PDF üretimi için Edge Function deploy + ALLOWED_ORIGINS secret gerekli. Supabase dashboard'dan set ettiğinde aktifleşir."
     }
   },
   "tickets": {

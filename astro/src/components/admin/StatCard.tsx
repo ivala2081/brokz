@@ -19,16 +19,16 @@ export default function StatCard({ label, value, hint, loading, className }: Sta
     return (
         <div
             className={cn(
-                'rounded-lg border border-line bg-white p-5 flex flex-col gap-2',
+                'rounded-lg border border-line bg-white p-6 flex flex-col gap-3',
                 className,
             )}
         >
-            <span className="text-2xs font-semibold uppercase tracking-wider text-ink-muted">
+            <span className="text-2xs font-semibold uppercase tracking-[0.1em] text-ink-muted">
                 {label}
             </span>
-            <span className="text-3xl font-semibold tracking-tight text-ink">
+            <span className="text-[2rem] leading-none font-bold tracking-[-0.02em] text-ink tabular-nums">
                 {loading ? (
-                    <span className="inline-block h-7 w-24 rounded-sm bg-surface-subtle animate-pulse" />
+                    <span className="inline-block h-8 w-28 rounded-sm bg-surface-subtle animate-pulse" />
                 ) : (
                     value
                 )}

@@ -155,7 +155,7 @@ function DashboardShellInner({
 
             {/* Main column */}
             <div className="md:pl-60 min-h-screen flex flex-col">
-                <header className="h-16 bg-white border-b border-line flex items-center gap-4 px-4 md:px-8">
+                <header className="h-14 bg-white border-b border-line flex items-center gap-4 px-4 md:px-8">
                     <button
                         type="button"
                         className="md:hidden h-9 w-9 inline-flex items-center justify-center rounded-md border border-line hover:border-ink/30"
@@ -180,44 +180,50 @@ function DashboardShellInner({
                                 <span className="text-ink-secondary">{title}</span>
                             </nav>
                         )}
-                        <h1 className="text-lg sm:text-xl font-semibold tracking-tight text-ink truncate">
-                            {title}
-                        </h1>
-                        {subtitle && (
-                            <p className="hidden sm:block text-xs text-ink-muted truncate">{subtitle}</p>
-                        )}
                     </div>
-                    <div className="flex items-center gap-2">
-                        <div
-                            role="group"
-                            aria-label="Language"
-                            className="inline-flex items-center rounded-md border border-line overflow-hidden"
-                        >
-                            {(['tr', 'en'] as const).map((loc) => {
-                                const active = effectiveLocale === loc;
-                                return (
-                                    <button
-                                        key={loc}
-                                        type="button"
-                                        onClick={() => loc !== effectiveLocale && setAdminLocale(loc)}
-                                        aria-pressed={active}
-                                        className={cn(
-                                            'px-2.5 py-1 text-2xs font-mono uppercase tracking-wider transition-colors',
-                                            active
-                                                ? 'bg-ink text-white'
-                                                : 'bg-white text-ink-muted hover:text-ink',
-                                        )}
-                                    >
-                                        {loc}
-                                    </button>
-                                );
-                            })}
-                        </div>
-                        {action}
+                    <div
+                        role="group"
+                        aria-label="Language"
+                        className="inline-flex items-center rounded-md border border-line overflow-hidden"
+                    >
+                        {(['tr', 'en'] as const).map((loc) => {
+                            const active = effectiveLocale === loc;
+                            return (
+                                <button
+                                    key={loc}
+                                    type="button"
+                                    onClick={() => loc !== effectiveLocale && setAdminLocale(loc)}
+                                    aria-pressed={active}
+                                    className={cn(
+                                        'px-2.5 py-1 text-2xs font-mono uppercase tracking-wider transition-colors',
+                                        active
+                                            ? 'bg-ink text-white'
+                                            : 'bg-white text-ink-muted hover:text-ink',
+                                    )}
+                                >
+                                    {loc}
+                                </button>
+                            );
+                        })}
                     </div>
                 </header>
 
-                <main className="flex-1 px-4 md:px-8 py-6 md:py-10 max-w-wide w-full mx-auto">
+                <main className="flex-1 px-4 md:px-8 py-8 md:py-12 max-w-wide w-full mx-auto">
+                    {(title || subtitle || action) && (
+                        <header className="mb-8 md:mb-10 flex flex-wrap items-end justify-between gap-4">
+                            <div className="min-w-0">
+                                {title && (
+                                    <h1 className="text-[2.25rem] md:text-[2.5rem] leading-[1.05] font-bold tracking-[-0.03em] text-ink truncate">
+                                        {title}
+                                    </h1>
+                                )}
+                                {subtitle && (
+                                    <p className="mt-2 text-sm text-ink-muted max-w-2xl">{subtitle}</p>
+                                )}
+                            </div>
+                            {action && <div className="flex items-center gap-2 shrink-0">{action}</div>}
+                        </header>
+                    )}
                     {children}
                 </main>
             </div>

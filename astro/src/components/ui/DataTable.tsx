@@ -203,7 +203,7 @@ export default function DataTable<T>({
                                                 key={col.key}
                                                 scope="col"
                                                 className={cn(
-                                                    'px-4 py-2.5 text-left text-2xs font-semibold uppercase tracking-wider text-ink-secondary',
+                                                    'px-4 h-11 text-left text-2xs font-semibold uppercase tracking-[0.08em] text-ink-muted bg-surface-muted/60',
                                                     col.align === 'right' && 'text-right',
                                                     col.align === 'center' && 'text-center',
                                                     col.sortable && 'cursor-pointer select-none',
@@ -240,7 +240,7 @@ export default function DataTable<T>({
                                             key={id}
                                             onClick={onRowClick ? () => onRowClick(row) : undefined}
                                             className={cn(
-                                                'transition-colors',
+                                                'h-14 transition-colors',
                                                 onRowClick && 'cursor-pointer hover:bg-surface-muted',
                                             )}
                                         >
@@ -248,7 +248,7 @@ export default function DataTable<T>({
                                                 <td
                                                     key={col.key}
                                                     className={cn(
-                                                        'px-4 py-3 text-ink align-middle',
+                                                        'px-4 py-0 text-sm text-ink align-middle',
                                                         col.align === 'right' && 'text-right',
                                                         col.align === 'center' && 'text-center',
                                                         col.className,

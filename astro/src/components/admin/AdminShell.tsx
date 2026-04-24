@@ -22,6 +22,7 @@ import { useAuth } from '../auth/AuthContext';
 import { Toaster } from '../ui/Toast';
 import { cn } from '../../lib/cn';
 import { resolveAdminLocale, setAdminLocale, type AdminLocale } from '../../lib/admin/locale';
+import { hasPaymentSubmissions } from '../../lib/admin/schemaProbe';
 import '../../i18n';
 
 type Locale = 'en' | 'tr';
@@ -100,11 +101,17 @@ function AdminShellInner({
     useEffect(() => {
         let cancelled = false;
         async function load() {
-            const [{ count: pay }, { count: tkt }] = await Promise.all([
-                supabase
-                    .from('payment_submissions')
-                    .select('*', { count: 'exact', head: true })
-                    .eq('status', 'pending_review'),
+            // Probe for payment_submissions table once — if the migration
+            // hasn't landed, skip the query entirely (no 404 noise).
+            const tableExists = await hasPaymentSubmissions(supabase);
+            const [payCount, tktRes] = await Promise.all([
+                tableExists
+                    ? supabase
+                          .from('payment_submissions')
+                          .select('*', { count: 'exact', head: true })
+                          .eq('status', 'pending_review')
+                          .then((r) => r.count ?? 0)
+                    : Promise.resolve(0),
                 supabase
                     .from('tickets')
                     .select('*', { count: 'exact', head: true })
@@ -112,8 +119,8 @@ function AdminShellInner({
                     .is('deleted_at', null),
             ]);
             if (cancelled) return;
-            setPendingPayments(pay ?? 0);
-            setOpenTickets(tkt ?? 0);
+            setPendingPayments(payCount);
+            setOpenTickets(tktRes.count ?? 0);
         }
         void load();
         const handle = window.setInterval(() => { void load(); }, 30_000);
@@ -214,7 +221,8 @@ function AdminShellInner({
 
             {/* Main column */}
             <div className="md:pl-60 min-h-screen flex flex-col">
-                <header className="h-16 bg-white border-b border-line flex items-center gap-4 px-4 md:px-8">
+                {/* Compact topbar — breadcrumbs + locale toggle. Page title lives in hero. */}
+                <header className="h-14 bg-white border-b border-line flex items-center gap-4 px-4 md:px-8">
                     <button
                         type="button"
                         className="md:hidden h-9 w-9 inline-flex items-center justify-center rounded-md border border-line hover:border-ink/30"
@@ -239,44 +247,51 @@ function AdminShellInner({
                                 <span className="text-ink-secondary">{title}</span>
                             </nav>
                         )}
-                        <h1 className="text-lg sm:text-xl font-semibold tracking-tight text-ink truncate">
-                            {title}
-                        </h1>
-                        {subtitle && (
-                            <p className="hidden sm:block text-xs text-ink-muted truncate">{subtitle}</p>
-                        )}
                     </div>
-                    <div className="flex items-center gap-2">
-                        <div
-                            role="group"
-                            aria-label="Language"
-                            className="inline-flex items-center rounded-md border border-line overflow-hidden"
-                        >
-                            {(['tr', 'en'] as const).map((loc) => {
-                                const active = effectiveLocale === loc;
-                                return (
-                                    <button
-                                        key={loc}
-                                        type="button"
-                                        onClick={() => loc !== effectiveLocale && setAdminLocale(loc)}
-                                        aria-pressed={active}
-                                        className={cn(
-                                            'px-2.5 py-1 text-2xs font-mono uppercase tracking-wider transition-colors',
-                                            active
-                                                ? 'bg-ink text-white'
-                                                : 'bg-white text-ink-muted hover:text-ink',
-                                        )}
-                                    >
-                                        {loc}
-                                    </button>
-                                );
-                            })}
-                        </div>
-                        {action}
+                    <div
+                        role="group"
+                        aria-label="Language"
+                        className="inline-flex items-center rounded-md border border-line overflow-hidden"
+                    >
+                        {(['tr', 'en'] as const).map((loc) => {
+                            const active = effectiveLocale === loc;
+                            return (
+                                <button
+                                    key={loc}
+                                    type="button"
+                                    onClick={() => loc !== effectiveLocale && setAdminLocale(loc)}
+                                    aria-pressed={active}
+                                    className={cn(
+                                        'px-2.5 py-1 text-2xs font-mono uppercase tracking-wider transition-colors',
+                                        active
+                                            ? 'bg-ink text-white'
+                                            : 'bg-white text-ink-muted hover:text-ink',
+                                    )}
+                                >
+                                    {loc}
+                                </button>
+                            );
+                        })}
                     </div>
                 </header>
 
-                <main className="flex-1 px-4 md:px-8 py-6 md:py-10 max-w-wide w-full mx-auto">
+                <main className="flex-1 px-4 md:px-8 py-8 md:py-12 max-w-wide w-full mx-auto">
+                    {/* Page hero — exaggerated-minimalism: one giant title, muted subtitle. */}
+                    {(title || subtitle || action) && (
+                        <header className="mb-8 md:mb-10 flex flex-wrap items-end justify-between gap-4">
+                            <div className="min-w-0">
+                                {title && (
+                                    <h1 className="text-[2.25rem] md:text-[2.5rem] leading-[1.05] font-bold tracking-[-0.03em] text-ink truncate">
+                                        {title}
+                                    </h1>
+                                )}
+                                {subtitle && (
+                                    <p className="mt-2 text-sm text-ink-muted max-w-2xl">{subtitle}</p>
+                                )}
+                            </div>
+                            {action && <div className="flex items-center gap-2 shrink-0">{action}</div>}
+                        </header>
+                    )}
                     {children}
                 </main>
             </div>

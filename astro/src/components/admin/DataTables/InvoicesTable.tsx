@@ -19,7 +19,6 @@ import IssueInvoiceDialog from '../IssueInvoiceDialog';
 import { useAuth } from '../../auth/AuthContext';
 import { toast } from '../../ui/Toast';
 import { formatDate, formatMoney } from '../../../lib/admin/format';
-import { callEdgeFunction } from '../../../lib/admin/edgeFunction';
 
 type Locale = 'en' | 'tr';
 
@@ -97,20 +96,12 @@ function InvoicesInner({ locale }: { locale: Locale }) {
         setPreviewUrl(data.signedUrl);
     }
 
-    async function generatePdf(r: Row) {
-        setGeneratingId(r.id);
-        const res = await callEdgeFunction<{ storage_path: string }>(
-            supabase,
-            'generate-invoice-pdf',
-            { invoice_id: r.id },
-        );
-        setGeneratingId(null);
-        if (res.error || !res.data) {
-            toast.error(t('invoices.generatePdf.error'));
-            return;
-        }
-        toast.success(t('invoices.generatePdf.success'));
-        void load();
+    async function generatePdf(_r: Row) {
+        // PDF generation requires the `generate-invoice-pdf` Edge Function
+        // to be deployed AND ALLOWED_ORIGINS secret to be set. Until both
+        // land, just show a clear info toast instead of firing a CORS-doomed
+        // fetch that pollutes the console.
+        toast(t('invoices.generatePdf.pendingSetup'));
     }
 
     async function markPaid(r: Row) {

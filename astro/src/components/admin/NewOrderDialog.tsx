@@ -13,8 +13,8 @@ import Select from '../ui/Select';
 import Textarea from '../ui/Textarea';
 import Field from '../ui/Field';
 import { useAuth } from '../auth/AuthContext';
-import { callEdgeFunction } from '../../lib/admin/edgeFunction';
 import { toast } from '../ui/Toast';
+import { hasProductsBilling, hasOrdersBilling } from '../../lib/admin/schemaProbe';
 
 export interface NewOrderDialogProps {
     open: boolean;
@@ -79,12 +79,21 @@ export default function NewOrderDialog({
         setNotes('');
 
         void (async () => {
+            const hasBilling = await hasProductsBilling(supabase);
+            const productCols = hasBilling
+                ? 'id, name, base_price, currency, billing_type, setup_fee'
+                : 'id, name, base_price, currency';
             const [{ data: orgsData }, { data: productsData }] = await Promise.all([
                 supabase.from('organizations').select('id, name').order('name'),
-                supabase.from('products').select('id, name, base_price, currency, billing_type, setup_fee').eq('is_active', true).order('name'),
+                supabase.from('products').select(productCols).eq('is_active', true).order('name'),
             ]);
             if (orgsData) setOrgs(orgsData as OrgRow[]);
-            if (productsData) setProducts(productsData as ProductRow[]);
+            const rawProducts = (productsData as Array<Partial<ProductRow>>) ?? [];
+            setProducts(rawProducts.map((p) => ({
+                ...(p as ProductRow),
+                billing_type: p.billing_type ?? ('onetime' as ProductBillingType),
+                setup_fee: p.setup_fee ?? 0,
+            })));
         })();
     }, [open, supabase, prefillOrgId]);
 
@@ -98,36 +107,43 @@ export default function NewOrderDialog({
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
         setSubmitting(true);
-        const body = {
+        const qty = Number(quantity);
+        const unit = Number(unitPrice);
+        const total = Math.round(qty * unit * 100) / 100;
+        const currency = selectedProduct?.currency ?? 'USD';
+
+        // Probe once — only send billing columns if the migration has landed.
+        const ordersHasBilling = await hasOrdersBilling(supabase);
+        const basePayload: Record<string, unknown> = {
             organization_id: orgId,
             product_id: productId,
-            quantity,
-            unit_price: Number(unitPrice),
-            notes: notes || undefined,
+            status: 'pending',
+            quantity: qty,
+            unit_price: unit,
+            total,
+            currency,
+            notes: notes || null,
         };
-        const { data, error } = await callEdgeFunction<{ order_id: string }>(
-            supabase, 'admin-create-order', body,
-        );
-        if (error || !data?.order_id) {
-            setSubmitting(false);
-            toast.error(t('orders.dialog.error'));
-            return;
+        if (ordersHasBilling) {
+            if (isRecurring) {
+                const start = new Date(periodStart);
+                const next = nextInvoiceFrom(start, billingType);
+                basePayload.billing_type = billingType;
+                basePayload.period_start = periodStart;
+                if (next) basePayload.next_invoice_at = next.toISOString().slice(0, 10);
+            } else {
+                basePayload.billing_type = 'onetime';
+            }
         }
 
-        // For recurring products, decorate the order with billing fields
-        // (admin-create-order Edge Function only handles the base flow).
-        if (isRecurring) {
-            const start = new Date(periodStart);
-            const next = nextInvoiceFrom(start, billingType);
-            await supabase.from('orders').update({
-                billing_type: billingType,
-                period_start: periodStart,
-                next_invoice_at: next ? next.toISOString().slice(0, 10) : null,
-            }).eq('id', data.order_id);
-        } else {
-            await supabase.from('orders').update({
-                billing_type: 'onetime',
-            }).eq('id', data.order_id);
+        const result = await supabase.from('orders').insert(basePayload).select('id').single();
+
+        if (result.error || !result.data) {
+            setSubmitting(false);
+            toast.error(t('orders.dialog.error'));
+            // eslint-disable-next-line no-console
+            console.error('[NewOrderDialog] insert failed:', result.error);
+            return;
         }
 
         setSubmitting(false);

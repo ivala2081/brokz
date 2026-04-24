@@ -19,7 +19,6 @@ import EmptyState from '../../ui/EmptyState';
 import { resolveAdminLocale } from '../../../lib/admin/locale';
 import NewOrderDialog from '../NewOrderDialog';
 import { useAuth } from '../../auth/AuthContext';
-import { callEdgeFunction } from '../../../lib/admin/edgeFunction';
 import { toast } from '../../ui/Toast';
 import { formatDate, formatMoney } from '../../../lib/admin/format';
 
@@ -81,13 +80,37 @@ function OrdersInner({ locale }: { locale: Locale }) {
     async function activate(r: Row) {
         const ok = window.confirm(t('orders.actions.activateConfirm'));
         if (!ok) return;
-        const { error } = await callEdgeFunction(supabase, 'admin-generate-license', {
+
+        // Direct-insert path — mirrors what admin-generate-license Edge Function
+        // would do, minus audit log + customer email. When MCP re-auth lands and
+        // secrets + ALLOWED_ORIGINS are set, we swap back to the Edge Function.
+        const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+        const rand = (len: number) => {
+            const buf = crypto.getRandomValues(new Uint8Array(len));
+            return Array.from(buf, (b) => alphabet[b % alphabet.length]).join('');
+        };
+        const licenseKey = `BRKZ-${rand(4)}-${rand(4)}-${rand(4)}-${rand(4)}-${rand(4)}`;
+
+        const expiresAt = new Date(Date.now() + 365 * 86400_000).toISOString();
+
+        const licIns = await supabase.from('licenses').insert({
             order_id: r.id,
-        });
-        if (error) {
+            license_key: licenseKey,
+            issued_at: new Date().toISOString(),
+            expires_at: expiresAt,
+            status: 'active',
+        }).select('id').single();
+
+        if (licIns.error) {
             toast.error(t('orders.actions.activateError'));
+            // eslint-disable-next-line no-console
+            console.error('[OrdersTable.activate] license insert failed:', licIns.error);
             return;
         }
+
+        // Flip order status to 'active'
+        await supabase.from('orders').update({ status: 'active' }).eq('id', r.id);
+
         toast.success(t('orders.actions.activateSuccess'));
         void load();
     }

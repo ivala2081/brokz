@@ -92,7 +92,7 @@ export default function ProductDialog({ open, onClose, onSuccess, initial }: Pro
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
         setSubmitting(true);
-        const payload = {
+        const fullPayload = {
             slug: form.slug || slugify(form.name),
             name: form.name,
             description: form.description || null,
@@ -103,11 +103,23 @@ export default function ProductDialog({ open, onClose, onSuccess, initial }: Pro
             billing_type: form.billing_type,
             setup_fee: form.setup_fee,
         };
-        const { error } = form.id
-            ? await supabase.from('products').update(payload).eq('id', form.id)
-            : await supabase.from('products').insert(payload);
+        let result = form.id
+            ? await supabase.from('products').update(fullPayload).eq('id', form.id)
+            : await supabase.from('products').insert(fullPayload);
+
+        // If the billing columns haven't been migrated yet, retry without.
+        // Be aggressive — any error on a payload including the new cols
+        // triggers a fallback attempt.
+        if (result.error) {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { billing_type: _bt, setup_fee: _sf, ...legacyPayload } = fullPayload;
+            result = form.id
+                ? await supabase.from('products').update(legacyPayload).eq('id', form.id)
+                : await supabase.from('products').insert(legacyPayload);
+        }
+
         setSubmitting(false);
-        if (error) {
+        if (result.error) {
             toast.error(t('products.dialog.error'));
             return;
         }
