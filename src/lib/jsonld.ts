@@ -1,9 +1,10 @@
 /**
  * Typed builders for schema.org JSON-LD snippets.
  *
- * Site-wide entities (Organization, WebSite) live in index.html so bots see
- * them pre-JS. Per-page types (BreadcrumbList, Article, Service, FAQPage)
- * flow through the <SEO jsonLd={...} /> prop and render via react-helmet-async.
+ * Site-wide entities (Organization, WebSite) are emitted from BaseLayout.astro
+ * so bots see them in static HTML. Per-page types (BreadcrumbList, Article,
+ * Service, FAQPage) are passed via the layout's `jsonLd` prop and serialized
+ * into a <script type="application/ld+json"> tag at build time.
  */
 
 const BASE_URL = 'https://brokztech.com';

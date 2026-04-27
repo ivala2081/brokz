@@ -131,7 +131,7 @@ const enableAnalytics = import.meta.env.PROD && !noindex;
     <meta name="msapplication-TileColor" content="#00C033" />
 
     {/* Site-wide JSON-LD (Organization + WebSite) */}
-    <script type="application/ld+json" set:html={JSON.stringify({
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',
       '@type': 'Organization',
       '@id': `${BASE_URL}/#organization`,
@@ -161,7 +161,7 @@ const enableAnalytics = import.meta.env.PROD && !noindex;
         },
       ],
     })} />
-    <script type="application/ld+json" set:html={JSON.stringify({
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       '@id': `${BASE_URL}/#website`,
@@ -173,7 +173,7 @@ const enableAnalytics = import.meta.env.PROD && !noindex;
 
     {/* Per-page JSON-LD */}
     {perPageSchemas.map((schema) => (
-      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
     ))}
 
     {/* ─── Analytics (production-only, env-gated) ─────────────────────

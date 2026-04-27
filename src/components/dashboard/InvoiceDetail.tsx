@@ -235,7 +235,6 @@ function InvoiceDetailInner({ invoiceId, locale }: { invoiceId: string; locale: 
 
             {!approved && (
                 <PaymentSection
-                    invoice={invoice}
                     wallets={wallets}
                     pending={pendingReview}
                     lastRejected={lastRejected}
@@ -262,14 +261,12 @@ function InvoiceDetailInner({ invoiceId, locale }: { invoiceId: string; locale: 
 }
 
 function PaymentSection({
-    invoice,
     wallets,
     pending,
     lastRejected,
     lastSubmission,
     onOpenProof,
 }: {
-    invoice: Invoice;
     wallets: Wallet[];
     pending: boolean;
     lastRejected: boolean;

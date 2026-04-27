@@ -25,7 +25,7 @@ exist only to give authenticated surfaces a sane UX:
 Wrap any protected page's root island in an `<AuthGuard>`:
 
 ```tsx
-// astro/src/pages/admin/index.astro
+// src/pages/admin/index.astro
 ---
 import AdminLayout from '../../layouts/AdminLayout.astro';
 import AdminShell from '../../components/admin/AdminShell.tsx';

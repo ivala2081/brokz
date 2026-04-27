@@ -171,7 +171,7 @@ function ogTemplate(input: TemplateInput): any {
 
 // ─── Render one post ───────────────────────────────────────────────────
 
-async function renderOne(slug: string, eyebrow: string, title: string, url: string, outPath: string) {
+async function renderOne(eyebrow: string, title: string, url: string, outPath: string) {
     const svg = await satori(ogTemplate({ eyebrow, title, url }), {
         width: 1200,
         height: 630,
@@ -199,12 +199,11 @@ async function main() {
         const title = fm.title || slug;
         const url = `brokztech.com/blog/${slug}`;
         const outPath = resolve(outDir, `blog-${slug}.png`);
-        await renderOne(slug, eyebrow, title, url, outPath);
+        await renderOne(eyebrow, title, url, outPath);
     }
 
     // Default (homepage + non-blog pages) — branded, title-free wordmark card
     await renderOne(
-        'default',
         'B2B Fintech Engineering',
         'Trading infrastructure, automation & analytics built for brokerages.',
         'brokztech.com',

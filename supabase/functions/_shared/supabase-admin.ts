@@ -7,10 +7,10 @@
  * A hard runtime guard throws if this module ever ends up evaluated in
  * a browser context — belt-and-braces against an accidental import.
  *
- * This file replaces `astro/src/lib/supabase/admin.ts` (which used
- * `import.meta.env` and the Node @supabase/supabase-js package). Keep
- * the two concerns separate: Astro SSR endpoints can read env differently,
- * but the Edge runtime always uses `Deno.env.get`.
+ * Edge Functions own the service-role path; the Astro static build
+ * never imports this file. Keep the two concerns separate: any
+ * server-side env reading on the Astro side stays in `src/lib/supabase/`,
+ * while this Edge runtime always uses `Deno.env.get`.
  */
 
 // deno-lint-ignore-file
