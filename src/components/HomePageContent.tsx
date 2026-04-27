@@ -5,6 +5,7 @@ import Spotlight from './fx/Spotlight';
 import InteractiveGrid from './fx/InteractiveGrid';
 import GlareCard from './fx/GlareCard';
 import ReferenceArchitecture from './sections/ReferenceArchitecture';
+import BrandIntroSection from './sections/BrandIntroSection';
 import HowWeEngage from './sections/HowWeEngage';
 import LocalizedLink from '../i18n/LocalizedLink';
 // Side-effect: ensures i18next is initialized before translations run.
@@ -171,6 +172,9 @@ export default function HomePageContent() {
 
       {/* ═══ REFERENCE ARCHITECTURE — How the stack composes ═══ */}
       <ReferenceArchitecture />
+
+      {/* ═══ BRAND INTRO — Identity reveal (visual-only, no copy) ═══ */}
+      <BrandIntroSection />
 
       {/* ═══ TRUST BAND — Who we work with ═══ */}
       <section className="section-padding bg-surface-muted border-y border-line">

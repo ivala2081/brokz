@@ -137,3 +137,30 @@ export function contactPage(name: string, description: string, path: string): Js
     isPartOf: { '@id': `${BASE_URL}/#website` },
   };
 }
+
+export interface VideoObjectInput {
+  name: string;
+  description: string;
+  thumbnailPath: string;
+  contentPath: string;
+  uploadDate: string;
+  /** ISO-8601 duration, e.g. "PT10S" for 10 seconds. */
+  duration: string;
+  inLanguage?: 'en' | 'tr';
+}
+
+/** schema.org VideoObject — for embedded brand or product videos. */
+export function videoObject(input: VideoObjectInput): JsonLd {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: input.name,
+    description: input.description,
+    thumbnailUrl: abs(input.thumbnailPath),
+    contentUrl: abs(input.contentPath),
+    uploadDate: input.uploadDate,
+    duration: input.duration,
+    publisher: { '@id': ORG_ID },
+    inLanguage: input.inLanguage || 'en',
+  };
+}

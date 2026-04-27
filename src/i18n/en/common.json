@@ -21,7 +21,9 @@
     "openMenu": "Open navigation menu",
     "closeMenu": "Close navigation menu",
     "brokzHome": "Brokz — Home",
-    "switchLanguage": "Switch language"
+    "switchLanguage": "Switch language",
+    "brandIntro": "Brokz brand intro animation, 10 seconds, no audio",
+    "replayBrandIntro": "Replay brand intro"
   },
   "status": {
     "operational": "All systems operational"
