@@ -13,21 +13,28 @@ import { createBrowserSupabase } from '../../lib/supabase/browser';
 import '../../i18n';
 
 type Locale = 'en' | 'tr';
+type Audience = 'customer' | 'admin';
 
 interface Props {
     locale: Locale;
 }
 
-async function resolveHomeForUser(
+async function fetchUserRole(
     supabase: ReturnType<typeof createBrowserSupabase>,
     userId: string,
-): Promise<string> {
+): Promise<'admin' | 'customer' | null> {
     const { data } = await supabase
         .from('profiles')
         .select('role')
         .eq('id', userId)
         .maybeSingle();
-    return data?.role === 'admin' ? '/admin' : '/dashboard';
+    if (data?.role === 'admin') return 'admin';
+    if (data?.role) return 'customer';
+    return null;
+}
+
+function homeForRole(role: 'admin' | 'customer' | null): string {
+    return role === 'admin' ? '/admin' : '/dashboard';
 }
 
 export default function LoginForm({ locale }: Props) {
@@ -39,12 +46,16 @@ export default function LoginForm({ locale }: Props) {
     const [magicSent, setMagicSent] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [explicitRedirect, setExplicitRedirect] = useState<string | null>(null);
+    const [audience, setAudience] = useState<Audience>('customer');
 
     useEffect(() => {
         if (i18n.language !== locale) void i18n.changeLanguage(locale);
         const params = new URLSearchParams(window.location.search);
         const raw = params.get('redirect');
         if (raw && raw.startsWith('/')) setExplicitRedirect(raw);
+        if (raw?.startsWith('/admin')) setAudience('admin');
+        const audParam = params.get('as');
+        if (audParam === 'admin' || audParam === 'customer') setAudience(audParam);
 
         // If a session already exists (user hit /auth/login while logged in),
         // bounce to the target. The previous SSR-guard version of this page
@@ -52,9 +63,8 @@ export default function LoginForm({ locale }: Props) {
         const supabase = createBrowserSupabase();
         void supabase.auth.getSession().then(async ({ data }) => {
             if (!data.session) return;
-            const target = raw && raw.startsWith('/')
-                ? raw
-                : await resolveHomeForUser(supabase, data.session.user.id);
+            const role = await fetchUserRole(supabase, data.session.user.id);
+            const target = raw && raw.startsWith('/') ? raw : homeForRole(role);
             window.location.assign(target);
         });
     }, [locale, i18n]);
@@ -74,7 +84,19 @@ export default function LoginForm({ locale }: Props) {
                 setSubmitting(false);
                 return;
             }
-            const target = explicitRedirect ?? await resolveHomeForUser(supabase, signInData.user.id);
+            const role = await fetchUserRole(supabase, signInData.user.id);
+            if (audience === 'admin' && role !== 'admin') {
+                await supabase.auth.signOut();
+                setError(t('login.roleMismatchAdmin'));
+                setSubmitting(false);
+                return;
+            }
+            if (audience === 'customer' && role === 'admin') {
+                setError(t('login.roleMismatchCustomer'));
+                setSubmitting(false);
+                return;
+            }
+            const target = explicitRedirect ?? homeForRole(role);
             window.location.assign(target);
         } catch {
             setError(t('login.errors.generic'));
@@ -115,6 +137,34 @@ export default function LoginForm({ locale }: Props) {
                 </h1>
                 <p className="mt-2 text-sm text-ink/60">{t('login.subheading')}</p>
             </div>
+
+            <div role="tablist" aria-label={t('login.audienceLabel')} className="grid grid-cols-2 gap-1 rounded-lg bg-ink/5 p-1">
+                {(['customer', 'admin'] as const).map((value) => {
+                    const selected = audience === value;
+                    return (
+                        <button
+                            key={value}
+                            type="button"
+                            role="tab"
+                            aria-selected={selected}
+                            onClick={() => {
+                                setAudience(value);
+                                setError(null);
+                            }}
+                            className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+                                selected
+                                    ? 'bg-white text-ink shadow-sm'
+                                    : 'text-ink/60 hover:text-ink'
+                            }`}
+                        >
+                            {value === 'customer' ? t('login.audienceCustomer') : t('login.audienceAdmin')}
+                        </button>
+                    );
+                })}
+            </div>
+            <p className="-mt-2 text-xs text-ink/50">
+                {audience === 'customer' ? t('login.audienceCustomerHint') : t('login.audienceAdminHint')}
+            </p>
 
             <div className="space-y-4">
                 <label className="block">
