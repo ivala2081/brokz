@@ -36,7 +36,7 @@ export default function LogoutHandler() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 fontFamily:
-                    'Geist, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+                    '"SF Pro Display", -apple-system, BlinkMacSystemFont, ui-sans-serif, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
                 fontSize: '0.875rem',
                 color: 'rgba(5, 10, 6, 0.6)',
             }}

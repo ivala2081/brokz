@@ -3,8 +3,8 @@
  *
  * Build-time OG image generator. Produces one 1200×630 PNG per blog post
  * into public/og/blog-<slug>.png, using satori (JSX → SVG) + @resvg/resvg-js
- * (SVG → PNG). Fonts come from the locally installed @fontsource/geist
- * woff files — no external fetches at build or runtime.
+ * (SVG → PNG). Fonts loaded from scripts/_fonts/ (subsetted SF Pro Display
+ * TTFs, build-only — not shipped to browsers; web copy is in public/fonts/).
  *
  * Rendered template: Brokz wordmark + category eyebrow + title + URL slug.
  * Non-blog pages continue to use the static /og-image.png default.
@@ -23,11 +23,11 @@ const outDir = resolve(root, 'public/og');
 
 if (!existsSync(outDir)) mkdirSync(outDir, { recursive: true });
 
-// ─── Font loading (local woff, no CDN) ─────────────────────────────────
+// ─── Font loading (local TTF, no CDN) ──────────────────────────────────
 
-const fontsDir = resolve(root, 'node_modules/@fontsource/geist/files');
-const regularFont = readFileSync(resolve(fontsDir, 'geist-latin-400-normal.woff'));
-const boldFont    = readFileSync(resolve(fontsDir, 'geist-latin-700-normal.woff'));
+const fontsDir = resolve(root, 'scripts/_fonts');
+const regularFont = readFileSync(resolve(fontsDir, 'sf-pro-display-400.ttf'));
+const boldFont    = readFileSync(resolve(fontsDir, 'sf-pro-display-700.ttf'));
 
 // ─── Frontmatter reader (same as sitemap generator) ────────────────────
 
@@ -74,7 +74,7 @@ function ogTemplate(input: TemplateInput): any {
                 padding: '72px 80px',
                 justifyContent: 'space-between',
                 color: '#F9FAFB',
-                fontFamily: 'Geist',
+                fontFamily: 'SF Pro Display',
                 backgroundImage: 'radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 192, 51, 0.22), transparent)',
             },
             children: [
@@ -176,8 +176,8 @@ async function renderOne(eyebrow: string, title: string, url: string, outPath: s
         width: 1200,
         height: 630,
         fonts: [
-            { name: 'Geist', data: regularFont, weight: 400, style: 'normal' },
-            { name: 'Geist', data: boldFont, weight: 700, style: 'normal' },
+            { name: 'SF Pro Display', data: regularFont, weight: 400, style: 'normal' },
+            { name: 'SF Pro Display', data: boldFont, weight: 700, style: 'normal' },
         ],
     });
     const png = new Resvg(svg).render().asPng();

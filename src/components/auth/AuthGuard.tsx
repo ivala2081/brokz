@@ -20,7 +20,7 @@
  *
  * SKELETON:
  * While resolving, renders a neutral full-screen placeholder in the
- * Brokz palette (#F9FAFB surface, #00C033 accent, Geist). We deliberately
+ * Brokz palette (#F9FAFB surface, #00C033 accent, SF Pro Display). We deliberately
  * avoid a spinner — exaggerated-minimalism says "calm, not busy."
  */
 
@@ -160,9 +160,9 @@ export default function AuthGuard({
 }
 
 /**
- * Neutral loading surface. Brokz palette, Geist-aware (inherited from the
- * global stylesheet), no spinner. Covers the whole viewport so it hides
- * whatever the hydrated page would otherwise flash on mount.
+ * Neutral loading surface. Brokz palette, SF Pro Display-aware (inherited
+ * from the global stylesheet), no spinner. Covers the whole viewport so it
+ * hides whatever the hydrated page would otherwise flash on mount.
  */
 function AuthSkeleton() {
     return (
@@ -180,7 +180,7 @@ function AuthSkeleton() {
                 backgroundColor: '#F9FAFB',
                 color: '#050A06',
                 fontFamily:
-                    'Geist, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+                    '"SF Pro Display", -apple-system, BlinkMacSystemFont, ui-sans-serif, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
             }}
         >
             <span
