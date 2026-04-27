@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { BrokzLogoCompact } from './BrokzLogo';
 import LocalizedLink from '../i18n/LocalizedLink';
 import LanguageSwitcher from '../i18n/LanguageSwitcher';
 import { useCurrentLocale, useLocalePath } from '../i18n/useLocale';
-import type { RouteKey } from '../i18n/routes';
+import type { RouteKey } from '../lib/routes';
+// Side-effect import — initializes i18next + resources on first island mount.
+import '../i18n';
 
 const EASE = [0.21, 0.47, 0.32, 0.98] as const;
 
@@ -55,7 +56,17 @@ export default function NavBar() {
   // mode === 'over-light' → header renders DARK (contrasts with white content)
   const [mode, setMode] = useState<'over-dark' | 'over-light'>('over-dark');
   const [progress, setProgress] = useState(0);
-  const location = useLocation();
+  // Astro is static-router-free: reflect the real pathname client-side
+  // after hydration, then re-read whenever a navigation happens (popstate).
+  const [pathname, setPathname] = useState(
+    typeof window !== 'undefined' ? window.location.pathname : '',
+  );
+
+  useEffect(() => {
+    const onPop = () => setPathname(window.location.pathname);
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => {
@@ -79,7 +90,7 @@ export default function NavBar() {
     setOpen(false);
     const y = window.scrollY;
     setMode(y < HERO_EXIT ? 'over-dark' : 'over-light');
-  }, [location.pathname]);
+  }, [pathname]);
 
   useEffect(() => {
     if (!open) return;
@@ -119,7 +130,7 @@ export default function NavBar() {
   const progressColor = overDark ? 'bg-brand' : 'bg-brand-accent';
 
   // Active-link detection — compare against the current-locale path for each item.
-  const isActiveKey = (key: RouteKey) => location.pathname === localePath(key);
+  const isActiveKey = (key: RouteKey) => pathname === localePath(key);
 
   return (
     <>
@@ -166,6 +177,12 @@ export default function NavBar() {
 
           <div className="hidden md:flex items-center gap-5">
             <LanguageSwitcher tone={overDark ? 'on-light' : 'on-dark'} />
+            <a
+              href="/auth/login"
+              className={`text-sm font-medium transition-colors duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-ring focus-visible:ring-offset-2 rounded-md ${linkIdle} hover:text-brand`}
+            >
+              {t('cta.signIn')}
+            </a>
             <LocalizedLink
               to="contact"
               className={`inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-pill transition-colors duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-ring focus-visible:ring-offset-2 ${ctaClasses}`}
@@ -305,6 +322,12 @@ export default function NavBar() {
                     <polyline points="12 5 19 12 12 19" />
                   </svg>
                 </LocalizedLink>
+                <a
+                  href="/auth/login"
+                  className="inline-flex items-center justify-center w-full py-3 text-sm font-medium text-white/80 border border-line-inverse rounded-pill hover:text-brand-accent hover:border-brand-accent transition-colors"
+                >
+                  {t('nav.portal')}
+                </a>
 
                 <div className="flex flex-col gap-4 pt-6 border-t border-line-inverse">
                   <div className="flex items-center gap-2.5">

@@ -1,20 +1,26 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-import enCommon from './locales/en/common.json';
-import trCommon from './locales/tr/common.json';
-import enHome from './locales/en/home.json';
-import trHome from './locales/tr/home.json';
-import enSolutions from './locales/en/solutions.json';
-import trSolutions from './locales/tr/solutions.json';
-import enProducts from './locales/en/products.json';
-import trProducts from './locales/tr/products.json';
-import enAbout from './locales/en/about.json';
-import trAbout from './locales/tr/about.json';
-import enContact from './locales/en/contact.json';
-import trContact from './locales/tr/contact.json';
-import enLegal from './locales/en/legal.json';
-import trLegal from './locales/tr/legal.json';
+import enCommon from './en/common.json';
+import trCommon from './tr/common.json';
+import enHome from './en/home.json';
+import trHome from './tr/home.json';
+import enSolutions from './en/solutions.json';
+import trSolutions from './tr/solutions.json';
+import enProducts from './en/products.json';
+import trProducts from './tr/products.json';
+import enAbout from './en/about.json';
+import trAbout from './tr/about.json';
+import enContact from './en/contact.json';
+import trContact from './tr/contact.json';
+import enLegal from './en/legal.json';
+import trLegal from './tr/legal.json';
+import enAuth from './en/auth.json';
+import trAuth from './tr/auth.json';
+import enAdmin from './en/admin.json';
+import trAdmin from './tr/admin.json';
+import enDashboard from './en/dashboard.json';
+import trDashboard from './tr/dashboard.json';
 
 export const SUPPORTED_LANGUAGES = ['en', 'tr'] as const;
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
@@ -34,6 +40,9 @@ void i18n.use(initReactI18next).init({
       about: enAbout,
       contact: enContact,
       legal: enLegal,
+      auth: enAuth,
+      admin: enAdmin,
+      dashboard: enDashboard,
     },
     tr: {
       common: trCommon,
@@ -43,6 +52,9 @@ void i18n.use(initReactI18next).init({
       about: trAbout,
       contact: trContact,
       legal: trLegal,
+      auth: trAuth,
+      admin: trAdmin,
+      dashboard: trDashboard,
     },
   },
   lng: 'en',

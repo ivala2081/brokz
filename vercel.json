@@ -1,8 +1,11 @@
 {
+  "buildCommand": "bun run build",
+  "outputDirectory": "dist",
+  "installCommand": "bun install",
+  "framework": "astro",
   "rewrites": [
-    {
-      "source": "/((?!api/).*)",
-      "destination": "/index.html"
-    }
+    { "source": "/admin/customers/:id", "destination": "/admin/customers/placeholder/index.html" },
+    { "source": "/admin/tickets/:id", "destination": "/admin/tickets/placeholder/index.html" },
+    { "source": "/admin/blog/:slug/edit", "destination": "/admin/blog/new/edit/index.html" }
   ]
 }

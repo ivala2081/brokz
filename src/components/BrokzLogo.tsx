@@ -1,5 +1,5 @@
-import logoOnDark from '../assets/logo/brokz-logo-on-dark.svg';
-import logoOnLight from '../assets/logo/brokz-logo-on-light.svg';
+import logoOnDark from '../assets/logo/brokz-logo-on-dark.svg?url';
+import logoOnLight from '../assets/logo/brokz-logo-on-light.svg?url';
 
 interface BrokzLogoProps {
   size?: number;

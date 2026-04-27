@@ -18,8 +18,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, '..');
-const repoRoot = resolve(root, '..');
-const blogDir = resolve(repoRoot, 'content/blog');
+const blogDir = resolve(root, 'content/blog');
 const outDir = resolve(root, 'public/og');
 
 if (!existsSync(outDir)) mkdirSync(outDir, { recursive: true });
