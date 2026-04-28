@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Footer from '../../components/Footer.astro';
+import NavBar from '../../components/NavBar.tsx';
+import WebTraderPage from '../../components/products/WebTraderPage.tsx';
+import { service, faqPage, breadcrumbList } from '../../lib/jsonld';
+
+const pathname = '/products/webtrader';
+
+const title = 'Custom Web Trader Platform | Brokz — Institutional Trading Software';
+const description = 'Build or buy a custom white-label web trader platform engineered for institutional brokers. Real-time execution, multi-asset support, full brand ownership. Request pricing.';
+const keywords = 'custom web trader, buy web trader platform, best web trader provider, white label web trader, institutional web trader software, web trader for brokers, custom trading platform development, web trader pricing, web trader vs MT4 MT5';
+
+const faqItems = [
+  {
+    question: 'What is a custom web trader?',
+    answer: 'A custom web trader is a browser-based trading terminal built specifically for your brokerage. Unlike off-the-shelf platforms like MT4/MT5, a custom web trader is fully branded, architecturally owned by you, and can be extended with any feature your business requires.',
+  },
+  {
+    question: 'How do I buy a web trader platform?',
+    answer: 'Contact Brokz with your requirements — asset classes, expected user volume, integrations needed, and branding requirements. We scope the project, agree on a fixed-price or milestone contract, and deliver a production-ready platform typically within 10–16 weeks.',
+  },
+  {
+    question: 'How much does a custom web trader cost?',
+    answer: 'Web trader pricing depends on scope: asset classes supported, number of concurrent users, integrations (liquidity, risk, back-office), and white-label requirements. Contact us for a detailed quote. We offer both one-time license purchase and ongoing SaaS-style engagement models.',
+  },
+  {
+    question: 'Is a web trader better than MT4 or MT5?',
+    answer: 'For brokers who want full brand control, a web-first experience, and the ability to add proprietary features, a custom web trader outperforms MT4/MT5. MT4/MT5 have rigid UI constraints, licensing costs, and no white-label options. A custom web trader runs in any browser with no client install required.',
+  },
+  {
+    question: 'Can the web trader be white-labelled?',
+    answer: 'Yes. Brokz delivers the platform under full white-label terms — you own the codebase, brand all UI elements, and deploy on your own infrastructure or cloud. There are no Brokz watermarks or third-party attributions visible to your clients.',
+  },
+  {
+    question: 'What assets does the web trader support?',
+    answer: 'The platform is built multi-asset from the ground up: FX pairs, equities, derivatives, commodities, crypto, and CFDs. Asset class support is configurable per deployment.',
+  },
+  {
+    question: 'How long does web trader development take?',
+    answer: 'A standard institutional web trader deployment takes 10–16 weeks from signed agreement to production launch. Complex multi-asset, multi-broker setups may take 20–24 weeks. We provide weekly demos against a production-like environment from week one.',
+  },
+  {
+    question: 'Does Brokz provide ongoing support after delivery?',
+    answer: 'Yes. Every engagement includes a post-launch support window, and we offer optional retainer agreements for ongoing feature development, infrastructure monitoring, and platform evolution.',
+  },
+];
+
+const jsonLd = [
+  service({
+    name: 'Custom Web Trader Platform',
+    description,
+    path: pathname,
+    serviceType: 'Custom trading platform development',
+  }),
+  faqPage(faqItems),
+  breadcrumbList([
+    { name: 'Home',              path: '/' },
+    { name: 'Products',          path: '/products' },
+    { name: 'Custom Web Trader', path: pathname },
+  ]),
+];
+---
+<BaseLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+  jsonLd={jsonLd}
+>
+  <NavBar client:load />
+  <main class="min-h-screen bg-surface">
+    <WebTraderPage client:load />
+  </main>
+  <Footer />
+</BaseLayout>

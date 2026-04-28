@@ -6,10 +6,16 @@
   },
   "hero": {
     "eyebrow": "B2B Fintech Mühendisliği",
-    "titleLead": "Modern trading için",
-    "titleAccent": "altyapı",
-    "titleTail": ".",
-    "body": "Aracı kurumlar, prop firmaları ve likidite sağlayıcıları için kurumsal sistemler. Güvenilirlik, düşük latency, ölçek."
+    "titleLead": "Trading",
+    "titleAccent": "Altyapısı",
+    "titleTail": "Kurumsal Ölçeğe Hazır",
+    "body": "White-label MT5, FIX bağlantısı, algo motorları ve derin likidite entegrasyonları — kurumsal aracı kurumlar için yönetilen servis olarak.",
+    "trust": "47 aracı kurum Brokz altyapısına güveniyor",
+    "tabs": {
+      "webtrader": "WebTrader",
+      "brokerManager": "Broker Manager",
+      "brokerage": "Aracı Kurum"
+    }
   },
   "capabilities": {
     "eyebrow": "Ne İnşa Ediyoruz",

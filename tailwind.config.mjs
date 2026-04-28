@@ -149,8 +149,18 @@ export default {
 
             backgroundImage: {
                 'grid-light': 'linear-gradient(rgba(15,23,42,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,42,0.04) 1px, transparent 1px)',
-                'grid-dark':  'linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)',
+                'grid-dark':  'linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px)',
                 'brand-radial': 'radial-gradient(ellipse 80% 50% at 50% -20%, rgba(8,115,49,0.15), transparent)',
+            },
+
+            animation: {
+                'border-beam': 'border-beam calc(var(--duration)*1s) infinite linear',
+            },
+
+            keyframes: {
+                'border-beam': {
+                    '100%': { 'offset-distance': '100%' },
+                },
             },
         },
     },

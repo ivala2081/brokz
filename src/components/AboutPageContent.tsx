@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next';
-import PageHero from './PageHero';
 import AnimateIn, { Stagger, StaggerItem } from './AnimateIn';
 import Spotlight from './fx/Spotlight';
 import InteractiveGrid from './fx/InteractiveGrid';
 import GlareCard from './fx/GlareCard';
+import BrandIntroSection from './sections/BrandIntroSection';
 import '../i18n';
 
 type PhilosophyItem = { key: string; title: string; body: string };
@@ -18,12 +18,7 @@ export default function AboutPageContent() {
 
   return (
     <>
-      <PageHero
-        label={t('hero.label')}
-        title={t('hero.title')}
-        highlight={t('hero.highlight')}
-        description={t('hero.description')}
-      />
+      <BrandIntroSection />
 
       {/* Mission */}
       <section className="section-padding bg-surface">

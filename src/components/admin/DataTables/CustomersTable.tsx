@@ -16,6 +16,7 @@ import EmptyState from '../../ui/EmptyState';
 import { resolveAdminLocale } from '../../../lib/admin/locale';
 import { countryLabel } from '../../../lib/countries';
 import { useAuth } from '../../auth/AuthContext';
+import { toast } from '../../ui/Toast';
 import { formatDate } from '../../../lib/admin/format';
 
 type Locale = 'en' | 'tr';
@@ -111,6 +112,14 @@ function CustomersInner({ locale }: { locale: Locale }) {
         void load();
     }, [load]);
 
+    async function deleteRow(r: Row) {
+        if (!window.confirm(t('common.deleteConfirm'))) return;
+        const { error } = await supabase.from('organizations').delete().eq('id', r.id);
+        if (error) { toast.error(`${t('common.deleteError')}: ${error.message}`); return; }
+        toast.success(t('common.deleteSuccess'));
+        void load();
+    }
+
     const localeTag = locale === 'tr' ? 'tr-TR' : 'en-US';
 
     const columns: DataTableColumn<Row>[] = [
@@ -169,6 +178,22 @@ function CustomersInner({ locale }: { locale: Locale }) {
             cell: (r) => <span className="text-xs text-ink-muted tabular-nums">{formatDate(r.created_at, localeTag)}</span>,
             sortable: true,
             searchAccessor: (r) => r.created_at,
+            align: 'right',
+        },
+        {
+            key: 'actions',
+            header: '',
+            cell: (r) => (
+                <div className="text-right">
+                    <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={(e) => { e.stopPropagation(); void deleteRow(r); }}
+                    >
+                        {t('common.delete')}
+                    </Button>
+                </div>
+            ),
             align: 'right',
         },
     ];

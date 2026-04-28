@@ -31,15 +31,28 @@
   "form": {
     "company": {
       "label": "Şirket Adı",
-      "placeholder": "Örn. Acme Aracı Kurum A.Ş."
+      "placeholder": "Örn. Acme Aracı Kurum A.Ş. (isteğe bağlı)"
     },
     "name": {
       "label": "Adınız Soyadınız",
       "placeholder": "Ahmet Yılmaz"
     },
     "email": {
-      "label": "Kurumsal E-posta",
+      "label": "E-posta",
       "placeholder": "a.yilmaz@firma.com"
+    },
+    "phone": {
+      "label": "Telefon Numarası",
+      "error": "Seçilen ülke için geçerli bir telefon numarası girin.",
+      "searchPlaceholder": "Ülke ara…",
+      "noResults": "Sonuç bulunamadı"
+    },
+    "contactPreference": {
+      "label": "İletişim Tercihi",
+      "email": "E-posta",
+      "phone": "Telefon",
+      "any": "Farketmez",
+      "error": "Lütfen bir iletişim tercihi seçin."
     },
     "type": {
       "label": "Talep Türü",
@@ -75,6 +88,100 @@
     "errors": {
       "generic": "Bir şeyler yanlış gitti. Lütfen tekrar deneyin ya da doğrudan contact@brokztech.com adresine e-posta gönderin.",
       "network": "Ağ hatası. Lütfen bağlantınızı kontrol edip tekrar deneyin."
+    }
+  },
+  "gate": {
+    "title": "Size nasıl yardımcı olabiliriz?",
+    "subtitle": "Talebinizi doğru yönlendirebilmemiz için sizi en iyi tanımlayan seçeneği belirleyin.",
+    "customerCard": {
+      "title": "Müşterinizim",
+      "desc": "Brokz'da aktif bir hesabınız var. Destek talebi veya proje başvurusunu doğrudan hesabınızdan gönderin.",
+      "cta": "Müşteri olarak devam et"
+    },
+    "leadCard": {
+      "title": "Henüz müşteri değilim",
+      "desc": "Ürünlerimizi keşfedin, fiyat teklifi alın veya iş ortaklığı hakkında bilgi edinin — hesap gerekmez.",
+      "cta": "Devam et"
+    }
+  },
+  "customerTicket": {
+    "loginPrompt": "Destek talebi göndermek için Brokz hesabınıza giriş yapın.",
+    "loginCta": "Devam etmek için giriş yapın",
+    "notCustomer": "Bu form müşterilere özeldir. Talepleri yönetmek için yönetici panelini kullanın.",
+    "fields": {
+      "subject": {
+        "label": "Konu",
+        "placeholder": "Talebinizin kısa açıklaması"
+      },
+      "priority": {
+        "label": "Öncelik",
+        "options": {
+          "low": "Düşük",
+          "med": "Orta",
+          "high": "Yüksek"
+        }
+      },
+      "message": {
+        "label": "Mesaj",
+        "placeholder": "Talebinizi ayrıntılı olarak açıklayın…"
+      }
+    },
+    "submit": "Talebi Gönder",
+    "submitting": "Gönderiliyor…",
+    "success": {
+      "title": "Talebiniz oluşturuldu",
+      "body": "Destek talebiniz alındı. Durumunu panelinizden takip edebilirsiniz.",
+      "cta": "Taleplerime git"
+    },
+    "errors": {
+      "generic": "Bir şeyler yanlış gitti. Lütfen tekrar deneyin ya da doğrudan contact@brokztech.com adresine e-posta gönderin.",
+      "network": "Ağ hatası. Lütfen bağlantınızı kontrol edip tekrar deneyin.",
+      "subjectMax": "En fazla 140 karakter",
+      "messageMin": "En az 10 karakter",
+      "messageMax": "En fazla 5000 karakter"
+    }
+  },
+  "leadMenu": {
+    "title": "Ne yapmak istersiniz?",
+    "subtitle": "İhtiyacınıza en uygun talep türünü seçin.",
+    "back": "Geri",
+    "webtrader": {
+      "title": "WebTrader Manager talebi",
+      "desc": "WebTrader Manager ürünümüz hakkında özellikler, lisanslama ve entegrasyon bilgisi alın.",
+      "cta": "Talep başlat"
+    },
+    "order": {
+      "title": "Sipariş oluşturma",
+      "desc": "Katalogumuzdan belirli bir ürün talep edin. Ekibimiz inceleyip size geri dönecek.",
+      "cta": "Sipariş talebi"
+    },
+    "info": {
+      "title": "Bilgi ve fiyat alma",
+      "desc": "Ürünlerimiz hakkında detaylı fiyatlandırma, teknik özellikler veya genel bilgi alın.",
+      "cta": "Soru sor"
+    }
+  },
+  "leadForms": {
+    "back": "Geri",
+    "honeypotLabel": "Web sitesi (boş bırakın)",
+    "webtrader": {
+      "title": "WebTrader Manager talebi",
+      "subtitle": "Kullanım senaryonuzu anlatın, bir iş günü içinde size dönüş yapalım."
+    },
+    "order": {
+      "title": "Sipariş oluşturma",
+      "subtitle": "İlgilendiğiniz ürünü seçin ve iletişim bilgilerinizi girin.",
+      "productLabel": "Ürün",
+      "productPlaceholder": "Bir ürün seçin",
+      "productLoading": "Ürünler yükleniyor…",
+      "productError": "Ürünler yüklenemedi. Lütfen tekrar deneyin.",
+      "quantityLabel": "Adet",
+      "notesLabel": "Notlar",
+      "notesPlaceholder": "Siparişinizle ilgili ek bilgiler (isteğe bağlı)…"
+    },
+    "info": {
+      "title": "Bilgi ve fiyat alma",
+      "subtitle": "Fiyatlandırma, teknik özellikler veya ürünlerimiz hakkında merak ettiğiniz her şeyi sorun."
     }
   }
 }

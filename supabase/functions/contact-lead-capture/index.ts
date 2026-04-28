@@ -23,8 +23,7 @@
  */
 
 // deno-lint-ignore-file no-explicit-any
-// @ts-ignore — Deno std import (resolved at edge runtime)
-import { serve } from 'https://deno.land/std@0.224.0/http/server.ts';
+import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 // @ts-ignore — Deno x import (resolved at edge runtime)
 import { z } from 'https://deno.land/x/zod@v3.23.8/mod.ts';
 
@@ -33,54 +32,59 @@ import { sendEmail } from '../_shared/resend.ts';
 import { corsHeaders, handlePreflight } from '../_shared/cors.ts';
 import { renderContactNotification } from '../_shared/emails/contact-notification.ts';
 
-// @ts-ignore — `Deno` global at runtime
-declare const Deno: { env: { get(key: string): string | undefined } };
-
 // ─── constants ───────────────────────────────────────────────────────
 const FN_NAME = 'contact-lead-capture';
 const RATE_LIMIT_BUCKET = 'contact';
 const RATE_LIMIT_MAX = 5;
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000; // 10 minutes
 
-const INQUIRY_TYPES = new Set([
-  '',
-  'Brokerage Infrastructure',
-  'Trading Platform Development',
-  'MT4/MT5 Plugins',
-  'Algorithmic Trading Systems',
-  'Risk & Execution Optimization',
-  'Data Analytics',
-  'Partnership',
-  'Other',
+// ─── validation schema ───────────────────────────────────────────────
+// `inquiry_type` is the new structured enum from the 2-step flow.
+// `type` is kept as a legacy free-text field; if a caller sends only `type`
+// (old /contact form during transition), `inquiry_type` defaults to 'general'.
+const LEAD_INQUIRY_TYPE = z.enum([
+  'general',
+  'support',
+  'webtrader_manager',
+  'order_request',
+  'info_pricing',
 ]);
 
-// ─── validation schema ───────────────────────────────────────────────
-// Mirrors the current Astro contact form (ContactPageContent.tsx) plus
-// an optional `source` for campaign attribution and an optional `hp`
-// honeypot (the form uses `website` — we accept either).
-const ContactSchema = z.object({
-  company: z.string().min(1, 'Company is required').max(120),
-  name: z.string().min(1, 'Name is required').max(120),
-  email: z
-    .string()
-    .email('Invalid email')
-    .max(160),
-  type: z
-    .string()
-    .max(80)
-    .optional()
-    .default('')
-    .refine(v => INQUIRY_TYPES.has(v), { message: 'Invalid inquiry type' }),
-  message: z
-    .string()
-    .min(10, 'Message too short (min 10 chars)')
-    .max(5000),
-  consent: z.boolean().optional(),
-  source: z.string().max(120).optional(),
-  // Honeypots — either field present and non-empty means bot.
-  hp: z.string().max(200).optional(),
-  website: z.string().max(200).optional(),
-});
+const ContactSchema = z
+  .object({
+    company: z.string().max(120).optional(),
+    name: z.string().min(1, 'Name is required').max(120),
+    email: z.string().email('Invalid email').max(160),
+    // New structured field — preferred over legacy `type`.
+    inquiry_type: LEAD_INQUIRY_TYPE.optional(),
+    // Legacy free-text field kept for backward compatibility with old /contact form.
+    type: z.string().max(80).optional(),
+    // Required phone in E.164 format (e.g. +905321234567)
+    phone: z.string().min(1, 'Phone is required').max(30),
+    // How the prospect prefers to be contacted
+    contact_preference: z.enum(['email', 'phone', 'any']),
+    // Order-request–specific fields.
+    product_id: z.string().uuid().optional(),
+    quantity: z.number().int().positive().max(10000).optional(),
+    message: z.string().min(10, 'Message too short (min 10 chars)').max(5000),
+    consent: z.boolean().optional(),
+    source: z.string().max(120).optional(),
+    // Honeypots — either field present and non-empty means bot.
+    hp: z.string().max(200).optional(),
+    website: z.string().max(200).optional(),
+  })
+  .strict()
+  .superRefine((val, ctx) => {
+    // Resolve effective inquiry_type for cross-field checks.
+    const effectiveType = val.inquiry_type ?? 'general';
+    if (effectiveType === 'order_request' && !val.product_id) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'product_id is required for order_request',
+        path: ['product_id'],
+      });
+    }
+  });
 
 type ContactPayload = z.infer<typeof ContactSchema>;
 
@@ -175,7 +179,7 @@ async function isRateLimited(ip: string): Promise<boolean> {
 
 // ─── handler ─────────────────────────────────────────────────────────
 
-serve(async (req: Request) => {
+Deno.serve(async (req: Request) => {
   const ip = getClientIp(req);
 
   // CORS preflight
@@ -251,12 +255,21 @@ serve(async (req: Request) => {
   const supabase = createAdminClient();
   const leadSource = data.source?.trim() || 'contact_form';
 
+  // Resolve the effective inquiry_type: use the new field if present,
+  // otherwise fall back to 'general' (covers the legacy `type`-only path).
+  const effectiveInquiryType = data.inquiry_type ?? 'general';
+
   const { error: insertErr } = await supabase.from('leads').insert({
     name: data.name,
     email: data.email,
     company: data.company,
     message: data.message,
     source: leadSource,
+    inquiry_type: effectiveInquiryType,
+    phone: data.phone,
+    contact_preference: data.contact_preference,
+    ...(data.product_id != null ? { product_id: data.product_id } : {}),
+    ...(data.quantity != null ? { quantity: data.quantity } : {}),
   });
 
   if (insertErr) {
@@ -267,13 +280,30 @@ serve(async (req: Request) => {
     });
   }
 
+  // Resolve product name for order_request leads (best-effort; don't fail the
+  // whole request if the product lookup fails — lead is already saved).
+  let productName: string | undefined;
+  if (effectiveInquiryType === 'order_request' && data.product_id) {
+    const { data: product } = await supabase
+      .from('products')
+      .select('name')
+      .eq('id', data.product_id)
+      .single();
+    if (product && typeof (product as Record<string, unknown>).name === 'string') {
+      productName = (product as Record<string, unknown>).name as string;
+    }
+  }
+
   // Send notification email
   const toEmail = Deno.env.get('CONTACT_TO_EMAIL') || 'brokztech@gmail.com';
   const { subject, html, text } = renderContactNotification({
     company: data.company,
     name: data.name,
     email: data.email,
-    type: data.type ?? '',
+    type: data.type,
+    inquiry_type: effectiveInquiryType,
+    product_name: productName,
+    quantity: data.quantity,
     message: data.message,
     source: leadSource,
     ip,

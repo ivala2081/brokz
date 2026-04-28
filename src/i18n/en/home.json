@@ -6,10 +6,16 @@
   },
   "hero": {
     "eyebrow": "B2B Fintech Engineering",
-    "titleLead": "Infrastructure",
-    "titleAccent": "for modern",
-    "titleTail": "trading.",
-    "body": "Institutional systems for brokerages, prop firms, and liquidity providers. Built for reliability, latency, and scale."
+    "titleLead": "Trading",
+    "titleAccent": "Infrastructure",
+    "titleTail": "Built to Scale",
+    "body": "White-label MT5, FIX connectivity, algo engines, and deep-liquidity integrations — delivered as a managed service for institutional brokers.",
+    "trust": "47 brokerages trust Brokz infrastructure",
+    "tabs": {
+      "webtrader": "WebTrader",
+      "brokerManager": "Broker Manager",
+      "brokerage": "Brokerage"
+    }
   },
   "capabilities": {
     "eyebrow": "What We Build",

@@ -74,6 +74,14 @@ function BlogInner({ locale }: { locale: Locale }) {
         void load();
     }, [load]);
 
+    async function deleteRow(r: Row) {
+        if (!window.confirm(t('common.deleteConfirm'))) return;
+        const { error } = await supabase.from('blog_posts').delete().eq('id', r.id);
+        if (error) { toast.error(`${t('common.deleteError')}: ${error.message}`); return; }
+        toast.success(t('common.deleteSuccess'));
+        void load();
+    }
+
     async function togglePublish(r: Row) {
         const next = r.status === 'published' ? 'draft' : 'published';
         const { error } = await supabase
@@ -155,6 +163,9 @@ function BlogInner({ locale }: { locale: Locale }) {
                     </Button>
                     <Button size="sm" variant="ghost" onClick={() => void togglePublish(r)}>
                         {r.status === 'published' ? t('blog.editor.unpublish') : t('blog.editor.saveAndPublish')}
+                    </Button>
+                    <Button size="sm" variant="ghost" onClick={() => void deleteRow(r)}>
+                        {t('common.delete')}
                     </Button>
                 </div>
             ),

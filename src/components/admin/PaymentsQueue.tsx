@@ -135,6 +135,18 @@ export function PaymentsInner({ locale }: { locale: Locale }) {
         void load();
     }
 
+    async function deleteRow(row: Row) {
+        if (!window.confirm(t('common.deleteConfirm'))) return;
+        const { error } = await supabase
+            .from('payment_submissions')
+            .delete()
+            .eq('id', row.id);
+        if (error) { toast.error(`${t('common.deleteError')}: ${error.message}`); return; }
+        toast.success(t('common.deleteSuccess'));
+        if (selected?.id === row.id) setSelected(null);
+        void load();
+    }
+
     async function reject(row: Row, reason: string) {
         setActionBusy(true);
         const { error } = await supabase.rpc('reject_payment_submission', {
@@ -239,6 +251,22 @@ export function PaymentsInner({ locale }: { locale: Locale }) {
             ),
             sortable: true,
             searchAccessor: (r) => r.submitted_at,
+            align: 'right',
+        },
+        {
+            key: 'actions',
+            header: '',
+            cell: (r) => (
+                <div className="text-right">
+                    <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={(e) => { e.stopPropagation(); void deleteRow(r); }}
+                    >
+                        {t('common.delete')}
+                    </Button>
+                </div>
+            ),
             align: 'right',
         },
     ];
@@ -352,10 +380,11 @@ export function PaymentsInner({ locale }: { locale: Locale }) {
 }
 
 function AmountDiffBadge({ expected, paid }: { expected: number; paid: number }) {
+    const { t } = useTranslation('admin');
     const diff = paid - expected;
     const abs = Math.abs(diff);
     if (abs <= PAYMENT_AMOUNT_TOLERANCE_USD) {
-        return <span className="text-2xs text-brand">✓ match</span>;
+        return <span className="text-2xs text-brand">{t('payments.amountMatch')}</span>;
     }
     return (
         <span className={`text-2xs ${diff < 0 ? 'text-red-600' : 'text-amber-700'}`}>

@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -E \"\\\\.\\(tsx?|sql\\)$\")",
+      "PowerShell(powershell -ExecutionPolicy Bypass -File \"c:\\\\Users\\\\PC\\\\Desktop\\\\caveman-main\\\\hooks\\\\install.ps1\")",
+      "Bash(CAVEMAN_SETTINGS=\"/c/Users/PC/.claude/settings.json\" CAVEMAN_HOOKS_DIR=\"C:/Users/PC/.claude/hooks\" node \"/c/Users/PC/.claude/hooks/_caveman-merge.js\")",
+      "PowerShell(powershell -ExecutionPolicy Bypass -File \"C:/Users/PC/.claude/hooks/caveman-statusline.ps1\")",
+      "Read(//c/c/Users/PC/Desktop/brokz/src/i18n/**)",
+      "mcp__plugin_claude-mem_mcp-search__search",
+      "Bash(sort -k5 -rh)",
+      "Bash(claude plugin *)"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\PC\\.claude\\hooks",
+      "C:\\Users\\PC\\.claude\\hooks",
+      "\\tmp"
+    ]
+  }
+}

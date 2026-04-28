@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Footer from '../../../components/Footer.astro';
+import NavBar from '../../../components/NavBar.tsx';
+import WebTraderPage from '../../../components/products/WebTraderPageTR.tsx';
+import { service, faqPage, breadcrumbList } from '../../../lib/jsonld';
+
+const pathname = '/tr/urunler/webtrader';
+
+const title = 'Özel WebTrader Platformu | Brokz — Kurumsal İşlem Yazılımı';
+const description = 'Kurumsal brokerlar için özel white-label webtrader platformu. Gerçek zamanlı execution, çoklu varlık desteği, tam marka sahipliği. Fiyat teklifi alın.';
+const keywords = 'webtrader satın al, en iyi webtrader sağlayıcısı, webtrader nasıl alınır, özel webtrader geliştirme, kurumsal webtrader platformu, white label webtrader, forex webtrader çözümü, webtrader fiyat, webtrader yazılımı satın al';
+
+const faqItems = [
+  {
+    question: 'Özel webtrader nedir?',
+    answer: 'Özel webtrader, brokeriniz için sıfırdan inşa edilen tarayıcı tabanlı bir işlem terminalidir. MT4/MT5 gibi hazır platformların aksine, tamamen markalanır, mimari olarak size aittir ve işinizin gerektirdiği herhangi bir özellikle genişletilebilir.',
+  },
+  {
+    question: 'Webtrader platformunu nasıl satın alabilirim?',
+    answer: 'Brokz ile gereksinimlerinizi paylaşın — varlık sınıfları, beklenen kullanıcı hacmi, gereken entegrasyonlar ve markalaşma şartları. Projeyi kapsamlandırıyor, sabit fiyatlı veya milestone bazlı sözleşme yapıyor ve genellikle 10-16 hafta içinde üretime hazır platformu teslim ediyoruz.',
+  },
+  {
+    question: 'Özel webtrader maliyeti ne kadar?',
+    answer: 'Webtrader fiyatı kapsama bağlıdır: desteklenen varlık sınıfları, eşzamanlı kullanıcı sayısı, entegrasyonlar (likidite, risk, back-office) ve white-label gereksinimleri. Detaylı teklif için bizimle iletişime geçin. Tek seferlik lisans satın alma ve devamlı SaaS modeli sunuyoruz.',
+  },
+  {
+    question: 'Webtrader, MT4 veya MT5\'ten daha mı iyidir?',
+    answer: 'Tam marka kontrolü, web öncelikli deneyim ve özel özellikler ekleme yeteneği isteyen brokerlar için özel webtrader, MT4/MT5\'i geride bırakır. MT4/MT5\'in katı UI kısıtlamaları, lisans maliyetleri vardır ve white-label seçeneği yoktur. Özel webtrader herhangi bir tarayıcıda istemci kurulumu olmadan çalışır.',
+  },
+  {
+    question: 'Webtrader white-label olarak teslim edilebilir mi?',
+    answer: 'Evet. Brokz platformu tam white-label koşullarla teslim eder — kod tabanına sahip olursunuz, tüm UI öğelerini markalarsınız ve kendi altyapınızda veya bulutunuzda dağıtırsınız. Müşterilerinizin göreceği hiçbir Brokz filigranı veya üçüncü taraf atıfı yoktur.',
+  },
+  {
+    question: 'Webtrader hangi varlıkları destekliyor?',
+    answer: 'Platform en baştan çoklu varlık olarak inşa edilmiştir: FX paritleri, hisse senetleri, türevler, emtialar, kripto ve CFD\'ler. Varlık sınıfı desteği her dağıtıma göre yapılandırılabilir.',
+  },
+  {
+    question: 'Webtrader geliştirme ne kadar sürer?',
+    answer: 'Standart kurumsal webtrader dağıtımı, imzalı anlaşmadan üretime kadar 10-16 hafta sürer. Karmaşık çoklu varlık, çoklu broker kurulumları 20-24 hafta sürebilir. Birinci haftadan itibaren üretim benzeri ortama karşı haftalık demo veriyoruz.',
+  },
+  {
+    question: 'Brokz teslimat sonrası destek sunuyor mu?',
+    answer: 'Evet. Her proje launch sonrası destek penceresi içerir ve devamlı özellik geliştirme, altyapı izleme ve platform evrimi için isteğe bağlı retainer anlaşmaları sunuyoruz.',
+  },
+];
+
+const jsonLd = [
+  service({
+    name: 'Özel WebTrader Platformu',
+    description,
+    path: pathname,
+    serviceType: 'Özel işlem platformu geliştirme',
+  }),
+  faqPage(faqItems),
+  breadcrumbList([
+    { name: 'Ana Sayfa',           path: '/tr' },
+    { name: 'Ürünler',             path: '/tr/urunler' },
+    { name: 'Özel WebTrader',      path: pathname },
+  ]),
+];
+---
+<BaseLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+  jsonLd={jsonLd}
+>
+  <NavBar client:load />
+  <main class="min-h-screen bg-surface">
+    <WebTraderPage client:load />
+  </main>
+  <Footer />
+</BaseLayout>

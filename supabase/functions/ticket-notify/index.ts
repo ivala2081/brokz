@@ -18,8 +18,7 @@
  */
 
 // deno-lint-ignore-file no-explicit-any
-// @ts-ignore — Deno std
-import { serve } from 'https://deno.land/std@0.224.0/http/server.ts';
+import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 // @ts-ignore — Deno x
 import { z } from 'https://deno.land/x/zod@v3.23.8/mod.ts';
 
@@ -33,9 +32,6 @@ import {
 } from '../_shared/auth.ts';
 import { createAdminClient } from '../_shared/supabase-admin.ts';
 import { build as buildTicketEmail } from '../_shared/emails/ticket-notification.ts';
-
-// @ts-ignore — Deno global
-declare const Deno: { env: { get(key: string): string | undefined } };
 
 const FN_NAME = 'ticket-notify';
 const PREVIEW_MAX = 500;
@@ -58,7 +54,7 @@ function extractBearer(req: Request): string | null {
   return match?.[1] ?? null;
 }
 
-serve(async (req: Request) => {
+Deno.serve(async (req: Request) => {
   const pre = handlePreflight(req);
   if (pre) return pre;
 

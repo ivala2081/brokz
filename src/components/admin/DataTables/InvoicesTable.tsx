@@ -104,6 +104,17 @@ export function InvoicesInner({ locale }: { locale: Locale }) {
         toast(t('invoices.generatePdf.pendingSetup'));
     }
 
+    async function deleteRow(r: Row) {
+        if (!window.confirm(t('common.deleteConfirm'))) return;
+        const { error } = await supabase
+            .from('invoices')
+            .update({ deleted_at: new Date().toISOString() })
+            .eq('id', r.id);
+        if (error) { toast.error(`${t('common.deleteError')}: ${error.message}`); return; }
+        toast.success(t('common.deleteSuccess'));
+        void load();
+    }
+
     async function markPaid(r: Row) {
         const { error } = await supabase
             .from('invoices')
@@ -196,6 +207,9 @@ export function InvoicesInner({ locale }: { locale: Locale }) {
                             {t('invoices.markPaid.action')}
                         </Button>
                     )}
+                    <Button size="sm" variant="ghost" onClick={() => void deleteRow(r)}>
+                        {t('common.delete')}
+                    </Button>
                 </div>
             ),
             align: 'right',

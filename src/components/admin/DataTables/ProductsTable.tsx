@@ -13,6 +13,7 @@ import { resolveAdminLocale } from '../../../lib/admin/locale';
 import { hasProductsBilling } from '../../../lib/admin/schemaProbe';
 import ProductDialog, { type ProductRow } from '../ProductDialog';
 import { useAuth } from '../../auth/AuthContext';
+import { toast } from '../../ui/Toast';
 import { formatDate, formatMoney } from '../../../lib/admin/format';
 
 type Locale = 'en' | 'tr';
@@ -61,7 +62,11 @@ function ProductsInner({ locale }: { locale: Locale }) {
         const columns = hasBilling
             ? 'id, slug, name, description, category, base_price, currency, is_active, billing_type, setup_fee, updated_at'
             : 'id, slug, name, description, category, base_price, currency, is_active, updated_at';
-        const { data } = await supabase.from('products').select(columns).order('name', { ascending: true });
+        const { data } = await supabase
+            .from('products')
+            .select(columns)
+            .eq('is_active', true)
+            .order('name', { ascending: true });
         const raw = (data as Array<Partial<Row>>) ?? [];
         setRows(raw.map((r) => ({
             ...(r as Row),
@@ -74,6 +79,30 @@ function ProductsInner({ locale }: { locale: Locale }) {
     useEffect(() => {
         void load();
     }, [load]);
+
+    async function deleteRow(r: Row) {
+        if (!window.confirm(t('common.deleteConfirm'))) return;
+        const { error } = await supabase.from('products').delete().eq('id', r.id);
+        if (error) {
+            // FK to orders is `on delete restrict` — products with order history
+            // cannot be hard-deleted. Fall back to deactivation so the row
+            // disappears from active views without breaking history.
+            if ((error as { code?: string }).code === '23503') {
+                const { error: upErr } = await supabase
+                    .from('products')
+                    .update({ is_active: false })
+                    .eq('id', r.id);
+                if (upErr) { toast.error(`${t('common.deleteError')}: ${upErr.message}`); return; }
+                toast.success(t('common.deleteSuccess'));
+                void load();
+                return;
+            }
+            toast.error(`${t('common.deleteError')}: ${error.message}`);
+            return;
+        }
+        toast.success(t('common.deleteSuccess'));
+        void load();
+    }
 
     function openNew() {
         setEditing(null);
@@ -148,9 +177,12 @@ function ProductsInner({ locale }: { locale: Locale }) {
             key: 'actions',
             header: '',
             cell: (r) => (
-                <div className="text-right">
+                <div className="text-right flex justify-end gap-1.5">
                     <Button size="sm" variant="secondary" onClick={() => openEdit(r)}>
                         {t('common.edit')}
+                    </Button>
+                    <Button size="sm" variant="ghost" onClick={() => void deleteRow(r)}>
+                        {t('common.delete')}
                     </Button>
                 </div>
             ),

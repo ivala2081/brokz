@@ -12,7 +12,14 @@ export type ContactNotificationInput = {
   company: string;
   name: string;
   email: string;
-  type: string;
+  /** Legacy free-text type (old contact form). Displayed verbatim when inquiry_type is absent. */
+  type?: string;
+  /** New structured inquiry type from the 2-step flow. */
+  inquiry_type?: string;
+  /** Human-readable product name; only present for order_request leads. */
+  product_name?: string;
+  /** Requested quantity; only present for order_request leads. */
+  quantity?: number;
   message: string;
   source?: string;
   ip?: string;
@@ -33,18 +40,41 @@ function escapeHtml(s: string): string {
     .replace(/'/g, '&#039;');
 }
 
+// Maps the new inquiry_type enum values to human-readable Turkish labels used
+// in the email subject and body.
+const INQUIRY_TYPE_LABELS: Record<string, string> = {
+  general: 'Genel Talep',
+  support: 'Destek',
+  webtrader_manager: 'WebTrader / Manager',
+  order_request: 'Sipariş Talebi',
+  info_pricing: 'Fiyatlandırma & Bilgi',
+};
+
 export function renderContactNotification(
   input: ContactNotificationInput,
 ): ContactNotificationOutput {
-  const { company, name, email, type, message, source, ip } = input;
+  const { company, name, email, type, inquiry_type, product_name, quantity, message, source, ip } = input;
 
-  const subject = `Yeni İletişim Talebi: ${company || name || email}`;
+  // Resolve the human-readable label for the inquiry type.
+  // Priority: new structured inquiry_type > legacy free-text type > fallback.
+  const typeLabel = inquiry_type
+    ? (INQUIRY_TYPE_LABELS[inquiry_type] ?? inquiry_type)
+    : (type || 'Genel Talep');
+
+  const subject = inquiry_type === 'order_request'
+    ? `Sipariş Talebi: ${company || name || email}${product_name ? ` — ${product_name}` : ''}`
+    : `Yeni İletişim Talebi: ${company || name || email}`;
 
   const row = (label: string, value: string) => `
     <tr>
       <td style="padding:8px 16px 8px 0;color:#64748b;font-size:12px;text-transform:uppercase;letter-spacing:0.08em;vertical-align:top;white-space:nowrap;font-family:'Geist',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">${label}</td>
       <td style="padding:8px 0;color:#050A06;font-size:14px;line-height:1.6;font-family:'Geist',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">${escapeHtml(value) || '<span style="color:#94a3b8;">—</span>'}</td>
     </tr>`;
+
+  // Extra rows shown only for order_request leads.
+  const orderRows = inquiry_type === 'order_request'
+    ? `${product_name ? row('Ürün', product_name) : ''}${quantity != null ? row('Miktar', String(quantity)) : ''}`
+    : '';
 
   const html = `<!doctype html>
 <html lang="tr">
@@ -57,7 +87,7 @@ export function renderContactNotification(
     <tr>
       <td style="padding:28px 32px 20px;background:#050A06;">
         <p style="margin:0 0 4px;color:#5FDD82;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;font-family:'Geist',system-ui,sans-serif;">Brokz — Yeni Talep</p>
-        <h1 style="margin:0;color:#ffffff;font-size:22px;font-weight:700;letter-spacing:-0.02em;font-family:'Geist',system-ui,sans-serif;">${escapeHtml(type || 'Genel Talep')}</h1>
+        <h1 style="margin:0;color:#ffffff;font-size:22px;font-weight:700;letter-spacing:-0.02em;font-family:'Geist',system-ui,sans-serif;">${escapeHtml(typeLabel)}</h1>
       </td>
     </tr>
     <tr>
@@ -66,7 +96,8 @@ export function renderContactNotification(
           ${row('Şirket', company)}
           ${row('İsim', name)}
           ${row('E-posta', email)}
-          ${row('Talep Tipi', type)}
+          ${row('Talep Tipi', typeLabel)}
+          ${orderRows}
           ${source ? row('Kaynak', source) : ''}
         </table>
         <hr style="border:none;border-top:1px solid #e2e8f0;margin:20px 0;">
@@ -90,14 +121,18 @@ export function renderContactNotification(
 </body>
 </html>`;
 
+  const orderTextBlock = inquiry_type === 'order_request'
+    ? `${product_name ? `Ürün:         ${product_name}\n` : ''}${quantity != null ? `Miktar:       ${quantity}\n` : ''}`
+    : '';
+
   const text = `YENİ BROKZ TALEBİ
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Şirket:       ${company}
 İsim:         ${name}
 E-posta:      ${email}
-Talep Tipi:   ${type || 'Genel'}
-${source ? `Kaynak:       ${source}\n` : ''}${ip ? `IP:           ${ip}\n` : ''}
+Talep Tipi:   ${typeLabel}
+${orderTextBlock}${source ? `Kaynak:       ${source}\n` : ''}${ip ? `IP:           ${ip}\n` : ''}
 MESAJ
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

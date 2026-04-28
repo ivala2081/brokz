@@ -4,7 +4,7 @@
  * Convert opens the InviteCustomerDialog prefilled with lead email + company.
  */
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import AdminShell from '../AdminShell';
 import StatusBadge from '../StatusBadge';
@@ -19,6 +19,8 @@ import { formatDate, truncate } from '../../../lib/admin/format';
 
 type Locale = 'en' | 'tr';
 
+type InquiryType = 'general' | 'support' | 'webtrader_manager' | 'order_request' | 'info_pricing';
+
 interface Row {
     id: string;
     name: string;
@@ -27,10 +29,44 @@ interface Row {
     message: string | null;
     source: string | null;
     status: string;
+    inquiry_type: InquiryType;
+    product_id: string | null;
+    quantity: number | null;
+    product: { name: string } | null;
     created_at: string;
 }
 
 const STATUS_OPTIONS = ['all', 'new', 'qualified', 'rejected'];
+
+const INQUIRY_TYPE_OPTIONS: Array<'all' | InquiryType> = [
+    'all',
+    'general',
+    'support',
+    'webtrader_manager',
+    'order_request',
+    'info_pricing',
+];
+
+/** Tailwind classes per inquiry type — bg + text, no brand-green overuse. */
+const INQUIRY_BADGE_CLASSES: Record<InquiryType, string> = {
+    general:           'bg-slate-100  text-slate-700',
+    support:           'bg-amber-100  text-amber-700',
+    webtrader_manager: 'bg-violet-100 text-violet-700',
+    order_request:     'bg-brand/10   text-brand-dark',
+    info_pricing:      'bg-sky-100    text-sky-700',
+};
+
+function InquiryBadge({ type }: { type: InquiryType }) {
+    const { t } = useTranslation('admin');
+    const label = t(`leads.inquiryTypes.${type}`);
+    return (
+        <span
+            className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${INQUIRY_BADGE_CLASSES[type] ?? 'bg-slate-100 text-slate-700'}`}
+        >
+            {label}
+        </span>
+    );
+}
 
 export default function LeadsTable({ locale: localeProp = 'tr' }: { locale?: Locale }) {
     const locale = resolveAdminLocale(localeProp);
@@ -53,17 +89,18 @@ function LeadsInner({ locale }: { locale: Locale }) {
     const [rows, setRows] = useState<Row[]>([]);
     const [loading, setLoading] = useState(true);
     const [status, setStatus] = useState('all');
+    const [inquiryType, setInquiryType] = useState<'all' | InquiryType>('all');
     const [converting, setConverting] = useState<Row | null>(null);
 
     const load = useCallback(async () => {
         setLoading(true);
         let query = supabase
             .from('leads')
-            .select('id, name, email, company, message, source, status, created_at')
+            .select('id, name, email, company, message, source, status, inquiry_type, product_id, quantity, product:products(name), created_at')
             .order('created_at', { ascending: false });
         if (status !== 'all') query = query.eq('status', status);
         const { data } = await query;
-        setRows((data as Row[]) ?? []);
+        setRows((data as unknown as Row[]) ?? []);
         setLoading(false);
     }, [supabase, status]);
 
@@ -81,6 +118,14 @@ function LeadsInner({ locale }: { locale: Locale }) {
         void load();
     }
 
+    async function deleteRow(r: Row) {
+        if (!window.confirm(t('common.deleteConfirm'))) return;
+        const { error } = await supabase.from('leads').delete().eq('id', r.id);
+        if (error) { toast.error(`${t('common.deleteError')}: ${error.message}`); return; }
+        toast.success(t('common.deleteSuccess'));
+        void load();
+    }
+
     async function reject(r: Row) {
         const { error } = await supabase.from('leads').update({ status: 'rejected' }).eq('id', r.id);
         if (error) {
@@ -92,6 +137,12 @@ function LeadsInner({ locale }: { locale: Locale }) {
     }
 
     const localeTag = locale === 'tr' ? 'tr-TR' : 'en-US';
+
+    // Client-side inquiry_type filter applied on top of the server-side status filter.
+    const visibleRows = useMemo(
+        () => (inquiryType === 'all' ? rows : rows.filter((r) => r.inquiry_type === inquiryType)),
+        [rows, inquiryType],
+    );
 
     const columns: DataTableColumn<Row>[] = [
         {
@@ -120,12 +171,27 @@ function LeadsInner({ locale }: { locale: Locale }) {
             searchAccessor: (r) => r.source ?? '',
         },
         {
+            key: 'inquiry_type',
+            header: t('leads.columns.inquiryType'),
+            cell: (r) => <InquiryBadge type={r.inquiry_type ?? 'general'} />,
+            searchAccessor: (r) => r.inquiry_type ?? '',
+        },
+        {
             key: 'message',
             header: t('leads.columns.message'),
             cell: (r) => (
-                <span className="text-xs text-ink-secondary" title={r.message ?? ''}>
-                    {truncate(r.message, 60)}
-                </span>
+                <div className="flex flex-col gap-0.5">
+                    <span className="text-xs text-ink-secondary" title={r.message ?? ''}>
+                        {truncate(r.message, 60)}
+                    </span>
+                    {r.inquiry_type === 'order_request' && (r.product?.name || r.quantity != null) && (
+                        <span className="text-2xs text-ink-muted">
+                            {r.product?.name && `${t('leads.product')}: ${r.product.name}`}
+                            {r.product?.name && r.quantity != null && ' · '}
+                            {r.quantity != null && `${t('leads.quantity')}: ${r.quantity}`}
+                        </span>
+                    )}
+                </div>
             ),
             searchAccessor: (r) => r.message ?? '',
         },
@@ -161,6 +227,9 @@ function LeadsInner({ locale }: { locale: Locale }) {
                     <Button size="sm" onClick={() => setConverting(r)}>
                         {t('leads.actions.convert')}
                     </Button>
+                    <Button size="sm" variant="ghost" onClick={() => void deleteRow(r)}>
+                        {t('common.delete')}
+                    </Button>
                 </div>
             ),
             align: 'right',
@@ -170,7 +239,7 @@ function LeadsInner({ locale }: { locale: Locale }) {
     return (
         <>
             <DataTable<Row>
-                data={rows}
+                data={visibleRows}
                 columns={columns}
                 loading={loading}
                 getRowId={(r) => r.id}
@@ -192,6 +261,20 @@ function LeadsInner({ locale }: { locale: Locale }) {
                         label: v === 'all' ? t('common.all') : t(`status.${v}`),
                     })),
                 }}
+                toolbar={
+                    <select
+                        value={inquiryType}
+                        onChange={(e) => setInquiryType(e.target.value as 'all' | InquiryType)}
+                        aria-label={t('leads.filterInquiryType')}
+                        className="h-9 rounded-md border border-line bg-white px-3 text-sm text-ink focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
+                    >
+                        {INQUIRY_TYPE_OPTIONS.map((v) => (
+                            <option key={v} value={v}>
+                                {v === 'all' ? t('common.all') : t(`leads.inquiryTypes.${v}`)}
+                            </option>
+                        ))}
+                    </select>
+                }
                 emptyState={
                     <EmptyState
                         title={t('leads.empty.title')}

@@ -25,8 +25,7 @@
  */
 
 // deno-lint-ignore-file no-explicit-any
-// @ts-ignore — Deno std
-import { serve } from 'https://deno.land/std@0.224.0/http/server.ts';
+import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 // @ts-ignore — Deno x
 import { z } from 'https://deno.land/x/zod@v3.23.8/mod.ts';
 
@@ -49,7 +48,7 @@ function logJson(payload: Record<string, unknown>): void {
   console.log(JSON.stringify({ fn: FN_NAME, ts: new Date().toISOString(), ...payload }));
 }
 
-serve(async (req: Request) => {
+Deno.serve(async (req: Request) => {
   const pre = handlePreflight(req);
   if (pre) return pre;
 

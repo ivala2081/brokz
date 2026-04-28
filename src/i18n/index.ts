@@ -27,9 +27,14 @@ export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
 
 /**
  * i18n init — resources are bundled (small site, sync load is fine).
- * Language is driven by URL, not auto-detected at this layer; the
- * LocaleProvider calls `i18n.changeLanguage()` based on route.
+ * Initial language is derived from URL pathname on the client; SSR/build
+ * defaults to 'en'. `useLocaleSync()` keeps i18n in sync on route change.
  */
+const initialLng: SupportedLanguage =
+  typeof window !== 'undefined' && window.location.pathname.startsWith('/tr')
+    ? 'tr'
+    : 'en';
+
 void i18n.use(initReactI18next).init({
   resources: {
     en: {
@@ -57,7 +62,7 @@ void i18n.use(initReactI18next).init({
       dashboard: trDashboard,
     },
   },
-  lng: 'en',
+  lng: initialLng,
   fallbackLng: 'en',
   defaultNS: 'common',
   interpolation: { escapeValue: false },

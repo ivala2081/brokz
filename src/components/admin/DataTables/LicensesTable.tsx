@@ -152,6 +152,17 @@ function LicensesInner({ locale }: { locale: Locale }) {
         void load();
     }
 
+    async function deleteRow(r: Row) {
+        if (!window.confirm(t('common.deleteConfirm'))) return;
+        const { error } = await supabase
+            .from('licenses')
+            .update({ deleted_at: new Date().toISOString() })
+            .eq('id', r.id);
+        if (error) { toast.error(`${t('common.deleteError')}: ${error.message}`); return; }
+        toast.success(t('common.deleteSuccess'));
+        void load();
+    }
+
     async function copyKey(key: string) {
         try {
             await navigator.clipboard.writeText(key);
@@ -278,6 +289,9 @@ function LicensesInner({ locale }: { locale: Locale }) {
                                 {t('licenses.revoke.action')}
                             </Button>
                         )}
+                        <Button size="sm" variant="ghost" onClick={() => void deleteRow(r)}>
+                            {t('common.delete')}
+                        </Button>
                     </div>
                 );
             },

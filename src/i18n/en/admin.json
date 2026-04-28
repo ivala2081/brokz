@@ -30,7 +30,10 @@
     "copied": "Copied",
     "reveal": "Reveal",
     "hide": "Hide",
-    "logout": "Sign out"
+    "logout": "Sign out",
+    "deleteConfirm": "Are you sure you want to delete this record? This cannot be undone.",
+    "deleteSuccess": "Record deleted",
+    "deleteError": "Delete failed"
   },
   "nav": {
     "overview": "Overview",
@@ -89,6 +92,7 @@
       "approved": "Payment approved. Invoice marked paid.",
       "rejected": "Payment rejected."
     },
+    "amountMatch": "✓ match",
     "review": {
       "submitter": "Submitted by",
       "submittedAt": "Submitted at",
@@ -202,6 +206,12 @@
       "allActions": "All actions",
       "allEntities": "All entities"
     },
+    "range": {
+      "30d": "Last 30 days",
+      "90d": "Last 90 days",
+      "365d": "Last year",
+      "all": "All time"
+    },
     "empty": {
       "title": "No audit records yet",
       "description": "Admin actions will appear here as they happen."
@@ -272,11 +282,20 @@
     "inviteDialog": {
       "title": "Invite customer",
       "description": "Creates an organization and emails the user a sign-in link.",
+      "manualTitle": "Add customer",
+      "manualDescription": "Creates a customer record only. No email is sent and no user account is created.",
+      "manualSubmit": "Add",
+      "manualSuccess": "Customer added.",
+      "modeInviteNew": "New org + invite",
+      "modeInviteExisting": "Existing org + invite",
+      "modeManual": "Manual add (no email)",
       "organizationName": "Organization name",
       "organizationNameHint": "Leave blank to add to an existing organization.",
       "country": "Country",
       "website": "Website",
       "email": "Email",
+      "contactEmail": "Contact email (optional)",
+      "contactEmailPlaceholder": "info@company.com",
       "role": "Role",
       "roleCustomer": "Customer",
       "roleAdmin": "Admin",
@@ -516,14 +535,25 @@
   "leads": {
     "title": "Leads",
     "subtitle": "Contact form submissions.",
+    "filterInquiryType": "Type",
+    "product": "Product",
+    "quantity": "Qty",
     "columns": {
       "company": "Company",
       "name": "Name",
       "email": "Email",
       "source": "Source",
       "message": "Message",
+      "inquiryType": "Type",
       "status": "Status",
       "createdAt": "Date"
+    },
+    "inquiryTypes": {
+      "general": "General",
+      "support": "Support",
+      "webtrader_manager": "WebTrader Manager",
+      "order_request": "Order Request",
+      "info_pricing": "Info & Pricing"
     },
     "empty": {
       "title": "No leads yet",

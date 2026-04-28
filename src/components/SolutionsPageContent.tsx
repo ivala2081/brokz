@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import PageHero from './PageHero';
 import { Stagger, StaggerItem } from './AnimateIn';
 import '../i18n';
 
@@ -17,13 +16,6 @@ export default function SolutionsPageContent() {
 
   return (
     <>
-      <PageHero
-        label={t('hero.label')}
-        title={t('hero.title')}
-        highlight={t('hero.highlight')}
-        description={t('hero.description')}
-      />
-
       {/* Solutions — massive typography, alternating layout */}
       <section className="section-padding bg-surface">
         <div className="section-container">

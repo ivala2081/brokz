@@ -63,6 +63,7 @@ export default function NewTicketDialog({ open, onClose, onSuccess }: NewTicketD
                 priority: values.priority,
                 status: 'open',
                 organization_id: profile.organization_id,
+                opened_by: user.id,
             })
             .select('id')
             .single();

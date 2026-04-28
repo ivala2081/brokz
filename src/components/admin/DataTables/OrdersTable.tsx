@@ -115,6 +115,17 @@ function OrdersInner({ locale }: { locale: Locale }) {
         void load();
     }
 
+    async function deleteRow(r: Row) {
+        if (!window.confirm(t('common.deleteConfirm'))) return;
+        const { error } = await supabase
+            .from('orders')
+            .update({ deleted_at: new Date().toISOString() })
+            .eq('id', r.id);
+        if (error) { toast.error(`${t('common.deleteError')}: ${error.message}`); return; }
+        toast.success(t('common.deleteSuccess'));
+        void load();
+    }
+
     async function cancel(r: Row) {
         const ok = window.confirm(t('orders.actions.cancelConfirm'));
         if (!ok) return;
@@ -197,6 +208,9 @@ function OrdersInner({ locale }: { locale: Locale }) {
                             {t('orders.actions.cancel')}
                         </Button>
                     )}
+                    <Button size="sm" variant="ghost" onClick={() => void deleteRow(r)}>
+                        {t('common.delete')}
+                    </Button>
                 </div>
             ),
             align: 'right',

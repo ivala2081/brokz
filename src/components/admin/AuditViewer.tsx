@@ -17,6 +17,7 @@ import DataTable, { type DataTableColumn } from '../ui/DataTable';
 import Select from '../ui/Select';
 import EmptyState from '../ui/EmptyState';
 import Button from '../ui/Button';
+import { toast } from '../ui/Toast';
 import { formatDateTime } from '../../lib/admin/format';
 
 type Locale = 'en' | 'tr';
@@ -93,6 +94,14 @@ function AuditInner({ locale }: { locale: Locale }) {
     useEffect(() => {
         void load();
     }, [load]);
+
+    async function deleteRow(r: Row) {
+        if (!window.confirm(t('common.deleteConfirm'))) return;
+        const { error } = await supabase.from('audit_log').delete().eq('id', r.id);
+        if (error) { toast.error(`${t('common.deleteError')}: ${error.message}`); return; }
+        toast.success(t('common.deleteSuccess'));
+        void load();
+    }
 
     const localeTag = locale === 'tr' ? 'tr-TR' : 'en-US';
 
@@ -174,6 +183,18 @@ function AuditInner({ locale }: { locale: Locale }) {
                 );
             },
         },
+        {
+            key: 'actions',
+            header: '',
+            cell: (r) => (
+                <div className="text-right">
+                    <Button size="sm" variant="ghost" onClick={() => void deleteRow(r)}>
+                        {t('common.delete')}
+                    </Button>
+                </div>
+            ),
+            align: 'right',
+        },
     ];
 
     return (
@@ -194,10 +215,10 @@ function AuditInner({ locale }: { locale: Locale }) {
             toolbar={
                 <div className="flex items-center gap-2">
                     <Select value={range} onChange={(e) => setRange(e.target.value as RangeKey)} className="w-auto">
-                        <option value="30d">30d</option>
-                        <option value="90d">90d</option>
-                        <option value="365d">365d</option>
-                        <option value="all">all</option>
+                        <option value="30d">{t('audit.range.30d')}</option>
+                        <option value="90d">{t('audit.range.90d')}</option>
+                        <option value="365d">{t('audit.range.365d')}</option>
+                        <option value="all">{t('audit.range.all')}</option>
                     </Select>
                     <Select
                         value={actionFilter}

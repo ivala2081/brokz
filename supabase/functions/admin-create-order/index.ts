@@ -21,8 +21,7 @@
  */
 
 // deno-lint-ignore-file no-explicit-any
-// @ts-ignore — Deno std import
-import { serve } from 'https://deno.land/std@0.224.0/http/server.ts';
+import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 // @ts-ignore — Deno x import
 import { z } from 'https://deno.land/x/zod@v3.23.8/mod.ts';
 
@@ -54,7 +53,7 @@ function round2(n: number): number {
 
 // ─── handler ────────────────────────────────────────────────────────
 
-serve(async (req: Request) => {
+Deno.serve(async (req: Request) => {
   const pre = handlePreflight(req);
   if (pre) return pre;
 

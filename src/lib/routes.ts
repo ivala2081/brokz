@@ -17,6 +17,7 @@ export const ROUTES = {
   home:             { en: '/',                       tr: '/tr' },
   solutions:        { en: '/solutions',              tr: '/tr/cozumler' },
   products:         { en: '/products',               tr: '/tr/urunler' },
+  productWebtrader: { en: '/products/webtrader',     tr: '/tr/urunler/webtrader' },
   about:            { en: '/about',                  tr: '/tr/hakkimizda' },
   contact:          { en: '/contact',                tr: '/tr/iletisim' },
   blog:             { en: '/blog',                   tr: '/tr/blog' },

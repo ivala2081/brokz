@@ -30,7 +30,10 @@
     "copied": "Kopyalandı",
     "reveal": "Göster",
     "hide": "Gizle",
-    "logout": "Çıkış"
+    "logout": "Çıkış",
+    "deleteConfirm": "Bu kaydı silmek istediğinize emin misiniz? Bu işlem geri alınamaz.",
+    "deleteSuccess": "Kayıt silindi",
+    "deleteError": "Silme başarısız"
   },
   "nav": {
     "overview": "Genel Bakış",
@@ -89,6 +92,7 @@
       "approved": "Ödeme onaylandı. Fatura ödendi olarak işaretlendi.",
       "rejected": "Ödeme reddedildi."
     },
+    "amountMatch": "✓ eşleşiyor",
     "review": {
       "submitter": "Gönderen kullanıcı",
       "submittedAt": "Gönderim zamanı",
@@ -202,6 +206,12 @@
       "allActions": "Tüm eylemler",
       "allEntities": "Tüm varlıklar"
     },
+    "range": {
+      "30d": "Son 30 gün",
+      "90d": "Son 90 gün",
+      "365d": "Son 1 yıl",
+      "all": "Tümü"
+    },
     "empty": {
       "title": "Denetim kaydı yok",
       "description": "Yönetici panelinden bir eylem yapıldığında burada listelenir."
@@ -272,11 +282,20 @@
     "inviteDialog": {
       "title": "Müşteri Davet Et",
       "description": "Organizasyon oluşturulur ve kullanıcıya giriş bağlantısı e-posta ile gönderilir.",
+      "manualTitle": "Müşteri Ekle",
+      "manualDescription": "Sadece müşteri kaydı oluşturulur. E-posta gönderilmez, kullanıcı hesabı açılmaz.",
+      "manualSubmit": "Ekle",
+      "manualSuccess": "Müşteri eklendi.",
+      "modeInviteNew": "Yeni kuruluş + davet",
+      "modeInviteExisting": "Mevcut kuruluş + davet",
+      "modeManual": "Elle ekle (e-posta yok)",
       "organizationName": "Organizasyon adı",
       "organizationNameHint": "Boş bırakırsanız mevcut bir organizasyona eklenir.",
       "country": "Ülke",
       "website": "Web sitesi",
       "email": "E-posta",
+      "contactEmail": "İletişim e-postası (opsiyonel)",
+      "contactEmailPlaceholder": "info@firma.com",
       "role": "Rol",
       "roleCustomer": "Müşteri",
       "roleAdmin": "Yönetici",
@@ -516,14 +535,25 @@
   "leads": {
     "title": "Potansiyel Müşteriler",
     "subtitle": "İletişim formu kayıtları.",
+    "filterInquiryType": "Tür",
+    "product": "Ürün",
+    "quantity": "Adet",
     "columns": {
       "company": "Şirket",
       "name": "Ad",
       "email": "E-posta",
       "source": "Kaynak",
       "message": "Mesaj",
+      "inquiryType": "Tür",
       "status": "Durum",
       "createdAt": "Tarih"
+    },
+    "inquiryTypes": {
+      "general": "Genel",
+      "support": "Destek",
+      "webtrader_manager": "WebTrader Yönetici",
+      "order_request": "Sipariş Talebi",
+      "info_pricing": "Bilgi ve Fiyat"
     },
     "empty": {
       "title": "Henüz kayıt yok",

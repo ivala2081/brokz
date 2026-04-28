@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { BrokzLogoCompact } from './BrokzLogo';
 import LocalizedLink from '../i18n/LocalizedLink';
 import LanguageSwitcher from '../i18n/LanguageSwitcher';
-import { useCurrentLocale, useLocalePath } from '../i18n/useLocale';
+import { useCurrentLocale, useLocalePath, useLocaleSync } from '../i18n/useLocale';
 import type { RouteKey } from '../lib/routes';
 // Side-effect import — initializes i18next + resources on first island mount.
 import '../i18n';
@@ -17,7 +17,6 @@ const HERO_EXIT = 400;
 
 const NAV_ITEMS: { key: RouteKey; label: string }[] = [
   { key: 'home',      label: 'nav.home' },
-  { key: 'solutions', label: 'nav.solutions' },
   { key: 'products',  label: 'nav.products' },
   { key: 'about',     label: 'nav.about' },
   { key: 'blog',      label: 'nav.blog' },
@@ -48,6 +47,7 @@ const itemVariants = {
 };
 
 export default function NavBar() {
+  useLocaleSync();
   const { t } = useTranslation();
   const locale = useCurrentLocale();
   const localePath = useLocalePath();

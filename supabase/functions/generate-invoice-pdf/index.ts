@@ -14,8 +14,7 @@
  */
 
 // deno-lint-ignore-file no-explicit-any
-// @ts-ignore — Deno std
-import { serve } from 'https://deno.land/std@0.224.0/http/server.ts';
+import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 // @ts-ignore — Deno x
 import { z } from 'https://deno.land/x/zod@v3.23.8/mod.ts';
 // @ts-ignore — pdf-lib via esm.sh
@@ -24,9 +23,6 @@ import { PDFDocument, StandardFonts, rgb } from 'https://esm.sh/pdf-lib@1.17.1';
 import { handlePreflight } from '../_shared/cors.ts';
 import { requireAdmin, jsonResponse, errorToResponse, UnauthorizedError } from '../_shared/auth.ts';
 import { createAdminClient } from '../_shared/supabase-admin.ts';
-
-// @ts-ignore — Deno global
-declare const Deno: { env: { get(key: string): string | undefined } };
 
 const FN_NAME = 'generate-invoice-pdf';
 const BUCKET = 'invoices';
@@ -186,7 +182,7 @@ async function buildPdfBytes(invoice: InvoiceRow): Promise<Uint8Array> {
     return await doc.save();
 }
 
-serve(async (req: Request) => {
+Deno.serve(async (req: Request) => {
     const pre = handlePreflight(req);
     if (pre) return pre;
 

@@ -1,11 +1,15 @@
 /**
- * InviteCustomerDialog — opens an invite form, calls `admin-invite-user`
- * Edge Function, fires toast, triggers parent refresh via onSuccess.
+ * InviteCustomerDialog — opens an invite/add form, calls `admin-invite-user`
+ * Edge Function (invite mode) OR inserts directly into organizations
+ * (manual mode), fires toast, triggers parent refresh via onSuccess.
  *
- * Create-new-org mode (default) vs. add-to-existing-org mode. When
- * adding to existing, the org list is fetched from supabase on open.
+ * Modes:
+ *   invite-new      → create new org + send invite email
+ *   invite-existing → attach user to existing org + send invite email
+ *   manual          → just create org row (no email, no auth user)
+ *                     useful when SMTP is not yet configured.
  *
- * Called Edge Function shape (FROZEN per agent spec):
+ * Called Edge Function shape:
  *   POST /functions/v1/admin-invite-user
  *   body: { email, organization_id?, organization_name?, role }
  */
@@ -38,6 +42,8 @@ interface OrgRow {
     name: string;
 }
 
+type Mode = 'invite-new' | 'invite-existing' | 'manual';
+
 export default function InviteCustomerDialog({
     open,
     onClose,
@@ -48,11 +54,12 @@ export default function InviteCustomerDialog({
     const { t } = useTranslation('admin');
     const { supabase } = useAuth();
 
-    const [mode, setMode] = useState<'new' | 'existing'>('new');
+    const [mode, setMode] = useState<Mode>('invite-new');
     const [email, setEmail] = useState('');
     const [orgName, setOrgName] = useState('');
     const [country, setCountry] = useState('');
     const [website, setWebsite] = useState('');
+    const [contactEmail, setContactEmail] = useState('');
     const [role, setRole] = useState<'customer' | 'admin'>('customer');
     const [orgId, setOrgId] = useState<string>('');
     const [orgs, setOrgs] = useState<OrgRow[]>([]);
@@ -64,9 +71,10 @@ export default function InviteCustomerDialog({
         setOrgName(prefillOrgName ?? '');
         setCountry('');
         setWebsite('');
+        setContactEmail('');
         setRole('customer');
         setOrgId('');
-        setMode(prefillOrgName ? 'new' : 'new');
+        setMode('invite-new');
 
         void (async () => {
             const { data, error } = await supabase
@@ -81,11 +89,30 @@ export default function InviteCustomerDialog({
         e.preventDefault();
         setSubmitting(true);
 
-        // If creating a new org, we send organization_name. If not, we include
-        // the extra fields as metadata for the Edge Function to persist on
-        // the new org row. The api-layer agent owns the final mapping.
+        if (mode === 'manual') {
+            // Direct insert into organizations — no auth user, no invite email.
+            const { error } = await supabase
+                .from('organizations')
+                .insert({
+                    name: orgName,
+                    country: country || null,
+                    website: website || null,
+                    contact_email: contactEmail || null,
+                });
+            setSubmitting(false);
+            if (error) {
+                toast.error(`${t('customers.inviteDialog.error')}: ${error.message}`);
+                return;
+            }
+            toast.success(t('customers.inviteDialog.manualSuccess'));
+            onSuccess?.();
+            onClose();
+            return;
+        }
+
+        // Invite flow — calls admin-invite-user Edge Function
         const body: Record<string, unknown> = { email, role };
-        if (mode === 'existing' && orgId) {
+        if (mode === 'invite-existing' && orgId) {
             body.organization_id = orgId;
         } else {
             body.organization_name = orgName;
@@ -97,7 +124,10 @@ export default function InviteCustomerDialog({
         setSubmitting(false);
 
         if (error) {
-            toast.error(t('customers.inviteDialog.error'));
+            // eslint-disable-next-line no-console
+            console.error('[admin-invite-user] failed', error);
+            const detail = error.message || error.code || `HTTP ${error.status}`;
+            toast.error(`${t('customers.inviteDialog.error')}: ${detail}`);
             return;
         }
         toast.success(t('customers.inviteDialog.success'));
@@ -105,12 +135,17 @@ export default function InviteCustomerDialog({
         onClose();
     }
 
+    const isManual = mode === 'manual';
+    const isInviteNew = mode === 'invite-new';
+    const isInviteExisting = mode === 'invite-existing';
+    const showOrgFields = isInviteNew || isManual;
+
     return (
         <Dialog
             open={open}
             onClose={onClose}
-            title={t('customers.inviteDialog.title')}
-            description={t('customers.inviteDialog.description')}
+            title={isManual ? t('customers.inviteDialog.manualTitle') : t('customers.inviteDialog.title')}
+            description={isManual ? t('customers.inviteDialog.manualDescription') : t('customers.inviteDialog.description')}
             footer={
                 <>
                     <Button variant="secondary" onClick={onClose} disabled={submitting}>
@@ -121,30 +156,37 @@ export default function InviteCustomerDialog({
                         form="invite-customer-form"
                         loading={submitting}
                     >
-                        {t('customers.inviteDialog.submit')}
+                        {isManual ? t('customers.inviteDialog.manualSubmit') : t('customers.inviteDialog.submit')}
                     </Button>
                 </>
             }
         >
             <form id="invite-customer-form" onSubmit={handleSubmit} className="space-y-4">
-                <div className="flex gap-2 text-xs">
+                <div className="flex flex-wrap gap-2 text-xs">
                     <button
                         type="button"
-                        onClick={() => setMode('new')}
-                        className={`rounded-md px-2.5 py-1 border ${mode === 'new' ? 'border-brand bg-brand-subtle text-green-700' : 'border-line text-ink-secondary hover:border-ink/30'}`}
+                        onClick={() => setMode('invite-new')}
+                        className={`rounded-md px-2.5 py-1 border ${isInviteNew ? 'border-brand bg-brand-subtle text-green-700' : 'border-line text-ink-secondary hover:border-ink/30'}`}
                     >
-                        {t('customers.inviteDialog.organizationName')}
+                        {t('customers.inviteDialog.modeInviteNew')}
                     </button>
                     <button
                         type="button"
-                        onClick={() => setMode('existing')}
-                        className={`rounded-md px-2.5 py-1 border ${mode === 'existing' ? 'border-brand bg-brand-subtle text-green-700' : 'border-line text-ink-secondary hover:border-ink/30'}`}
+                        onClick={() => setMode('invite-existing')}
+                        className={`rounded-md px-2.5 py-1 border ${isInviteExisting ? 'border-brand bg-brand-subtle text-green-700' : 'border-line text-ink-secondary hover:border-ink/30'}`}
                     >
-                        {t('customers.inviteDialog.useExisting')}
+                        {t('customers.inviteDialog.modeInviteExisting')}
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => setMode('manual')}
+                        className={`rounded-md px-2.5 py-1 border ${isManual ? 'border-brand bg-brand-subtle text-green-700' : 'border-line text-ink-secondary hover:border-ink/30'}`}
+                    >
+                        {t('customers.inviteDialog.modeManual')}
                     </button>
                 </div>
 
-                {mode === 'new' ? (
+                {showOrgFields ? (
                     <>
                         <Field
                             label={t('customers.inviteDialog.organizationName')}
@@ -202,22 +244,36 @@ export default function InviteCustomerDialog({
                     </Field>
                 )}
 
-                <Field label={t('customers.inviteDialog.email')} required>
-                    <Input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                        autoComplete="email"
-                    />
-                </Field>
+                {isManual ? (
+                    <Field label={t('customers.inviteDialog.contactEmail')}>
+                        <Input
+                            type="email"
+                            value={contactEmail}
+                            onChange={(e) => setContactEmail(e.target.value)}
+                            placeholder={t('customers.inviteDialog.contactEmailPlaceholder')}
+                            autoComplete="email"
+                        />
+                    </Field>
+                ) : (
+                    <>
+                        <Field label={t('customers.inviteDialog.email')} required>
+                            <Input
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                                autoComplete="email"
+                            />
+                        </Field>
 
-                <Field label={t('customers.inviteDialog.role')} required>
-                    <Select value={role} onChange={(e) => setRole(e.target.value as 'customer' | 'admin')}>
-                        <option value="customer">{t('customers.inviteDialog.roleCustomer')}</option>
-                        <option value="admin">{t('customers.inviteDialog.roleAdmin')}</option>
-                    </Select>
-                </Field>
+                        <Field label={t('customers.inviteDialog.role')} required>
+                            <Select value={role} onChange={(e) => setRole(e.target.value as 'customer' | 'admin')}>
+                                <option value="customer">{t('customers.inviteDialog.roleCustomer')}</option>
+                                <option value="admin">{t('customers.inviteDialog.roleAdmin')}</option>
+                            </Select>
+                        </Field>
+                    </>
+                )}
             </form>
         </Dialog>
     );

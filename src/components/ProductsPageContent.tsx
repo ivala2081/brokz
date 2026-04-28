@@ -2,7 +2,20 @@ import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import PageHero from './PageHero';
 import AnimateIn, { Stagger, StaggerItem } from './AnimateIn';
+import LocalizedLink from '../i18n/LocalizedLink';
+import type { RouteKey } from '../lib/routes';
 import '../i18n';
+
+const ArrowIcon = (
+  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <line x1="5" y1="12" x2="19" y2="12" />
+    <polyline points="12 5 19 12 12 19" />
+  </svg>
+);
+
+const PRODUCT_DETAIL_ROUTES: Record<string, RouteKey> = {
+  webTrader: 'productWebtrader',
+};
 
 type ProductItem = {
   key: string;
@@ -54,6 +67,17 @@ export default function ProductsPageContent() {
                         </StaggerItem>
                       ))}
                     </Stagger>
+                    {PRODUCT_DETAIL_ROUTES[product.key] && (
+                      <div className="mt-6">
+                        <LocalizedLink
+                          to={PRODUCT_DETAIL_ROUTES[product.key]!}
+                          className="btn-link text-sm inline-flex items-center gap-1.5"
+                        >
+                          Learn more
+                          {ArrowIcon}
+                        </LocalizedLink>
+                      </div>
+                    )}
                   </div>
                 </div>
               </AnimateIn>
