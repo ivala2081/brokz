@@ -21,7 +21,9 @@
     "openMenu": "Menüyü aç",
     "closeMenu": "Menüyü kapat",
     "brokzHome": "Brokz — Ana Sayfa",
-    "switchLanguage": "Dili değiştir"
+    "switchLanguage": "Dili değiştir",
+    "brandIntro": "Brokz marka tanıtım animasyonu, 10 saniye, sessiz",
+    "replayBrandIntro": "Marka tanıtımını tekrar oynat"
   },
   "status": {
     "operational": "Tüm sistemler çalışıyor"

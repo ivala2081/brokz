@@ -1,8 +1,63 @@
-/* Self-hosted Geist (variable fonts) — zero external CDN dependency.
-   Shipped as woff2 with display:swap + subset via @fontsource-variable.
-   Removes Google Fonts round-trip → ~300ms LCP improvement + privacy win. */
-@import '@fontsource-variable/geist/index.css';
-@import '@fontsource-variable/geist-mono/index.css';
+/* Self-hosted SF Pro Display (woff2, Latin + Latin-Extended subset for TR).
+   Files served from /fonts/sf-pro-display/ — no external CDN, no Google Fonts.
+   8 weights total (~344KB), display:swap to avoid FOIT. */
+
+@font-face {
+  font-family: 'SF Pro Display';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/sf-pro-display/sf-pro-display-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'SF Pro Display';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/sf-pro-display/sf-pro-display-400-italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'SF Pro Display';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/sf-pro-display/sf-pro-display-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'SF Pro Display';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/sf-pro-display/sf-pro-display-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'SF Pro Display';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/sf-pro-display/sf-pro-display-700.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'SF Pro Display';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/sf-pro-display/sf-pro-display-700-italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'SF Pro Display';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('/fonts/sf-pro-display/sf-pro-display-800.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'SF Pro Display';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('/fonts/sf-pro-display/sf-pro-display-900.woff2') format('woff2');
+}
 
 @tailwind base;
 @tailwind components;
@@ -16,7 +71,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    font-feature-settings: 'ss01', 'cv11';
+    font-feature-settings: 'kern', 'liga', 'calt';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;

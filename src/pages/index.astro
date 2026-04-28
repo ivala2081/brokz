@@ -4,13 +4,25 @@ import Footer from '../components/Footer.astro';
 import NavBar from '../components/NavBar.tsx';
 import HomePageContent from '../components/HomePageContent.tsx';
 import { getT } from '../i18n/t';
+import { videoObject } from '../lib/jsonld';
 
 const t = getT('en', 'home');
+
+const jsonLd = videoObject({
+  name: 'Brokz Brand Identity',
+  description: 'Brokz brand identity reveal — kinetic shards converge into the Brokz wordmark.',
+  thumbnailPath: '/brand/brokz-intro-poster.jpg',
+  contentPath: '/brand/brokz-intro.mp4',
+  uploadDate: '2026-04-27',
+  duration: 'PT10S',
+  inLanguage: 'en',
+});
 ---
 <BaseLayout
   title={t('seo.title')}
   description={t('seo.description')}
   keywords={t('seo.keywords')}
+  jsonLd={jsonLd}
 >
   <NavBar client:load />
   <main class="min-h-screen bg-surface">

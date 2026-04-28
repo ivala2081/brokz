@@ -59,8 +59,8 @@ export default {
             },
 
             fontFamily: {
-                sans: ['Geist', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
-                mono: ['Geist Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+                sans: ['"SF Pro Display"', '-apple-system', 'BlinkMacSystemFont', 'ui-sans-serif', 'system-ui', 'Segoe UI', 'sans-serif'],
+                mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
             },
 
             fontSize: {
