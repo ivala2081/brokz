@@ -23,14 +23,15 @@ import { Toaster } from '../ui/Toast';
 import { cn } from '../../lib/cn';
 import { resolveAdminLocale, setAdminLocale, type AdminLocale } from '../../lib/admin/locale';
 import { hasPaymentSubmissions } from '../../lib/admin/schemaProbe';
+import AdminUserMenu from './AdminUserMenu';
 import '../../i18n';
 
 type Locale = 'en' | 'tr';
 
 export interface AdminShellProps {
     locale?: Locale;
-    /** Which nav item to mark active. */
-    activeKey: AdminNavKey;
+    /** Which nav item to mark active. Pass null or omit to highlight nothing. */
+    activeKey?: AdminNavKey | null;
     /** Page title shown in the topbar. */
     title: string;
     /** Optional subtitle under title. */
@@ -48,29 +49,50 @@ export type AdminNavKey =
     | 'products'
     | 'orders'
     | 'licenses'
-    | 'invoices'
-    | 'payments'
-    | 'wallets'
+    | 'billing'
     | 'tickets'
     | 'leads'
     | 'blog'
-    | 'audit'
-    | 'account';
+    | 'audit';
 
-const NAV: Array<{ key: AdminNavKey; href: string }> = [
-    { key: 'overview', href: '/admin' },
-    { key: 'customers', href: '/admin/customers' },
-    { key: 'products', href: '/admin/products' },
-    { key: 'orders', href: '/admin/orders' },
-    { key: 'licenses', href: '/admin/licenses' },
-    { key: 'invoices', href: '/admin/invoices' },
-    { key: 'payments', href: '/admin/payments' },
-    { key: 'wallets', href: '/admin/wallets' },
-    { key: 'tickets', href: '/admin/tickets' },
-    { key: 'leads', href: '/admin/leads' },
-    { key: 'blog', href: '/admin/blog' },
-    { key: 'audit', href: '/admin/audit' },
-    { key: 'account', href: '/admin/account' },
+type NavItem = { key: AdminNavKey; href: string };
+type NavSection = { titleKey: string; items: NavItem[] };
+
+const NAV_SECTIONS: NavSection[] = [
+    {
+        titleKey: 'general',
+        items: [{ key: 'overview', href: '/admin' }],
+    },
+    {
+        titleKey: 'operations',
+        items: [
+            { key: 'customers', href: '/admin/customers' },
+            { key: 'orders', href: '/admin/orders' },
+            { key: 'licenses', href: '/admin/licenses' },
+        ],
+    },
+    {
+        titleKey: 'billing',
+        items: [{ key: 'billing', href: '/admin/billing' }],
+    },
+    {
+        titleKey: 'support',
+        items: [
+            { key: 'tickets', href: '/admin/tickets' },
+            { key: 'leads', href: '/admin/leads' },
+        ],
+    },
+    {
+        titleKey: 'content',
+        items: [
+            { key: 'products', href: '/admin/products' },
+            { key: 'blog', href: '/admin/blog' },
+        ],
+    },
+    {
+        titleKey: 'system',
+        items: [{ key: 'audit', href: '/admin/audit' }],
+    },
 ];
 
 export default function AdminShell(props: AdminShellProps) {
@@ -84,7 +106,7 @@ export default function AdminShell(props: AdminShellProps) {
 
 function AdminShellInner({
     locale = 'tr',
-    activeKey,
+    activeKey = null,
     title,
     subtitle,
     action,
@@ -128,7 +150,7 @@ function AdminShellInner({
     }, [supabase]);
 
     const badgeFor = (key: AdminNavKey): number => {
-        if (key === 'payments') return pendingPayments;
+        if (key === 'billing') return pendingPayments;
         if (key === 'tickets') return openTickets;
         return 0;
     };
@@ -172,51 +194,41 @@ function AdminShellInner({
                         </span>
                     </a>
                 </div>
-                <nav className="flex-1 overflow-y-auto py-3">
-                    <ul className="space-y-0.5 px-2">
-                        {NAV.map((item) => {
-                            const badge = badgeFor(item.key);
-                            return (
-                                <li key={item.key}>
-                                    <a
-                                        href={item.href}
-                                        aria-current={activeKey === item.key ? 'page' : undefined}
-                                        className={cn(
-                                            'flex items-center justify-between rounded-md px-3 py-2 text-sm font-medium transition-colors',
-                                            activeKey === item.key
-                                                ? 'bg-brand-subtle text-green-700'
-                                                : 'text-ink-secondary hover:bg-surface-muted hover:text-ink',
-                                        )}
-                                    >
-                                        <span>{t(`nav.${item.key}`)}</span>
-                                        {badge > 0 && (
-                                            <span className="inline-flex items-center justify-center min-w-[1.25rem] h-5 px-1.5 rounded-full bg-brand text-white text-2xs font-bold tabular-nums">
-                                                {badge}
-                                            </span>
-                                        )}
-                                    </a>
-                                </li>
-                            );
-                        })}
-                    </ul>
+                <nav className="flex-1 overflow-y-auto py-2">
+                    {NAV_SECTIONS.map((section) => (
+                        <div key={section.titleKey}>
+                            <p className="text-2xs uppercase tracking-wider text-ink-muted px-3 pt-3 pb-1 select-none">
+                                {t(`navSection.${section.titleKey}`)}
+                            </p>
+                            <ul className="space-y-0.5 px-2">
+                                {section.items.map((item) => {
+                                    const badge = badgeFor(item.key);
+                                    return (
+                                        <li key={item.key}>
+                                            <a
+                                                href={item.href}
+                                                aria-current={activeKey === item.key ? 'page' : undefined}
+                                                className={cn(
+                                                    'flex items-center justify-between rounded-md px-3 py-2 text-sm font-medium transition-colors',
+                                                    activeKey === item.key
+                                                        ? 'bg-brand-subtle text-green-700'
+                                                        : 'text-ink-secondary hover:bg-surface-muted hover:text-ink',
+                                                )}
+                                            >
+                                                <span>{t(`nav.${item.key}`)}</span>
+                                                {badge > 0 && (
+                                                    <span className="inline-flex items-center justify-center min-w-[1.25rem] h-5 px-1.5 rounded-full bg-brand text-white text-2xs font-bold tabular-nums">
+                                                        {badge}
+                                                    </span>
+                                                )}
+                                            </a>
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        </div>
+                    ))}
                 </nav>
-                <div className="border-t border-line p-3">
-                    <div className="rounded-md px-3 py-2 flex flex-col gap-1">
-                        <span className="text-xs font-medium text-ink truncate" title={profile.email ?? user.email ?? ''}>
-                            {profile.email ?? user.email}
-                        </span>
-                        <span className="text-2xs uppercase tracking-wider text-ink-muted">
-                            {t('shell.roleAdmin')}
-                        </span>
-                    </div>
-                    <button
-                        type="button"
-                        onClick={() => void signOut()}
-                        className="mt-2 w-full text-left rounded-md px-3 py-2 text-sm text-ink-secondary hover:bg-surface-muted hover:text-ink transition-colors"
-                    >
-                        {t('common.logout')}
-                    </button>
-                </div>
             </aside>
 
             {/* Main column */}
@@ -273,6 +285,7 @@ function AdminShellInner({
                             );
                         })}
                     </div>
+                    <AdminUserMenu user={user} profile={profile} signOut={signOut} />
                 </header>
 
                 <main className="flex-1 px-4 md:px-8 py-8 md:py-12 max-w-wide w-full mx-auto">

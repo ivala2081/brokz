@@ -42,7 +42,7 @@ export default function WalletsTable({ locale: localeProp = 'tr' }: { locale?: L
     return (
         <AdminShell
             locale={locale}
-            activeKey="wallets"
+            activeKey="billing"
             title={t('wallets.title')}
             subtitle={t('wallets.subtitle')}
         >
@@ -51,7 +51,7 @@ export default function WalletsTable({ locale: localeProp = 'tr' }: { locale?: L
     );
 }
 
-function WalletsInner({ locale }: { locale: Locale }) {
+export function WalletsInner({ locale }: { locale: Locale }) {
     const { t } = useTranslation('admin');
     const { supabase } = useAuth();
     const [rows, setRows] = useState<Row[]>([]);

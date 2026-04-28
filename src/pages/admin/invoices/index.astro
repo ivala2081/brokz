@@ -1,7 +1,11 @@
 ---
-import AdminLayout from '../../../layouts/AdminLayout.astro';
-import InvoicesTable from '../../../components/admin/DataTables/InvoicesTable.tsx';
+// Redirect stub — /admin/invoices → /admin/billing#invoices
+// Hash cannot be sent via HTTP redirect, so we use a client-side replace.
 ---
-<AdminLayout title="Brokz Admin · Invoices">
-  <InvoicesTable locale="tr" client:only="react" />
-</AdminLayout>
+<!doctype html>
+<html>
+  <head><meta charset="UTF-8" /><title>Redirecting…</title></head>
+  <body>
+    <script>location.replace('/admin/billing#invoices');</script>
+  </body>
+</html>

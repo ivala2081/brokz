@@ -38,15 +38,33 @@
     "products": "Products",
     "orders": "Orders",
     "licenses": "Licenses",
-    "invoices": "Invoices",
+    "billing": "Billing",
     "tickets": "Tickets",
-    "payments": "Payments",
-    "wallets": "Wallets",
     "leads": "Leads",
     "blog": "Blog",
     "audit": "Audit",
-    "account": "Account",
     "settings": "Settings"
+  },
+  "navSection": {
+    "general": "General",
+    "operations": "Operations",
+    "billing": "Billing",
+    "support": "Support",
+    "content": "Content",
+    "system": "System"
+  },
+  "billing": {
+    "title": "Billing",
+    "subtitle": "Invoices, payment approvals, and payment wallets",
+    "tabs": {
+      "invoices": "Invoices",
+      "payments": "Payment Approvals",
+      "wallets": "Wallets"
+    }
+  },
+  "userMenu": {
+    "account": "Account",
+    "signOut": "Sign out"
   },
   "payments": {
     "title": "Payment reviews",

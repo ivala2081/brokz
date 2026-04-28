@@ -42,7 +42,7 @@ export default function InvoicesTable({ locale: localeProp = 'tr' }: { locale?: 
     return (
         <AdminShell
             locale={locale}
-            activeKey="invoices"
+            activeKey="billing"
             title={t('invoices.title')}
             subtitle={t('invoices.subtitle')}
         >
@@ -51,7 +51,7 @@ export default function InvoicesTable({ locale: localeProp = 'tr' }: { locale?: 
     );
 }
 
-function InvoicesInner({ locale }: { locale: Locale }) {
+export function InvoicesInner({ locale }: { locale: Locale }) {
     const { t } = useTranslation('admin');
     const { supabase } = useAuth();
     const [rows, setRows] = useState<Row[]>([]);

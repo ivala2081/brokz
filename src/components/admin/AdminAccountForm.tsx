@@ -49,7 +49,7 @@ export default function AdminAccountForm({ locale: localeProp = 'tr' }: { locale
     return (
         <AdminShell
             locale={locale}
-            activeKey="account"
+            activeKey={null}
             title={t('account.title')}
             subtitle={t('account.subtitle')}
         >

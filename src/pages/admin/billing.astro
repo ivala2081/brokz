@@ -1,0 +1,7 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import BillingPanel from '../../components/admin/BillingPanel.tsx';
+---
+<AdminLayout title="Brokz Admin · Billing">
+  <BillingPanel locale="tr" client:only="react" />
+</AdminLayout>

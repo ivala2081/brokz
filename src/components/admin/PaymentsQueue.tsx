@@ -67,7 +67,7 @@ export default function PaymentsQueue({ locale: localeProp = 'tr' }: { locale?: 
     return (
         <AdminShell
             locale={locale}
-            activeKey="payments"
+            activeKey="billing"
             title={t('payments.title')}
             subtitle={t('payments.subtitle')}
         >
@@ -76,7 +76,7 @@ export default function PaymentsQueue({ locale: localeProp = 'tr' }: { locale?: 
     );
 }
 
-function PaymentsInner({ locale }: { locale: Locale }) {
+export function PaymentsInner({ locale }: { locale: Locale }) {
     const { t } = useTranslation('admin');
     const { supabase } = useAuth();
     const [tab, setTab] = useState<TabKey>('pending_review');

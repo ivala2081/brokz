@@ -1,7 +1,11 @@
 ---
-import AdminLayout from '../../layouts/AdminLayout.astro';
-import PaymentsQueue from '../../components/admin/PaymentsQueue.tsx';
+// Redirect stub — /admin/payments → /admin/billing#payments
+// Hash cannot be sent via HTTP redirect, so we use a client-side replace.
 ---
-<AdminLayout title="Brokz Admin · Payments">
-  <PaymentsQueue locale="tr" client:only="react" />
-</AdminLayout>
+<!doctype html>
+<html>
+  <head><meta charset="UTF-8" /><title>Redirecting…</title></head>
+  <body>
+    <script>location.replace('/admin/billing#payments');</script>
+  </body>
+</html>

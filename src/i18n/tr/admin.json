@@ -38,15 +38,33 @@
     "products": "Ürünler",
     "orders": "Siparişler",
     "licenses": "Lisanslar",
-    "invoices": "Faturalar",
+    "billing": "Faturalama",
     "tickets": "Talepler",
-    "payments": "Ödemeler",
-    "wallets": "Cüzdanlar",
     "leads": "Potansiyeller",
     "blog": "Blog",
     "audit": "Denetim",
-    "account": "Hesabım",
     "settings": "Ayarlar"
+  },
+  "navSection": {
+    "general": "Genel",
+    "operations": "Operasyonlar",
+    "billing": "Faturalama",
+    "support": "Destek",
+    "content": "İçerik",
+    "system": "Sistem"
+  },
+  "billing": {
+    "title": "Faturalama",
+    "subtitle": "Faturalar, ödeme onayları ve ödeme cüzdanları",
+    "tabs": {
+      "invoices": "Faturalar",
+      "payments": "Ödeme Onayları",
+      "wallets": "Cüzdanlar"
+    }
+  },
+  "userMenu": {
+    "account": "Hesabım",
+    "signOut": "Çıkış"
   },
   "payments": {
     "title": "Ödeme İncelemeleri",
