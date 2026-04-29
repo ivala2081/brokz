@@ -44,6 +44,9 @@ const BodySchema = z.object({
   role: z.enum(['admin', 'customer']).default('customer'),
   full_name: z.string().max(160).optional(),
   locale: z.enum(['tr', 'en']).optional(),
+  // When provided, the user is created with this password (auto-confirmed)
+  // instead of being sent an invite email. Admin then shares credentials manually.
+  password: z.string().min(8).max(72).optional(),
 });
 
 type Body = z.infer<typeof BodySchema>;
@@ -165,13 +168,60 @@ Deno.serve(async (req: Request) => {
 
   let userId: string;
   let invited = false;
+  let createdWithPassword = false;
 
   if (existingUserId) {
     userId = existingUserId;
     logJson({ stage: 'user_exists', user_id: userId, email: maskEmail(body.email) });
+
+    // If admin supplied a password and the user already exists, reset their
+    // password to the new value (admin-driven credential rotation).
+    if (body.password) {
+      try {
+        const { error } = await supabase.auth.admin.updateUserById(userId, {
+          password: body.password,
+          email_confirm: true,
+        });
+        if (error) throw error;
+        createdWithPassword = true;
+        logJson({ stage: 'password_set_existing', user_id: userId });
+      } catch (err: any) {
+        logJson({ stage: 'password_update_failed', error: err?.message ?? 'unknown' });
+        return jsonResponse(req, 500, {
+          ok: false,
+          error: err?.message ?? 'Could not update password',
+        });
+      }
+    }
+  } else if (body.password) {
+    // Direct create with password — no invite email; admin shares credentials.
+    try {
+      const { data, error } = await supabase.auth.admin.createUser({
+        email: body.email,
+        password: body.password,
+        email_confirm: true,
+        user_metadata: {
+          role: body.role,
+          organization_id: organizationId,
+          organization_name: organizationName,
+          full_name: body.full_name ?? null,
+          locale: body.locale ?? 'tr',
+        },
+      });
+      if (error) throw error;
+      userId = data.user?.id ?? '';
+      if (!userId) throw new Error('createUser returned no user id');
+      createdWithPassword = true;
+      logJson({ stage: 'user_created_with_password', user_id: userId, email: maskEmail(body.email) });
+    } catch (err: any) {
+      logJson({ stage: 'create_user_failed', error: err?.message ?? 'unknown' });
+      return jsonResponse(req, 500, {
+        ok: false,
+        error: err?.message ?? 'Could not create user',
+      });
+    }
   } else {
-    // Use Supabase's built-in invite email (sent via Supabase Auth SMTP).
-    // Configure email template at Supabase Dashboard → Auth → Email Templates → "Invite user".
+    // Default flow: Supabase invite email.
     try {
       const { data, error } = await supabase.auth.admin.inviteUserByEmail(body.email, {
         redirectTo,
@@ -215,21 +265,29 @@ Deno.serve(async (req: Request) => {
 
   // Audit
   try {
+    const action = createdWithPassword
+      ? (existingUserId ? 'admin_password_reset' : 'create_user_with_password')
+      : (existingUserId ? 'invite_user_reissue' : 'invite_user');
     await supabase.from('audit_log').insert({
       actor: adminProfile.id,
-      action: existingUserId ? 'invite_user_reissue' : 'invite_user',
+      action,
       entity_type: 'profiles',
       entity_id: userId,
-      diff: { organization_id: organizationId, role: body.role },
+      diff: { organization_id: organizationId, role: body.role, with_password: createdWithPassword },
     });
   } catch (err: any) {
     logJson({ stage: 'audit_insert_failed', error: err?.message ?? 'unknown' });
   }
 
-  logJson({ stage: 'done', user_id: userId, organization_id: organizationId, invited });
+  logJson({ stage: 'done', user_id: userId, organization_id: organizationId, invited, with_password: createdWithPassword });
 
   return jsonResponse(req, 200, {
     ok: true,
-    data: { user_id: userId, organization_id: organizationId, invited },
+    data: {
+      user_id: userId,
+      organization_id: organizationId,
+      invited,
+      with_password: createdWithPassword,
+    },
   });
 });

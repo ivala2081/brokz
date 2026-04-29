@@ -27,8 +27,8 @@
     },
     {
       "key": "dashboard",
-      "name": "Kurum İçi Yönetim Dashboard'u",
-      "tag": "Arka Ofis Sistemi",
+      "name": "WebTrader White Label Manager",
+      "tag": "Back-Office Konsolu",
       "description": "Tüm müşteri hesapları, pozisyonları ve risk pozisyonlarında operasyonel görünürlük sağlayan kapsamlı bir aracı kurum arka ofis platformu. Gerçek zamanlı veri ve denetim kalitesinde kayıt tutmayı gerektiren uyum ekipleri, risk yöneticileri ve operasyon personeli için tasarlandı.",
       "features": [
         "Canlı müşteri hesabı ve pozisyon izleme",

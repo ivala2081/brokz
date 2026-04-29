@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Footer from '../../components/Footer.astro';
+import NavBar from '../../components/NavBar.tsx';
+import WhiteLabelManagerPage from '../../components/products/WhiteLabelManagerPage.tsx';
+import { service, faqPage, breadcrumbList } from '../../lib/jsonld';
+
+const pathname = '/products/whitelabel-manager';
+
+const title = 'WebTrader White Label Manager | Brokz — Brokerage Back-Office Console';
+const description = 'The internal management dashboard paired with the Brokz WebTrader. Operations, risk, finance, and compliance — one fully white-labelled console. Request pricing.';
+const keywords = 'webtrader white label manager, brokerage back office software, broker admin panel, trade monitoring console, broker risk dashboard, white label brokerage management, broker operations console, IB management software';
+
+const faqItems = [
+  {
+    question: 'What is the WebTrader White Label Manager?',
+    answer: 'It is the internal back-office and risk console paired with the WebTrader. Your operations, risk, finance, and compliance teams use it to run the brokerage day-to-day — onboarding traders, approving deposits, monitoring exposure, configuring IB tiers, and pulling reports.',
+  },
+  {
+    question: 'Is it sold separately from the WebTrader?',
+    answer: 'No. The Manager is delivered together with the WebTrader as one platform. They share the same data layer, audit trail, and authentication. Buying the WebTrader gives you the Manager.',
+  },
+  {
+    question: 'Can roles and permissions be customised?',
+    answer: 'Yes. The Manager ships with role-based access control out of the box — Operations, Risk, Compliance, Management, and custom roles. Each module and action can be gated per role, and every action is recorded in an immutable audit log.',
+  },
+  {
+    question: 'Does it integrate with our existing CRM and PSPs?',
+    answer: 'No — we do not plug into third-party CRMs. Instead, we build a custom CRM tailored to your workflows as part of the engagement. PSP, KYC, BI, and data-warehouse integrations are delivered via REST and webhook APIs.',
+  },
+  {
+    question: 'Can we white-label the Manager?',
+    answer: 'Yes. Logo, colour system, typography, and domain are all branded to your firm. The Manager runs on your infrastructure with no Brokz attribution visible to staff.',
+  },
+  {
+    question: 'How do you handle audit and compliance?',
+    answer: 'Every action — balance adjustment, approval, role change, configuration edit — is recorded with actor, timestamp, before/after state. Logs are immutable and exportable to your SIEM or compliance archive.',
+  },
+  {
+    question: 'Can I use my own price provider?',
+    answer: 'Yes. You can plug in your own price provider — share the API details with us and we handle the integration.',
+  },
+  {
+    question: 'If I don\'t have a price provider, do you supply one?',
+    answer: 'Yes. We supply price feeds as standard with no extra cost. We do not route order execution though — that side is up to you.',
+  },
+];
+
+const jsonLd = [
+  service({
+    name: 'WebTrader White Label Manager',
+    description,
+    path: pathname,
+    serviceType: 'Brokerage back-office and risk console',
+  }),
+  faqPage(faqItems),
+  breadcrumbList([
+    { name: 'Home',                           path: '/' },
+    { name: 'Products',                       path: '/products' },
+    { name: 'WebTrader White Label Manager',  path: pathname },
+  ]),
+];
+---
+<BaseLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+  jsonLd={jsonLd}
+>
+  <NavBar client:load />
+  <main class="min-h-screen bg-surface">
+    <WhiteLabelManagerPage client:load />
+  </main>
+  <Footer />
+</BaseLayout>

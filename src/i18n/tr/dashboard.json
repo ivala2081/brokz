@@ -106,6 +106,22 @@
     "empty": {
       "title": "Henüz sipariş yok",
       "description": "Siparişleriniz burada görünecektir."
+    },
+    "detail": {
+      "planFixed": "Sabit vade",
+      "planOpen": "Açık uçlu",
+      "walletPinned": "Ödemeyi gönderilecek adres",
+      "schedule": "Ödeme planı",
+      "monthLabel": "Ay",
+      "due": "Son ödeme",
+      "amount": "Tutar",
+      "status": "Durum",
+      "markPaid": "Ödedim",
+      "inReview": "İncelemede",
+      "downloadInvoice": "Faturayı indir",
+      "nextPayment": "Sıradaki ödeme",
+      "notFound": "Sipariş bulunamadı",
+      "total": "Toplam"
     }
   },
   "invoices": {

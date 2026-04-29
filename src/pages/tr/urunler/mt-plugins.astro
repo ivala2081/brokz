@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Footer from '../../../components/Footer.astro';
+import NavBar from '../../../components/NavBar.tsx';
+import MtPluginsPageTR from '../../../components/products/MtPluginsPageTR.tsx';
+import { service, faqPage, breadcrumbList } from '../../../lib/jsonld';
+
+const pathname = '/tr/urunler/mt-plugins';
+
+const title = 'MT4 / MT5 Plug-in ve Eklentileri | Brokz';
+const description = 'Kurumsal brokerlar için özel MT4 ve MT5 server-side plug-in, likidite köprüsü, EA ve indicator geliştirme. Native C++ ve MQL.';
+const keywords = 'MT4 plug-in geliştirme, MT5 plug-in geliştirme, MetaTrader server plug-in, MQL4 EA, MQL5 EA, özel likidite köprüsü, FIX bridge MT5, broker plug-in tedarikçisi';
+
+const faqItems = [
+  { question: 'Hem MT4 hem MT5 için geliştiriyor musunuz?', answer: 'Evet. MT4 server-side plug-in, MT5 server gateway ve MQL4 / MQL5 client-side EA / indicator destekliyoruz.' },
+  { question: 'Mevcut plug-in’imizi düzeltebilir misiniz?', answer: 'Çoğu zaman evet — önceki vendor’ın plug-in’lerini audit ve patch edebiliriz, yasal incelemeye tabi.' },
+  { question: 'MetaQuotes server upgrade ile çalışır mı?', answer: 'Evet. Breaking-change pencereleri için bakım retainer’ı sunuyoruz.' },
+  { question: 'Özel likidite köprüsü kurabilir misiniz?', answer: 'Evet. LP, ECN veya prime broker’lara FIX 4.4 / 5.0 köprüleri.' },
+  { question: 'Sadece MQL4 / MQL5 mi yapıyorsunuz?', answer: 'Hayır. Server-side plug-in genellikle C++. Client-side EA ve indicator MQL4 / MQL5.' },
+];
+
+const jsonLd = [
+  service({ name: 'MT4 / MT5 Plug-in ve Eklentileri', description, path: pathname, serviceType: 'MetaTrader plug-in geliştirme' }),
+  faqPage(faqItems),
+  breadcrumbList([
+    { name: 'Ana Sayfa',          path: '/tr' },
+    { name: 'Ürünler',            path: '/tr/urunler' },
+    { name: 'MT4 / MT5 Plug-in',  path: pathname },
+  ]),
+];
+---
+<BaseLayout title={title} description={description} keywords={keywords} jsonLd={jsonLd}>
+  <NavBar client:load />
+  <main class="min-h-screen bg-surface">
+    <MtPluginsPageTR client:load />
+  </main>
+  <Footer />
+</BaseLayout>

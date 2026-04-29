@@ -40,6 +40,14 @@ export interface PaymentProofDialogProps {
     organizationId: string;
     defaultAmount: number;
     defaultCurrency?: string;
+    /** When provided, the network selector is locked to this value. */
+    lockedNetwork?: string;
+    /** When provided, the amount field is locked to this value. */
+    lockedAmount?: number;
+    /** When provided, the currency selector is locked to this value. */
+    lockedCurrency?: string;
+    /** When provided, shows static invoice label instead of a picker. */
+    lockedInvoiceId?: string;
 }
 
 export default function PaymentProofDialog({
@@ -50,14 +58,26 @@ export default function PaymentProofDialog({
     organizationId,
     defaultAmount,
     defaultCurrency = 'USDT',
+    lockedNetwork,
+    lockedAmount,
+    lockedCurrency,
+    lockedInvoiceId,
 }: PaymentProofDialogProps) {
     const { t } = useTranslation('dashboard');
     const { supabase, user } = useAuth();
 
-    const [network, setNetwork] = useState<NetworkCode>('USDT-TRC20');
+    const isNetworkLocked = !!lockedNetwork && NETWORK_CODES.includes(lockedNetwork as NetworkCode);
+    const isAmountLocked = lockedAmount !== undefined && lockedAmount > 0;
+    const isCurrencyLocked = !!lockedCurrency;
+
+    const [network, setNetwork] = useState<NetworkCode>(
+        isNetworkLocked ? (lockedNetwork as NetworkCode) : 'USDT-TRC20',
+    );
     const [txHash, setTxHash] = useState('');
-    const [amount, setAmount] = useState<string>(defaultAmount.toFixed(2));
-    const [currency, setCurrency] = useState(defaultCurrency);
+    const [amount, setAmount] = useState<string>(
+        isAmountLocked ? lockedAmount.toFixed(2) : defaultAmount.toFixed(2),
+    );
+    const [currency, setCurrency] = useState(isCurrencyLocked ? lockedCurrency! : defaultCurrency);
     const [note, setNote] = useState('');
     const [file, setFile] = useState<File | null>(null);
     const [submitting, setSubmitting] = useState(false);
@@ -66,10 +86,10 @@ export default function PaymentProofDialog({
     const info = useMemo(() => NETWORKS[network], [network]);
 
     function reset() {
-        setNetwork('USDT-TRC20');
+        setNetwork(isNetworkLocked ? (lockedNetwork as NetworkCode) : 'USDT-TRC20');
         setTxHash('');
-        setAmount(defaultAmount.toFixed(2));
-        setCurrency(defaultCurrency);
+        setAmount(isAmountLocked ? lockedAmount.toFixed(2) : defaultAmount.toFixed(2));
+        setCurrency(isCurrencyLocked ? lockedCurrency! : defaultCurrency);
         setNote('');
         setFile(null);
         setErrors({});
@@ -153,10 +173,17 @@ export default function PaymentProofDialog({
                     {t('payment.proof.description')}
                 </p>
 
+                {lockedInvoiceId && (
+                    <p className="text-xs text-ink-muted rounded-md border border-line bg-surface-muted px-3 py-2">
+                        {t('payment.proof.invoiceLabel', 'Invoice')}: <span className="font-mono">{lockedInvoiceId}</span>
+                    </p>
+                )}
+
                 <Field label={t('payment.proof.network')} required>
                     <Select
                         value={network}
                         onChange={(e) => setNetwork(e.target.value as NetworkCode)}
+                        disabled={isNetworkLocked}
                     >
                         {NETWORK_CODES.map((code) => (
                             <option key={code} value={code}>
@@ -184,10 +211,15 @@ export default function PaymentProofDialog({
                             min="0"
                             value={amount}
                             onChange={(e) => setAmount(e.target.value)}
+                            disabled={isAmountLocked}
                         />
                     </Field>
                     <Field label={t('payment.proof.currency')}>
-                        <Select value={currency} onChange={(e) => setCurrency(e.target.value)}>
+                        <Select
+                            value={currency}
+                            onChange={(e) => setCurrency(e.target.value)}
+                            disabled={isCurrencyLocked}
+                        >
                             <option value="USDT">USDT</option>
                             <option value="USDC">USDC</option>
                         </Select>

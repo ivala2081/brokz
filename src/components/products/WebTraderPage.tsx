@@ -154,6 +154,14 @@ const FAQS = [
     q: 'How long does web trader development take?',
     a: 'A standard institutional web trader deployment takes 10–16 weeks from signed agreement to production launch. Complex multi-asset, multi-broker setups may take 20–24 weeks. We provide weekly demos against a production-like environment from week one.',
   },
+  {
+    q: 'Can I use my own price provider?',
+    a: 'Yes. You can plug in your own price provider — share the API details with us and we handle the integration on your platform.',
+  },
+  {
+    q: 'If I don\'t have a price provider, do you supply one?',
+    a: 'Yes. We supply price feeds as standard with no extra cost. We do not route order execution though — that side is up to you.',
+  },
 ];
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
@@ -217,26 +225,84 @@ export default function WebTraderPage() {
   return (
     <>
       {/* ── 1. Hero ─────────────────────────────────────────────────────── */}
-      <section className="bg-surface-inverse text-ink-inverse section-padding">
-        <div className="section-container">
-          <p className="section-label-light">Custom Web Trader Platform</p>
-          <h1 className="heading-hero-sm text-white mt-4 mb-6 max-w-[22ch]">
-            Custom Web Trader Platform for Institutional Brokers
-          </h1>
-          <p className="body-lg text-neutral-300 max-w-2xl mb-10">
-            Browser-native, real-time, and fully white-labelled. A trading terminal engineered
-            around your infrastructure — not around a vendor's constraints.
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <a href="/contact" className="btn-primary">
-              Request Pricing
-            </a>
-            <a
-              href="/products"
-              className="btn btn-lg border border-line-inverse text-white hover:border-brand-accent hover:text-brand-accent transition-colors duration-base"
-            >
-              View All Products
-            </a>
+      <section className="relative overflow-hidden bg-surface-inverse text-ink-inverse section-padding">
+        {/* Subtle radial accents */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-60"
+          style={{
+            background:
+              'radial-gradient(60% 50% at 15% 20%, rgba(16,185,129,0.18) 0%, transparent 60%), radial-gradient(50% 40% at 85% 80%, rgba(16,185,129,0.10) 0%, transparent 60%)',
+          }}
+        />
+        <div className="relative section-container">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            {/* Left — copy */}
+            <div className="lg:col-span-6">
+              <p className="section-label-light">Custom Web Trader Platform</p>
+              <h1 className="heading-hero-sm text-white mt-4 mb-6 max-w-[22ch]">
+                Custom Web Trader Platform for Institutional Brokers
+              </h1>
+              <p className="body-lg text-neutral-300 max-w-xl mb-10">
+                Browser-native, real-time, and fully white-labelled. A trading terminal engineered
+                around your infrastructure — not around a vendor's constraints.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <a href="/contact" className="btn-primary">
+                  Request Pricing
+                </a>
+                <a
+                  href="https://brokztrader.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-lg border border-line-inverse text-white hover:border-brand-accent hover:text-brand-accent transition-colors duration-base"
+                >
+                  Try Free Demo
+                </a>
+              </div>
+            </div>
+
+            {/* Right — browser mockup */}
+            <div className="lg:col-span-6">
+              <div className="relative">
+                {/* Glow */}
+                <div
+                  aria-hidden="true"
+                  className="absolute -inset-6 rounded-[24px] blur-2xl opacity-40"
+                  style={{
+                    background:
+                      'linear-gradient(135deg, rgba(16,185,129,0.45) 0%, rgba(16,185,129,0.10) 60%, transparent 100%)',
+                  }}
+                />
+                <div className="relative rounded-[14px] overflow-hidden border border-black/10 bg-white shadow-2xl ring-1 ring-black/5">
+                  {/* Browser chrome */}
+                  <div className="flex items-center gap-2 px-4 py-3 bg-neutral-100 border-b border-black/10">
+                    <span className="w-3 h-3 rounded-full bg-[#ff5f57]" />
+                    <span className="w-3 h-3 rounded-full bg-[#febc2e]" />
+                    <span className="w-3 h-3 rounded-full bg-[#28c840]" />
+                    <div className="ml-3 flex-1 h-6 rounded-md bg-white border border-black/10 flex items-center px-3">
+                      <span className="text-[11px] text-neutral-500 truncate">
+                        app.yourbrokerage.com / webtrader
+                      </span>
+                    </div>
+                  </div>
+                  {/* Screenshot */}
+                  <img
+                    src="/2.png"
+                    alt="Brokz custom web trader terminal — live charting, order book, and watchlist"
+                    width={1600}
+                    height={900}
+                    loading="eager"
+                    className="block w-full h-auto"
+                  />
+                </div>
+                {/* Floating pill */}
+                <div className="hidden md:flex absolute -bottom-4 -left-4 items-center gap-2 px-3 py-2 rounded-full bg-white text-neutral-900 shadow-lg ring-1 ring-black/5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-xs font-semibold">Live · Sub-100ms</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -511,6 +577,106 @@ export default function WebTraderPage() {
                 <p className="body-sm">{body}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 8b. Mobile Trading ──────────────────────────────────────────── */}
+      <section className="relative overflow-hidden section-padding bg-surface-inverse text-ink-inverse">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-50"
+          style={{
+            background:
+              'radial-gradient(50% 60% at 80% 30%, rgba(16,185,129,0.18) 0%, transparent 60%), radial-gradient(40% 40% at 10% 80%, rgba(16,185,129,0.10) 0%, transparent 60%)',
+          }}
+        />
+        <div className="relative section-container">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            {/* Left — phone mockup */}
+            <div className="lg:col-span-5 flex justify-center lg:justify-start order-2 lg:order-1">
+              <div className="relative">
+                <div
+                  aria-hidden="true"
+                  className="absolute -inset-8 rounded-[60px] blur-3xl opacity-50"
+                  style={{
+                    background:
+                      'radial-gradient(closest-side, rgba(16,185,129,0.45), transparent 70%)',
+                  }}
+                />
+                {/* Phone frame — realistic */}
+                <div
+                  className="relative w-[290px] sm:w-[310px] rounded-[48px] p-[3px] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6),0_0_0_1px_rgba(255,255,255,0.04)]"
+                  style={{
+                    background:
+                      'linear-gradient(145deg, #2a2a2c 0%, #050505 30%, #1a1a1c 55%, #050505 80%, #2a2a2c 100%)',
+                  }}
+                >
+                  {/* Side buttons */}
+                  <span className="absolute -left-[2px] top-[110px] w-[3px] h-8 rounded-l bg-neutral-700" />
+                  <span className="absolute -left-[2px] top-[160px] w-[3px] h-14 rounded-l bg-neutral-700" />
+                  <span className="absolute -left-[2px] top-[225px] w-[3px] h-14 rounded-l bg-neutral-700" />
+                  <span className="absolute -right-[2px] top-[140px] w-[3px] h-20 rounded-r bg-neutral-700" />
+
+                  {/* Inner bezel */}
+                  <div className="relative w-full rounded-[45px] bg-black p-[6px]">
+                    <div className="relative w-full rounded-[40px] overflow-hidden bg-white">
+                      {/* Dynamic island */}
+                      <div className="absolute top-2 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-full z-20" />
+                      <img
+                        src="/mobile1.png"
+                        alt="Brokz mobile web trader — EUR/USD live chart and order ticket"
+                        loading="lazy"
+                        className="block w-full h-auto bg-white"
+                      />
+                    </div>
+                  </div>
+                </div>
+                {/* Floating pill */}
+                <div className="hidden md:flex absolute -right-4 top-10 items-center gap-2 px-3 py-2 rounded-full bg-white text-neutral-900 shadow-lg ring-1 ring-black/5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-xs font-semibold">iOS · Android · PWA</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right — copy */}
+            <div className="lg:col-span-7 order-1 lg:order-2">
+              <p className="section-label-light">Mobile Trading</p>
+              <h2 className="heading-2 text-white mt-4 mb-6 max-w-[20ch]">
+                The Same Platform, Now in Your Client's Pocket
+              </h2>
+              <p className="body-lg text-neutral-300 max-w-2xl mb-8">
+                A responsive, touch-optimised mobile experience built on the same real-time
+                engine as the desktop terminal. One codebase. One brand. One source of truth
+                for every order, position, and tick.
+              </p>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl">
+                {[
+                  'One-tap Buy / Sell with SL & TP',
+                  'Real-time charts, watchlists, positions',
+                  'Push notifications for fills & alerts',
+                  'Biometric login & secure session management',
+                  'Installable as PWA — no app store needed',
+                  'Full white-label brand applied throughout',
+                ].map(item => (
+                  <li key={item} className="flex items-start gap-3 text-neutral-200">
+                    <span className="mt-1 w-4 h-4 flex-shrink-0 text-brand-accent">
+                      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M3 8.5L6.5 12L13 5"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
+                    <span className="text-sm">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </section>

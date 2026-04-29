@@ -33,6 +33,9 @@ interface Row {
     created_at: string;
     organization: { id: string; name: string } | null;
     product: { id: string; name: string } | null;
+    plan_kind?: string | null;
+    term_months?: number | null;
+    monthly_amount?: number | null;
 }
 
 const STATUS_OPTIONS = ['all', 'pending', 'active', 'cancelled', 'expired'];
@@ -64,7 +67,7 @@ function OrdersInner({ locale }: { locale: Locale }) {
         setLoading(true);
         let query = supabase
             .from('orders')
-            .select('id, status, quantity, total, currency, created_at, organization:organizations(id, name), product:products(id, name)')
+            .select('id, status, quantity, total, currency, created_at, plan_kind, term_months, monthly_amount, organization:organizations(id, name), product:products(id, name)')
             .is('deleted_at', null)
             .order('created_at', { ascending: false });
         if (status !== 'all') query = query.eq('status', status);
@@ -166,6 +169,28 @@ function OrdersInner({ locale }: { locale: Locale }) {
             searchAccessor: (r) => r.product?.name ?? '',
         },
         {
+            key: 'plan',
+            header: t('orders.columns.plan'),
+            cell: (r) => {
+                if (r.plan_kind === 'fixed_term' && r.term_months != null && r.monthly_amount != null) {
+                    return (
+                        <span className="tabular-nums text-ink-secondary">
+                            {r.term_months} ay &times; {formatMoney(r.monthly_amount, r.currency, localeTag)}
+                        </span>
+                    );
+                }
+                if (r.plan_kind === 'open_ended' && r.monthly_amount != null) {
+                    return (
+                        <span className="tabular-nums text-ink-secondary">
+                            {t('orders.openEnded')} &times; {formatMoney(r.monthly_amount, r.currency, localeTag)}/ay
+                        </span>
+                    );
+                }
+                return <span className="text-ink-muted">—</span>;
+            },
+            searchAccessor: (r) => r.plan_kind ?? '',
+        },
+        {
             key: 'quantity',
             header: t('orders.columns.quantity'),
             cell: (r) => <span className="tabular-nums">{r.quantity}</span>,
@@ -224,6 +249,7 @@ function OrdersInner({ locale }: { locale: Locale }) {
                 columns={columns}
                 loading={loading}
                 getRowId={(r) => r.id}
+                onRowClick={(r) => { window.location.href = `/admin/orders/view?id=${r.id}`; }}
                 searchPlaceholder={t('common.search')}
                 labels={{
                     search: t('common.search'),

@@ -8,6 +8,7 @@ export interface BentoItem {
     tags?: string[];
     meta?: string;
     cta?: string;
+    href?: string;
     colSpan?: number;
     hasPersistentHover?: boolean;
 }
@@ -19,14 +20,19 @@ interface BentoGridProps {
 function BentoGrid({ items }: BentoGridProps) {
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            {items.map((item, index) => (
-                <div
+            {items.map((item, index) => {
+                const Wrapper: any = item.href ? 'a' : 'div';
+                const wrapperProps = item.href ? { href: item.href } : {};
+                return (
+                <Wrapper
                     key={index}
+                    {...wrapperProps}
                     className={cn(
-                        "group relative p-4 rounded-xl overflow-hidden transition-all duration-300",
+                        "group relative p-4 rounded-xl overflow-hidden transition-all duration-300 block",
                         "border border-line bg-surface",
                         "hover:shadow-[0_2px_12px_rgba(0,0,0,0.06)]",
                         "hover:-translate-y-0.5 will-change-transform",
+                        item.href ? "cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-ring" : "",
                         item.colSpan === 2 ? "md:col-span-2" : "col-span-1",
                         item.hasPersistentHover
                             ? "shadow-[0_2px_12px_rgba(0,0,0,0.06)] -translate-y-0.5"
@@ -95,8 +101,9 @@ function BentoGrid({ items }: BentoGridProps) {
                                 : "opacity-0 group-hover:opacity-100"
                         )}
                     />
-                </div>
-            ))}
+                </Wrapper>
+                );
+            })}
         </div>
     );
 }

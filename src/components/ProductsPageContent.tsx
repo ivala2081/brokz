@@ -15,6 +15,7 @@ const ArrowIcon = (
 
 const PRODUCT_DETAIL_ROUTES: Record<string, RouteKey> = {
   webTrader: 'productWebtrader',
+  dashboard: 'productManager',
 };
 
 type ProductItem = {

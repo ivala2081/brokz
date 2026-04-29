@@ -1,17 +1,14 @@
 /**
- * InviteCustomerDialog — opens an invite/add form, calls `admin-invite-user`
- * Edge Function (invite mode) OR inserts directly into organizations
- * (manual mode), fires toast, triggers parent refresh via onSuccess.
+ * InviteCustomerDialog — opens an invite form, calls `admin-invite-user`
+ * Edge Function, fires toast, triggers parent refresh via onSuccess.
  *
  * Modes:
- *   invite-new      → create new org + send invite email
- *   invite-existing → attach user to existing org + send invite email
- *   manual          → just create org row (no email, no auth user)
- *                     useful when SMTP is not yet configured.
+ *   invite-new      → create new org + onboard user (invite email or admin-set password)
+ *   invite-existing → attach user to existing org + onboard
  *
- * Called Edge Function shape:
- *   POST /functions/v1/admin-invite-user
- *   body: { email, organization_id?, organization_name?, role }
+ * Onboarding paths within both modes:
+ *   - default: Supabase invite email (user clicks link to set password)
+ *   - "Set password manually" checkbox: admin sets password, no email sent.
  */
 
 import { useEffect, useState, type FormEvent } from 'react';
@@ -42,7 +39,7 @@ interface OrgRow {
     name: string;
 }
 
-type Mode = 'invite-new' | 'invite-existing' | 'manual';
+type Mode = 'invite-new' | 'invite-existing';
 
 export default function InviteCustomerDialog({
     open,
@@ -64,6 +61,8 @@ export default function InviteCustomerDialog({
     const [orgId, setOrgId] = useState<string>('');
     const [orgs, setOrgs] = useState<OrgRow[]>([]);
     const [submitting, setSubmitting] = useState(false);
+    const [setPasswordMode, setSetPasswordMode] = useState(false);
+    const [password, setPassword] = useState('');
 
     useEffect(() => {
         if (!open) return;
@@ -75,6 +74,8 @@ export default function InviteCustomerDialog({
         setRole('customer');
         setOrgId('');
         setMode('invite-new');
+        setSetPasswordMode(false);
+        setPassword('');
 
         void (async () => {
             const { data, error } = await supabase
@@ -89,27 +90,6 @@ export default function InviteCustomerDialog({
         e.preventDefault();
         setSubmitting(true);
 
-        if (mode === 'manual') {
-            // Direct insert into organizations — no auth user, no invite email.
-            const { error } = await supabase
-                .from('organizations')
-                .insert({
-                    name: orgName,
-                    country: country || null,
-                    website: website || null,
-                    contact_email: contactEmail || null,
-                });
-            setSubmitting(false);
-            if (error) {
-                toast.error(`${t('customers.inviteDialog.error')}: ${error.message}`);
-                return;
-            }
-            toast.success(t('customers.inviteDialog.manualSuccess'));
-            onSuccess?.();
-            onClose();
-            return;
-        }
-
         // Invite flow — calls admin-invite-user Edge Function
         const body: Record<string, unknown> = { email, role };
         if (mode === 'invite-existing' && orgId) {
@@ -118,6 +98,9 @@ export default function InviteCustomerDialog({
             body.organization_name = orgName;
             if (country) body.country = country;
             if (website) body.website = website;
+        }
+        if (setPasswordMode && password) {
+            body.password = password;
         }
 
         const { error } = await callEdgeFunction(supabase, 'admin-invite-user', body);
@@ -135,17 +118,16 @@ export default function InviteCustomerDialog({
         onClose();
     }
 
-    const isManual = mode === 'manual';
     const isInviteNew = mode === 'invite-new';
     const isInviteExisting = mode === 'invite-existing';
-    const showOrgFields = isInviteNew || isManual;
+    const showOrgFields = isInviteNew;
 
     return (
         <Dialog
             open={open}
             onClose={onClose}
-            title={isManual ? t('customers.inviteDialog.manualTitle') : t('customers.inviteDialog.title')}
-            description={isManual ? t('customers.inviteDialog.manualDescription') : t('customers.inviteDialog.description')}
+            title={t('customers.inviteDialog.title')}
+            description={t('customers.inviteDialog.description')}
             footer={
                 <>
                     <Button variant="secondary" onClick={onClose} disabled={submitting}>
@@ -156,7 +138,7 @@ export default function InviteCustomerDialog({
                         form="invite-customer-form"
                         loading={submitting}
                     >
-                        {isManual ? t('customers.inviteDialog.manualSubmit') : t('customers.inviteDialog.submit')}
+                        {t('customers.inviteDialog.submit')}
                     </Button>
                 </>
             }
@@ -176,13 +158,6 @@ export default function InviteCustomerDialog({
                         className={`rounded-md px-2.5 py-1 border ${isInviteExisting ? 'border-brand bg-brand-subtle text-green-700' : 'border-line text-ink-secondary hover:border-ink/30'}`}
                     >
                         {t('customers.inviteDialog.modeInviteExisting')}
-                    </button>
-                    <button
-                        type="button"
-                        onClick={() => setMode('manual')}
-                        className={`rounded-md px-2.5 py-1 border ${isManual ? 'border-brand bg-brand-subtle text-green-700' : 'border-line text-ink-secondary hover:border-ink/30'}`}
-                    >
-                        {t('customers.inviteDialog.modeManual')}
                     </button>
                 </div>
 
@@ -272,6 +247,44 @@ export default function InviteCustomerDialog({
                                 <option value="admin">{t('customers.inviteDialog.roleAdmin')}</option>
                             </Select>
                         </Field>
+
+                        <div className="rounded-lg border border-line bg-surface-muted/40 p-3">
+                            <label className="flex cursor-pointer items-start gap-2 text-sm">
+                                <input
+                                    type="checkbox"
+                                    className="mt-0.5 h-4 w-4 rounded border-line text-brand focus:ring-brand"
+                                    checked={setPasswordMode}
+                                    onChange={(e) => setSetPasswordMode(e.target.checked)}
+                                />
+                                <span>
+                                    <span className="font-medium text-ink">
+                                        {t('customers.inviteDialog.setPassword')}
+                                    </span>
+                                    <span className="block text-xs text-ink-secondary">
+                                        {t('customers.inviteDialog.setPasswordHint')}
+                                    </span>
+                                </span>
+                            </label>
+                            {setPasswordMode && (
+                                <div className="mt-3">
+                                    <Field
+                                        label={t('customers.inviteDialog.passwordLabel')}
+                                        required
+                                    >
+                                        <Input
+                                            type="text"
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
+                                            minLength={8}
+                                            maxLength={72}
+                                            required
+                                            autoComplete="new-password"
+                                            placeholder="••••••••"
+                                        />
+                                    </Field>
+                                </div>
+                            )}
+                        </div>
                     </>
                 )}
             </form>

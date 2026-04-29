@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Footer from '../../../components/Footer.astro';
+import NavBar from '../../../components/NavBar.tsx';
+import WhiteLabelManagerPageTR from '../../../components/products/WhiteLabelManagerPageTR.tsx';
+import { service, faqPage, breadcrumbList } from '../../../lib/jsonld';
+
+const pathname = '/tr/urunler/whitelabel-manager';
+
+const title = 'WebTrader White Label Manager | Brokz — Brokeraj Back-Office Konsolu';
+const description = 'Brokz WebTrader ile birlikte teslim edilen kurum içi yönetim panosu. Operasyon, risk, finans ve compliance — tamamen white-label tek konsol. Fiyat teklifi alın.';
+const keywords = 'webtrader white label manager, brokeraj back office yazılımı, broker admin paneli, işlem izleme konsolu, broker risk dashboard, white label brokeraj yönetimi, IB yönetim yazılımı';
+
+const faqItems = [
+  {
+    question: 'WebTrader White Label Manager nedir?',
+    answer: 'WebTrader ile birlikte gelen kurum içi back-office ve risk konsoludur. Operasyon, risk, finans ve compliance ekipleriniz brokeraji günlük olarak buradan yönetir.',
+  },
+  {
+    question: 'WebTrader\'dan ayrı satılıyor mu?',
+    answer: 'Hayır. Manager, WebTrader ile tek platform olarak teslim edilir. Aynı veri katmanını, audit trail\'i ve kimlik doğrulamayı paylaşırlar.',
+  },
+  {
+    question: 'Roller ve izinler özelleştirilebilir mi?',
+    answer: 'Evet. Manager kutudan çıktığı gibi rol bazlı erişim kontrolü ile gelir — Operasyon, Risk, Compliance, Yönetim ve özel roller.',
+  },
+  {
+    question: 'Mevcut CRM ve PSP\'lerimizle entegre olur mu?',
+    answer: 'Hayır — üçüncü taraf CRM\'lere bağlanmıyoruz. Bunun yerine projenin parçası olarak iş akışlarınıza özel CRM geliştiriyoruz. PSP, KYC, BI ve data warehouse entegrasyonları REST ve webhook API\'leri ile teslim edilir.',
+  },
+  {
+    question: 'Manager white-label olabilir mi?',
+    answer: 'Evet. Logo, renk sistemi, tipografi ve domain firmanızın markasına göre uygulanır. Manager, kendi altyapınızda çalışır.',
+  },
+  {
+    question: 'Audit ve compliance nasıl ele alınıyor?',
+    answer: 'Her aksiyon — bakiye düzenleme, onay, rol değişikliği, yapılandırma değişikliği — aktör, zaman damgası ve önce/sonra durumu ile kaydedilir.',
+  },
+  {
+    question: 'Kendi fiyat sağlayıcımı kullanabilir miyim?',
+    answer: 'Evet. Kendi fiyat sağlayıcınızı kullanabilirsiniz — API bilgilerini bizle paylaşmanız yeterli, entegrasyonu biz yapıyoruz.',
+  },
+  {
+    question: 'Fiyat sağlayıcım yoksa fiyat sağlıyor musunuz?',
+    answer: 'Evet. Standart olarak ekstra ücret olmadan biz fiyat sağlıyoruz. Ancak emir iletmiyoruz — execution tarafı size bağlı.',
+  },
+];
+
+const jsonLd = [
+  service({
+    name: 'WebTrader White Label Manager',
+    description,
+    path: pathname,
+    serviceType: 'Brokeraj back-office ve risk konsolu',
+  }),
+  faqPage(faqItems),
+  breadcrumbList([
+    { name: 'Ana Sayfa',                      path: '/tr' },
+    { name: 'Ürünler',                        path: '/tr/urunler' },
+    { name: 'WebTrader White Label Manager',  path: pathname },
+  ]),
+];
+---
+<BaseLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+  jsonLd={jsonLd}
+>
+  <NavBar client:load />
+  <main class="min-h-screen bg-surface">
+    <WhiteLabelManagerPageTR client:load />
+  </main>
+  <Footer />
+</BaseLayout>

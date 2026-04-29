@@ -10,6 +10,8 @@ export type OrderConfirmationInput = {
   productName: string;
   orderId: string;
   locale?: Locale | string;
+  /** Optional one-line plan summary, e.g. "12 month(s) × 500 USD". */
+  planSummary?: string;
 };
 
 export type OrderConfirmationOutput = {
@@ -20,7 +22,7 @@ export type OrderConfirmationOutput = {
 
 export function build(input: OrderConfirmationInput): OrderConfirmationOutput {
   const locale = pickLocale(input.locale);
-  const { organizationName, productName, orderId } = input;
+  const { organizationName, productName, orderId, planSummary } = input;
 
   const subject = locale === 'en'
     ? `Order received — ${productName}`
@@ -41,6 +43,10 @@ export function build(input: OrderConfirmationInput): OrderConfirmationOutput {
         <td style="padding:8px 16px 8px 0;color:#64748b;font-size:12px;text-transform:uppercase;letter-spacing:0.08em;font-family:'Geist',system-ui,sans-serif;">${locale === 'en' ? 'Order ID' : 'Sipariş No'}</td>
         <td style="padding:8px 0;color:#050A06;font-size:14px;font-family:'Geist Mono',ui-monospace,monospace;">${escapeHtml(orderId)}</td>
       </tr>
+      ${planSummary ? `<tr>
+        <td style="padding:8px 16px 8px 0;color:#64748b;font-size:12px;text-transform:uppercase;letter-spacing:0.08em;font-family:'Geist',system-ui,sans-serif;">${locale === 'en' ? 'Plan' : 'Plan'}</td>
+        <td style="padding:8px 0;color:#050A06;font-size:14px;font-family:'Geist',system-ui,sans-serif;">${escapeHtml(planSummary)}</td>
+      </tr>` : ''}
     </table>
     <p style="margin:0;color:#64748b;font-size:12px;">${locale === 'en'
       ? 'Reply to this email if you have any questions.'
@@ -49,9 +55,10 @@ export function build(input: OrderConfirmationInput): OrderConfirmationOutput {
 
   const html = renderShell({ locale, subject, eyebrow, heading, bodyHtml });
 
+  const planLine = planSummary ? `\nPlan: ${planSummary}` : '';
   const text = locale === 'en'
-    ? `Order received\n\nHello ${organizationName},\n\nWe have received your order for ${productName}. Order ID: ${orderId}.\n\nOur team will provision your licence shortly.\n\nBrokz Tech`
-    : `Siparişiniz alındı\n\nMerhaba ${organizationName},\n\n${productName} siparişinizi aldık. Sipariş No: ${orderId}.\n\nEkibimiz lisansınızı kısa süre içinde hazırlayacak.\n\nBrokz Tech`;
+    ? `Order received\n\nHello ${organizationName},\n\nWe have received your order for ${productName}. Order ID: ${orderId}.${planLine}\n\nOur team will provision your licence shortly.\n\nBrokz Tech`
+    : `Siparişiniz alındı\n\nMerhaba ${organizationName},\n\n${productName} siparişinizi aldık. Sipariş No: ${orderId}.${planLine}\n\nEkibimiz lisansınızı kısa süre içinde hazırlayacak.\n\nBrokz Tech`;
 
   return { subject, html, text };
 }

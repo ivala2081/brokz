@@ -17,9 +17,15 @@ const HERO_EXIT = 400;
 
 const NAV_ITEMS: { key: RouteKey; label: string }[] = [
   { key: 'home',      label: 'nav.home' },
-  { key: 'products',  label: 'nav.products' },
   { key: 'about',     label: 'nav.about' },
   { key: 'blog',      label: 'nav.blog' },
+];
+
+const PRODUCT_ITEMS: { key: RouteKey; label: string; description: string }[] = [
+  { key: 'productWebtrader', label: 'nav.productWebtrader', description: 'nav.productWebtraderDesc' },
+  { key: 'productManager',   label: 'nav.productManager',   description: 'nav.productManagerDesc' },
+  { key: 'productAlgo',      label: 'nav.productAlgo',      description: 'nav.productAlgoDesc' },
+  { key: 'productMt',        label: 'nav.productMt',        description: 'nav.productMtDesc' },
 ];
 
 // ─── Animation variants ───────────────────────────────────────────────
@@ -156,7 +162,38 @@ export default function NavBar() {
 
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-8">
-            {NAV_ITEMS.map(item => {
+            {/* Home */}
+            {(() => {
+              const item = NAV_ITEMS[0];
+              const active = isActiveKey(item.key);
+              return (
+                <LocalizedLink
+                  key={item.key}
+                  to={item.key}
+                  className={`text-sm font-medium transition-colors duration-base relative focus-visible:outline-none ${
+                    active ? linkActive : linkIdle
+                  }`}
+                >
+                  {t(item.label)}
+                  {active && (
+                    <span className={`absolute -bottom-[30px] left-0 right-0 h-[2px] rounded-pill ${activeBar}`} />
+                  )}
+                </LocalizedLink>
+              );
+            })()}
+
+            {/* Products dropdown */}
+            <ProductsDropdown
+              t={t}
+              isActiveKey={isActiveKey}
+              linkIdle={linkIdle}
+              linkActive={linkActive}
+              activeBar={activeBar}
+              overDark={overDark}
+            />
+
+            {/* Remaining items (about, blog) */}
+            {NAV_ITEMS.slice(1).map(item => {
               const active = isActiveKey(item.key);
               return (
                 <LocalizedLink
@@ -262,51 +299,66 @@ export default function NavBar() {
                 exit="closed"
                 className="flex flex-col"
               >
-                {NAV_ITEMS.map((item, i) => {
-                  const active = isActiveKey(item.key);
-                  return (
-                    <motion.div
-                      key={item.key}
-                      variants={itemVariants}
-                      className="border-b border-line-inverse"
-                    >
-                      <LocalizedLink
-                        to={item.key}
-                        className="flex items-baseline justify-between py-6 group focus-visible:outline-none"
+                {(() => {
+                  // Mobile menu order: home → products (accordion) → about, blog
+                  const ordered: Array<{ kind: 'link'; item: typeof NAV_ITEMS[number] } | { kind: 'products' }> = [
+                    { kind: 'link', item: NAV_ITEMS[0] },
+                    { kind: 'products' },
+                    ...NAV_ITEMS.slice(1).map(item => ({ kind: 'link' as const, item })),
+                  ];
+                  let counter = 0;
+                  return ordered.map(entry => {
+                    counter += 1;
+                    const i = counter - 1;
+                    if (entry.kind === 'products') {
+                      return <MobileProductsItem key="products" t={t} index={i} isActiveKey={isActiveKey} />;
+                    }
+                    const item = entry.item;
+                    const active = isActiveKey(item.key);
+                    return (
+                      <motion.div
+                        key={item.key}
+                        variants={itemVariants}
+                        className="border-b border-line-inverse"
                       >
-                        <div className="flex items-baseline gap-5">
-                          <span className="font-mono tabular text-xs text-ink-muted">
-                            {String(i + 1).padStart(2, '0')}
-                          </span>
-                          <span
-                            className={`text-5xl sm:text-6xl font-extrabold tracking-tight leading-[1] transition-colors duration-base ${
-                              active ? 'text-brand-accent' : 'text-white group-hover:text-brand-accent'
-                            }`}
-                            style={{ letterSpacing: '-0.04em' }}
-                          >
-                            {t(item.label)}
-                          </span>
-                        </div>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          aria-hidden="true"
-                          className="text-ink-muted group-hover:text-brand-accent transition-colors"
+                        <LocalizedLink
+                          to={item.key}
+                          className="flex items-baseline justify-between py-6 group focus-visible:outline-none"
                         >
-                          <line x1="5" y1="12" x2="19" y2="12" />
-                          <polyline points="12 5 19 12 12 19" />
-                        </svg>
-                      </LocalizedLink>
-                    </motion.div>
-                  );
-                })}
+                          <div className="flex items-baseline gap-5">
+                            <span className="font-mono tabular text-xs text-ink-muted">
+                              {String(i + 1).padStart(2, '0')}
+                            </span>
+                            <span
+                              className={`text-5xl sm:text-6xl font-extrabold tracking-tight leading-[1] transition-colors duration-base ${
+                                active ? 'text-brand-accent' : 'text-white group-hover:text-brand-accent'
+                              }`}
+                              style={{ letterSpacing: '-0.04em' }}
+                            >
+                              {t(item.label)}
+                            </span>
+                          </div>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            aria-hidden="true"
+                            className="text-ink-muted group-hover:text-brand-accent transition-colors"
+                          >
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                            <polyline points="12 5 19 12 12 19" />
+                          </svg>
+                        </LocalizedLink>
+                      </motion.div>
+                    );
+                  });
+                })()}
               </motion.nav>
 
               <motion.div
@@ -355,5 +407,191 @@ export default function NavBar() {
         )}
       </AnimatePresence>
     </>
+  );
+}
+
+// ─── Mobile products accordion ─────────────────────────────────────────
+
+type MobileProductsItemProps = {
+  t: (key: string) => string;
+  index: number;
+  isActiveKey: (key: RouteKey) => boolean;
+};
+
+function MobileProductsItem({ t, index, isActiveKey }: MobileProductsItemProps) {
+  const [open, setOpen] = useState(false);
+  const anyActive = PRODUCT_ITEMS.some(p => isActiveKey(p.key));
+
+  return (
+    <motion.div variants={itemVariants} className="border-b border-line-inverse">
+      <button
+        type="button"
+        onClick={() => setOpen(prev => !prev)}
+        className="w-full flex items-baseline justify-between py-6 group focus-visible:outline-none"
+        aria-expanded={open}
+      >
+        <div className="flex items-baseline gap-5">
+          <span className="font-mono tabular text-xs text-ink-muted">
+            {String(index + 1).padStart(2, '0')}
+          </span>
+          <span
+            className={`text-5xl sm:text-6xl font-extrabold tracking-tight leading-[1] transition-colors duration-base ${
+              anyActive ? 'text-brand-accent' : 'text-white group-hover:text-brand-accent'
+            }`}
+            style={{ letterSpacing: '-0.04em' }}
+          >
+            {t('nav.products')}
+          </span>
+        </div>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+          className={`text-ink-muted group-hover:text-brand-accent transition-transform duration-base ${open ? 'rotate-180' : ''}`}
+        >
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            key="content"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: EASE }}
+            className="overflow-hidden"
+          >
+            <div className="pb-6 pl-12 flex flex-col gap-3">
+              {PRODUCT_ITEMS.map(item => {
+                const active = isActiveKey(item.key);
+                return (
+                  <LocalizedLink
+                    key={item.key}
+                    to={item.key}
+                    className={`block py-2 group focus-visible:outline-none transition-colors duration-base ${
+                      active ? 'text-brand-accent' : 'text-white/85 hover:text-brand-accent'
+                    }`}
+                  >
+                    <div className="text-lg font-semibold leading-tight">{t(item.label)}</div>
+                    <div className="text-xs text-white/50 mt-0.5">{t(item.description)}</div>
+                  </LocalizedLink>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
+
+// ─── Products dropdown ─────────────────────────────────────────────────
+
+type ProductsDropdownProps = {
+  t: (key: string) => string;
+  isActiveKey: (key: RouteKey) => boolean;
+  linkIdle: string;
+  linkActive: string;
+  activeBar: string;
+  overDark: boolean;
+};
+
+function ProductsDropdown({ t, isActiveKey, linkIdle, linkActive, activeBar, overDark }: ProductsDropdownProps) {
+  const [open, setOpen] = useState(false);
+  const anyActive = PRODUCT_ITEMS.some(p => isActiveKey(p.key));
+
+  return (
+    <div
+      className="relative"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
+      <button
+        type="button"
+        onClick={() => setOpen(prev => !prev)}
+        className={`text-sm font-medium transition-colors duration-base relative focus-visible:outline-none flex items-center gap-1 ${
+          anyActive ? linkActive : linkIdle
+        }`}
+        aria-expanded={open}
+        aria-haspopup="true"
+      >
+        {t('nav.products')}
+        <svg
+          width="10"
+          height="10"
+          viewBox="0 0 12 12"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className={`transition-transform duration-base ${open ? 'rotate-180' : ''}`}
+          aria-hidden="true"
+        >
+          <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        {anyActive && (
+          <span className={`absolute -bottom-[30px] left-0 right-0 h-[2px] rounded-pill ${activeBar}`} />
+        )}
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 8, transition: { duration: 0.15 } }}
+            transition={{ duration: 0.18, ease: EASE }}
+            className="absolute top-full left-1/2 -translate-x-1/2 pt-4 z-50"
+          >
+            <div
+              className={`w-[420px] rounded-2xl shadow-xl border overflow-hidden ${
+                overDark
+                  ? 'bg-white border-line'
+                  : 'bg-neutral-950 border-white/10'
+              }`}
+            >
+              <div className="p-2">
+                {PRODUCT_ITEMS.map(item => {
+                  const active = isActiveKey(item.key);
+                  return (
+                    <LocalizedLink
+                      key={item.key}
+                      to={item.key}
+                      className={`block px-4 py-3 rounded-xl group transition-colors duration-base ${
+                        overDark
+                          ? active
+                            ? 'bg-brand/5'
+                            : 'hover:bg-neutral-50'
+                          : active
+                          ? 'bg-white/5'
+                          : 'hover:bg-white/5'
+                      }`}
+                    >
+                      <div className="flex items-start gap-3">
+                        <span className={`mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 ${active ? 'bg-brand' : overDark ? 'bg-neutral-300 group-hover:bg-brand' : 'bg-neutral-600 group-hover:bg-brand-accent'} transition-colors duration-base`} />
+                        <div className="min-w-0">
+                          <div className={`text-sm font-semibold ${overDark ? (active ? 'text-brand' : 'text-ink group-hover:text-brand') : (active ? 'text-brand-accent' : 'text-white group-hover:text-brand-accent')} transition-colors duration-base`}>
+                            {t(item.label)}
+                          </div>
+                          <div className={`text-xs mt-0.5 ${overDark ? 'text-ink-muted' : 'text-neutral-400'}`}>
+                            {t(item.description)}
+                          </div>
+                        </div>
+                      </div>
+                    </LocalizedLink>
+                  );
+                })}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }

@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Footer from '../../components/Footer.astro';
+import NavBar from '../../components/NavBar.tsx';
+import AlgoTradingPage from '../../components/products/AlgoTradingPage.tsx';
+import { service, faqPage, breadcrumbList } from '../../lib/jsonld';
+
+const pathname = '/products/algo-trading';
+
+const title = 'Algorithmic Trading & Strategy Testing | Brokz';
+const description = 'Tick-level backtesting, walk-forward optimisation, and a low-latency execution engine for systematic trading desks. Same codebase from research to live.';
+const keywords = 'algorithmic trading platform, strategy backtesting, walk-forward optimisation, low-latency execution, FIX execution engine, quant trading infrastructure, systematic trading software';
+
+const faqItems = [
+  { question: 'Who is this built for?', answer: 'Brokerages running prop desks, market-making books, or systematic execution; quant funds; treasury teams that need execution algos.' },
+  { question: 'Do you write strategies for us?', answer: 'We can deliver strategy templates and execution algos (TWAP, VWAP, IS, market-making). Alpha research is your domain.' },
+  { question: 'Can we keep our existing research stack?', answer: 'Yes. The platform is modular. Bring your own research notebooks, plug into our execution and backtest engine via Python or REST.' },
+  { question: 'What about latency?', answer: 'Hot path is Rust / C++. Co-location supported when the venue offers it.' },
+  { question: 'How long does delivery take?', answer: 'A baseline platform is 8–14 weeks. Full multi-venue execution stack is 16–24 weeks.' },
+];
+
+const jsonLd = [
+  service({ name: 'Algorithmic Trading & Strategy Testing', description, path: pathname, serviceType: 'Quant trading infrastructure' }),
+  faqPage(faqItems),
+  breadcrumbList([
+    { name: 'Home',     path: '/' },
+    { name: 'Products', path: '/products' },
+    { name: 'Algorithmic Trading', path: pathname },
+  ]),
+];
+---
+<BaseLayout title={title} description={description} keywords={keywords} jsonLd={jsonLd}>
+  <NavBar client:load />
+  <main class="min-h-screen bg-surface">
+    <AlgoTradingPage client:load />
+  </main>
+  <Footer />
+</BaseLayout>

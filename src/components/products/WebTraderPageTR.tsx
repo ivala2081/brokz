@@ -154,6 +154,14 @@ const FAQS = [
     q: 'Webtrader geliştirme ne kadar sürer?',
     a: 'Standart kurumsal webtrader dağıtımı, imzalı anlaşmadan üretime kadar 10–16 hafta sürer. Karmaşık çoklu varlık, çoklu broker kurulumları 20–24 hafta sürebilir. Birinci haftadan itibaren üretim benzeri ortama karşı haftalık demo veriyoruz.',
   },
+  {
+    q: 'Kendi fiyat sağlayıcımı kullanabilir miyim?',
+    a: 'Evet. Kendi fiyat sağlayıcınızı kullanabilirsiniz — API bilgilerini bizle paylaşmanız yeterli, entegrasyonu platforma biz yapıyoruz.',
+  },
+  {
+    q: 'Fiyat sağlayıcım yoksa fiyat sağlıyor musunuz?',
+    a: 'Evet. Standart olarak ekstra ücret olmadan biz fiyat sağlıyoruz. Ancak emir iletmiyoruz — execution tarafı size bağlı.',
+  },
 ];
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
@@ -217,26 +225,77 @@ export default function WebTraderPageTR() {
   return (
     <>
       {/* ── 1. Hero ─────────────────────────────────────────────────────── */}
-      <section className="bg-surface-inverse text-ink-inverse section-padding">
-        <div className="section-container">
-          <p className="section-label-light">Özel WebTrader Platformu</p>
-          <h1 className="heading-hero-sm text-white mt-4 mb-6 max-w-[22ch]">
-            Kurumsal Brokerlar için Özel WebTrader Platformu
-          </h1>
-          <p className="body-lg text-neutral-300 max-w-2xl mb-10">
-            Tarayıcı tabanlı, gerçek zamanlı ve tamamen white-label. Bir sağlayıcının
-            kısıtlamaları etrafında değil, sizin altyapınız etrafında tasarlanmış işlem terminali.
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <a href="/tr/iletisim" className="btn-primary">
-              Fiyat Teklifi Al
-            </a>
-            <a
-              href="/tr/urunler"
-              className="btn btn-lg border border-line-inverse text-white hover:border-brand-accent hover:text-brand-accent transition-colors duration-base"
-            >
-              Tüm Ürünler
-            </a>
+      <section className="relative overflow-hidden bg-surface-inverse text-ink-inverse section-padding">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-60"
+          style={{
+            background:
+              'radial-gradient(60% 50% at 15% 20%, rgba(16,185,129,0.18) 0%, transparent 60%), radial-gradient(50% 40% at 85% 80%, rgba(16,185,129,0.10) 0%, transparent 60%)',
+          }}
+        />
+        <div className="relative section-container">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            <div className="lg:col-span-6">
+              <p className="section-label-light">Özel WebTrader Platformu</p>
+              <h1 className="heading-hero-sm text-white mt-4 mb-6 max-w-[22ch]">
+                Kurumsal Brokerlar için Özel WebTrader Platformu
+              </h1>
+              <p className="body-lg text-neutral-300 max-w-xl mb-10">
+                Tarayıcı tabanlı, gerçek zamanlı ve tamamen white-label. Bir sağlayıcının
+                kısıtlamaları etrafında değil, sizin altyapınız etrafında tasarlanmış işlem terminali.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <a href="/tr/iletisim" className="btn-primary">
+                  Fiyat Teklifi Al
+                </a>
+                <a
+                  href="https://brokztrader.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-lg border border-line-inverse text-white hover:border-brand-accent hover:text-brand-accent transition-colors duration-base"
+                >
+                  Ücretsiz Demo
+                </a>
+              </div>
+            </div>
+
+            <div className="lg:col-span-6">
+              <div className="relative">
+                <div
+                  aria-hidden="true"
+                  className="absolute -inset-6 rounded-[24px] blur-2xl opacity-40"
+                  style={{
+                    background:
+                      'linear-gradient(135deg, rgba(16,185,129,0.45) 0%, rgba(16,185,129,0.10) 60%, transparent 100%)',
+                  }}
+                />
+                <div className="relative rounded-[14px] overflow-hidden border border-black/10 bg-white shadow-2xl ring-1 ring-black/5">
+                  <div className="flex items-center gap-2 px-4 py-3 bg-neutral-100 border-b border-black/10">
+                    <span className="w-3 h-3 rounded-full bg-[#ff5f57]" />
+                    <span className="w-3 h-3 rounded-full bg-[#febc2e]" />
+                    <span className="w-3 h-3 rounded-full bg-[#28c840]" />
+                    <div className="ml-3 flex-1 h-6 rounded-md bg-white border border-black/10 flex items-center px-3">
+                      <span className="text-[11px] text-neutral-500 truncate">
+                        app.brokerinizin-domaini.com / webtrader
+                      </span>
+                    </div>
+                  </div>
+                  <img
+                    src="/2.png"
+                    alt="Brokz özel webtrader terminali — canlı grafik, emir defteri ve izleme listesi"
+                    width={1600}
+                    height={900}
+                    loading="eager"
+                    className="block w-full h-auto"
+                  />
+                </div>
+                <div className="hidden md:flex absolute -bottom-4 -left-4 items-center gap-2 px-3 py-2 rounded-full bg-white text-neutral-900 shadow-lg ring-1 ring-black/5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-xs font-semibold">Canlı · Sub-100ms</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -510,6 +569,99 @@ export default function WebTraderPageTR() {
                 <p className="body-sm">{body}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 8b. Mobil İşlem ─────────────────────────────────────────────── */}
+      <section className="relative overflow-hidden section-padding bg-surface-inverse text-ink-inverse">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-50"
+          style={{
+            background:
+              'radial-gradient(50% 60% at 80% 30%, rgba(16,185,129,0.18) 0%, transparent 60%), radial-gradient(40% 40% at 10% 80%, rgba(16,185,129,0.10) 0%, transparent 60%)',
+          }}
+        />
+        <div className="relative section-container">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            <div className="lg:col-span-5 flex justify-center lg:justify-start order-2 lg:order-1">
+              <div className="relative">
+                <div
+                  aria-hidden="true"
+                  className="absolute -inset-8 rounded-[60px] blur-3xl opacity-50"
+                  style={{
+                    background:
+                      'radial-gradient(closest-side, rgba(16,185,129,0.45), transparent 70%)',
+                  }}
+                />
+                <div
+                  className="relative w-[290px] sm:w-[310px] rounded-[48px] p-[3px] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6),0_0_0_1px_rgba(255,255,255,0.04)]"
+                  style={{
+                    background:
+                      'linear-gradient(145deg, #2a2a2c 0%, #050505 30%, #1a1a1c 55%, #050505 80%, #2a2a2c 100%)',
+                  }}
+                >
+                  <span className="absolute -left-[2px] top-[110px] w-[3px] h-8 rounded-l bg-neutral-700" />
+                  <span className="absolute -left-[2px] top-[160px] w-[3px] h-14 rounded-l bg-neutral-700" />
+                  <span className="absolute -left-[2px] top-[225px] w-[3px] h-14 rounded-l bg-neutral-700" />
+                  <span className="absolute -right-[2px] top-[140px] w-[3px] h-20 rounded-r bg-neutral-700" />
+
+                  <div className="relative w-full rounded-[45px] bg-black p-[6px]">
+                    <div className="relative w-full rounded-[40px] overflow-hidden bg-white">
+                      <div className="absolute top-2 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-full z-20" />
+                      <img
+                        src="/mobile1.png"
+                        alt="Brokz mobil webtrader — EUR/USD canlı grafik ve emir ekranı"
+                        loading="lazy"
+                        className="block w-full h-auto bg-white"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="hidden md:flex absolute -right-4 top-10 items-center gap-2 px-3 py-2 rounded-full bg-white text-neutral-900 shadow-lg ring-1 ring-black/5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-xs font-semibold">iOS · Android · PWA</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="lg:col-span-7 order-1 lg:order-2">
+              <p className="section-label-light">Mobil İşlem</p>
+              <h2 className="heading-2 text-white mt-4 mb-6 max-w-[20ch]">
+                Aynı Platform, Şimdi Müşterinizin Cebinde
+              </h2>
+              <p className="body-lg text-neutral-300 max-w-2xl mb-8">
+                Masaüstü terminalle aynı gerçek zamanlı motor üzerine kurulu, dokunmaya
+                optimize edilmiş duyarlı bir mobil deneyim. Tek kod tabanı. Tek marka. Her
+                emir, pozisyon ve tick için tek doğruluk kaynağı.
+              </p>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl">
+                {[
+                  'SL & TP ile tek dokunuşla Al / Sat',
+                  'Gerçek zamanlı grafik, watchlist, pozisyon',
+                  'Emir ve uyarılar için push bildirimi',
+                  'Biyometrik giriş ve güvenli oturum yönetimi',
+                  'PWA olarak kurulabilir — app store gerekmez',
+                  'Tüm uygulamada tam white-label marka',
+                ].map(item => (
+                  <li key={item} className="flex items-start gap-3 text-neutral-200">
+                    <span className="mt-1 w-4 h-4 flex-shrink-0 text-brand-accent">
+                      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M3 8.5L6.5 12L13 5"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
+                    <span className="text-sm">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </section>

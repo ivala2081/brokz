@@ -27,8 +27,8 @@
     },
     {
       "key": "dashboard",
-      "name": "In-House Management Dashboard",
-      "tag": "Back-Office System",
+      "name": "WebTrader White Label Manager",
+      "tag": "Back-Office Console",
       "description": "A comprehensive broker back-office platform providing operational visibility across all client accounts, positions, and risk exposure. Designed for compliance teams, risk managers, and operations staff who need real-time data and audit-grade record-keeping.",
       "features": [
         "Live client account and position monitoring",

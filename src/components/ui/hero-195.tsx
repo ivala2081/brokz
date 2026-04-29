@@ -66,9 +66,9 @@ export function Hero195() {
                 <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)] gap-16 lg:gap-14 items-center [&>*]:min-w-0">
 
                     {/* ── LEFT: copy ── */}
-                    <div className="min-w-0 overflow-hidden">
+                    <div className="min-w-0">
                         <motion.h1
-                            className="heading-hero-sm text-white mb-8"
+                            className="text-white mb-8 font-extrabold leading-[0.98] tracking-[-0.04em] [font-size:clamp(2rem,4.5vw,3.75rem)]"
                             initial={{ opacity: 0, y: 24 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.7, delay: 0.1, ease: EASE }}

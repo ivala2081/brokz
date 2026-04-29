@@ -303,7 +303,10 @@
       "selectOrg": "Select organization",
       "submit": "Send invitation",
       "success": "Invitation sent.",
-      "error": "Couldn't send invitation."
+      "error": "Couldn't send invitation.",
+      "setPassword": "Set password manually (skip invite email)",
+      "setPasswordHint": "Account is created/updated immediately. Share these credentials with the customer privately.",
+      "passwordLabel": "Initial password (min. 8 chars)"
     },
     "detail": {
       "tabs": {
@@ -365,13 +368,32 @@
     "title": "Orders",
     "subtitle": "All orders and their status.",
     "new": "New order",
+    "walletLabel": "Pinned wallet",
+    "planKind": {
+      "label": "Plan type",
+      "fixedTerm": "Fixed term",
+      "openEnded": "Open-ended"
+    },
+    "termMonths": "Term (months)",
+    "monthlyAmount": "Monthly amount",
+    "periodStart": "Period start",
+    "totalPreview": "Total",
+    "openEnded": "Open-ended",
     "columns": {
       "organization": "Organization",
       "product": "Product",
+      "plan": "Plan",
       "quantity": "Quantity",
       "total": "Total",
       "status": "Status",
       "createdAt": "Created"
+    },
+    "detail": {
+      "back": "Back to orders",
+      "notFound": "Order not found.",
+      "schedule": "Schedule",
+      "pinnedWallet": "Pinned wallet",
+      "viewInvoice": "View invoice"
     },
     "empty": {
       "title": "No orders yet",

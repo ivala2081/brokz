@@ -1,0 +1,11 @@
+---
+import AuthLayout from '../layouts/AuthLayout.astro';
+import LoginForm from '../components/auth/LoginForm.tsx';
+import { getT, localeFromPath } from '../i18n/t';
+
+const locale = localeFromPath(Astro.url.pathname);
+const t = getT(locale, 'auth');
+---
+<AuthLayout title={t('login.seoTitle')} description={t('login.seoDescription')}>
+  <LoginForm locale={locale} audience="admin" client:load />
+</AuthLayout>

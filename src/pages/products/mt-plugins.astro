@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Footer from '../../components/Footer.astro';
+import NavBar from '../../components/NavBar.tsx';
+import MtPluginsPage from '../../components/products/MtPluginsPage.tsx';
+import { service, faqPage, breadcrumbList } from '../../lib/jsonld';
+
+const pathname = '/products/mt-plugins';
+
+const title = 'MT4 / MT5 Plug-ins & Extensions | Brokz';
+const description = 'Custom MT4 and MT5 server-side plug-ins, liquidity bridges, EAs and indicators built for institutional brokers. Native C++ and MQL development.';
+const keywords = 'MT4 plug-in development, MT5 plug-in development, MetaTrader server plug-ins, MQL4 EA, MQL5 EA, custom liquidity bridge, FIX bridge MT5, broker plug-in vendor';
+
+const faqItems = [
+  { question: 'Do you build for both MT4 and MT5?', answer: 'Yes. We support MT4 server-side plug-ins, MT5 server gateways, and client-side EAs / indicators in MQL4 and MQL5.' },
+  { question: 'Can you fix our existing plug-in?', answer: 'Often, yes — we can audit and patch plug-ins from prior vendors, subject to legal review.' },
+  { question: 'Will this work with MetaQuotes server upgrades?', answer: 'Yes. We offer a maintenance retainer for breaking-change windows.' },
+  { question: 'Can you build a custom liquidity bridge?', answer: 'Yes. FIX 4.4 / 5.0 bridges to LPs, ECNs, or prime brokers.' },
+  { question: 'Do you do MQL4 / MQL5 only?', answer: 'No. Server-side plug-ins are typically C++. Client-side EAs and indicators are MQL4 / MQL5.' },
+];
+
+const jsonLd = [
+  service({ name: 'MT4 / MT5 Plug-ins & Extensions', description, path: pathname, serviceType: 'MetaTrader plug-in development' }),
+  faqPage(faqItems),
+  breadcrumbList([
+    { name: 'Home',                 path: '/' },
+    { name: 'Products',             path: '/products' },
+    { name: 'MT4 / MT5 Plug-ins',   path: pathname },
+  ]),
+];
+---
+<BaseLayout title={title} description={description} keywords={keywords} jsonLd={jsonLd}>
+  <NavBar client:load />
+  <main class="min-h-screen bg-surface">
+    <MtPluginsPage client:load />
+  </main>
+  <Footer />
+</BaseLayout>

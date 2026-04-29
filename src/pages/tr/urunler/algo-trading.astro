@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Footer from '../../../components/Footer.astro';
+import NavBar from '../../../components/NavBar.tsx';
+import AlgoTradingPageTR from '../../../components/products/AlgoTradingPageTR.tsx';
+import { service, faqPage, breadcrumbList } from '../../../lib/jsonld';
+
+const pathname = '/tr/urunler/algo-trading';
+
+const title = 'Algoritmik Trading & Strateji Testi | Brokz';
+const description = 'Sistematik trading masaları için tick bazlı backtest, walk-forward optimizasyon ve düşük gecikmeli execution motoru. Research’ten canlıya tek kod tabanı.';
+const keywords = 'algoritmik trading platformu, strateji backtest, walk-forward optimizasyon, low-latency execution, FIX execution motoru, quant trading altyapısı, sistematik trading yazılımı';
+
+const faqItems = [
+  { question: 'Bu kim için yapıldı?', answer: 'Prop desk, market-making book veya sistematik execution çalıştıran brokerlar; quant fonlar; execution algo lazım olan treasury ekipleri.' },
+  { question: 'Strateji yazıyor musunuz?', answer: 'Strateji şablonları ve execution algo (TWAP, VWAP, IS, market-making) teslim ediyoruz. Alpha araştırması sizin alanınız.' },
+  { question: 'Mevcut research stack’imizi kullanabilir miyiz?', answer: 'Evet. Platform modüler. Kendi notebook’larınızı getirin, execution ve backtest motoruna Python veya REST ile bağlanın.' },
+  { question: 'Latency ne durumda?', answer: 'Hot path Rust / C++. Venue izin verdiğinde co-location destekli.' },
+  { question: 'Teslimat ne kadar sürer?', answer: 'Baseline platform 8-14 hafta. Tam çoklu venue execution stack’i 16-24 hafta.' },
+];
+
+const jsonLd = [
+  service({ name: 'Algoritmik Trading & Strateji Testi', description, path: pathname, serviceType: 'Quant trading altyapısı' }),
+  faqPage(faqItems),
+  breadcrumbList([
+    { name: 'Ana Sayfa', path: '/tr' },
+    { name: 'Ürünler',   path: '/tr/urunler' },
+    { name: 'Algoritmik Trading', path: pathname },
+  ]),
+];
+---
+<BaseLayout title={title} description={description} keywords={keywords} jsonLd={jsonLd}>
+  <NavBar client:load />
+  <main class="min-h-screen bg-surface">
+    <AlgoTradingPageTR client:load />
+  </main>
+  <Footer />
+</BaseLayout>

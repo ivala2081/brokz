@@ -117,6 +117,7 @@ function OrdersInner({ locale }: { locale: Locale }) {
             columns={columns}
             loading={loading}
             getRowId={(r) => r.id}
+            onRowClick={(r) => window.location.assign(`/dashboard/orders/view?id=${r.id}`)}
             searchPlaceholder={t('common.search')}
             labels={{
                 search: t('common.search'),

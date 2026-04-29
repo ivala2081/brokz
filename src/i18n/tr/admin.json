@@ -303,7 +303,10 @@
       "selectOrg": "Organizasyon seçin",
       "submit": "Daveti Gönder",
       "success": "Davet gönderildi.",
-      "error": "Davet gönderilemedi."
+      "error": "Davet gönderilemedi.",
+      "setPassword": "Şifreyi elle belirle (davet emaili gönderme)",
+      "setPasswordHint": "Hesap anında oluşturulur/güncellenir. Bilgileri müşteriye özel olarak ilet.",
+      "passwordLabel": "Başlangıç şifresi (en az 8 karakter)"
     },
     "detail": {
       "tabs": {
@@ -365,13 +368,32 @@
     "title": "Siparişler",
     "subtitle": "Tüm siparişler ve durumları.",
     "new": "Yeni Sipariş",
+    "walletLabel": "Sabit cüzdan",
+    "planKind": {
+      "label": "Plan türü",
+      "fixedTerm": "Sabit vade",
+      "openEnded": "Açık uçlu"
+    },
+    "termMonths": "Vade (ay)",
+    "monthlyAmount": "Aylık tutar",
+    "periodStart": "Başlangıç tarihi",
+    "totalPreview": "Toplam",
+    "openEnded": "Açık uçlu",
     "columns": {
       "organization": "Organizasyon",
       "product": "Ürün",
+      "plan": "Plan",
       "quantity": "Adet",
       "total": "Toplam",
       "status": "Durum",
       "createdAt": "Oluşturulma"
+    },
+    "detail": {
+      "back": "Siparişlere dön",
+      "notFound": "Sipariş bulunamadı.",
+      "schedule": "Plan",
+      "pinnedWallet": "Sabit cüzdan",
+      "viewInvoice": "Faturayı gör"
     },
     "empty": {
       "title": "Henüz sipariş yok",

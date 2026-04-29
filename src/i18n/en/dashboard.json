@@ -106,6 +106,22 @@
     "empty": {
       "title": "No orders yet",
       "description": "Your orders will appear here once placed by Brokz."
+    },
+    "detail": {
+      "planFixed": "Fixed term",
+      "planOpen": "Open-ended",
+      "walletPinned": "Send payment to",
+      "schedule": "Payment schedule",
+      "monthLabel": "Month",
+      "due": "Due",
+      "amount": "Amount",
+      "status": "Status",
+      "markPaid": "I sent payment",
+      "inReview": "In review",
+      "downloadInvoice": "Download invoice",
+      "nextPayment": "Next payment",
+      "notFound": "Order not found",
+      "total": "Total"
     }
   },
   "invoices": {

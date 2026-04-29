@@ -1,13 +1,10 @@
 ---
 /**
- * AuthLayout — neutral centered-card shell for auth pages.
- *
- * Distinct from BaseLayout: no nav, no footer, minimal distractions.
- * Brand comes through via the wordmark, the #00C033 focus accents on
- * the form, and SF Pro Display typography from the global stylesheet.
+ * AuthLayout — branded centered-card shell for auth pages.
  */
 
 import '../styles/global.css';
+import logoOnLight from '../assets/logo/brokz-logo-on-light.svg?url';
 
 export interface Props {
   title: string;
@@ -18,36 +15,99 @@ const { title, description } = Astro.props;
 
 const BASE_URL = 'https://brokztech.com';
 const canonicalUrl = `${BASE_URL}${Astro.url.pathname}`;
+const isTr = Astro.url.pathname.startsWith('/tr');
+const year = new Date().getFullYear();
 ---
 <!doctype html>
-<html lang={Astro.url.pathname.startsWith('/tr') ? 'tr' : 'en'}>
+<html lang={isTr ? 'tr' : 'en'}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    {/* Auth surfaces should never be indexed. */}
     <meta name="robots" content="noindex, nofollow" />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="theme-color" content="#00C033" />
   </head>
   <body class="min-h-screen bg-surface text-ink antialiased">
-    <main class="min-h-screen flex flex-col items-center justify-center px-4 py-12">
-      <a
-        href="/"
-        class="mb-8 text-lg font-semibold tracking-tight text-ink hover:text-brand transition-colors"
-      >
-        Brokz
-      </a>
-      <div class="w-full max-w-md">
-        <div class="bg-white border border-ink/10 rounded-2xl p-8 sm:p-10 shadow-sm">
-          <slot />
+    <div class="relative min-h-screen overflow-hidden">
+      {/* Background layers */}
+      <div
+        aria-hidden="true"
+        class="pointer-events-none absolute inset-0 -z-10"
+        style="background:
+          radial-gradient(60% 60% at 50% 0%, rgba(0,192,51,0.08) 0%, rgba(0,192,51,0) 60%),
+          radial-gradient(50% 40% at 100% 100%, rgba(0,192,51,0.05) 0%, rgba(0,192,51,0) 70%),
+          linear-gradient(180deg, #ffffff 0%, #f7f8f7 100%);"
+      ></div>
+      <div
+        aria-hidden="true"
+        class="pointer-events-none absolute inset-0 -z-10 opacity-[0.35]"
+        style="background-image:
+          linear-gradient(to right, rgba(15,23,42,0.04) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(15,23,42,0.04) 1px, transparent 1px);
+          background-size: 48px 48px;
+          mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 30%, transparent 80%);
+          -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 30%, transparent 80%);"
+      ></div>
+
+      <main class="relative flex min-h-screen flex-col items-center justify-center px-4 py-10 sm:py-16">
+        <a
+          href="/"
+          class="mb-10 inline-flex items-center transition-opacity hover:opacity-80"
+          aria-label="Brokz"
+        >
+          <img src={logoOnLight} alt="Brokz" class="h-16 w-auto sm:h-20" />
+        </a>
+
+        <div class="w-full max-w-md">
+          <div class="relative">
+            {/* Subtle outer glow */}
+            <div
+              aria-hidden="true"
+              class="absolute -inset-px rounded-[20px] bg-gradient-to-b from-brand/15 via-transparent to-transparent blur-md"
+            ></div>
+            <div class="relative rounded-2xl border border-ink/10 bg-white/95 p-8 shadow-[0_30px_60px_-30px_rgba(15,23,42,0.18),0_8px_16px_-12px_rgba(15,23,42,0.08)] backdrop-blur-sm sm:p-10">
+              <slot />
+            </div>
+          </div>
+
+          <div class="mt-6 flex items-center justify-center gap-2 text-xs text-ink/55">
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 16 16"
+              class="h-3.5 w-3.5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="3" y="7" width="10" height="6" rx="1.5" />
+              <path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" />
+            </svg>
+            <span>{isTr ? 'TLS ile güvenli bağlantı' : 'Secured with TLS'}</span>
+          </div>
+
+          <div class="mt-6 flex items-center justify-between text-xs text-ink/50">
+            <a href="/" class="inline-flex items-center gap-1 transition-colors hover:text-ink">
+              <span aria-hidden="true">←</span>
+              <span>brokztech.com</span>
+            </a>
+            <a
+              href={isTr ? '/' : '/tr/'}
+              class="transition-colors hover:text-ink"
+            >
+              {isTr ? 'EN' : 'TR'}
+            </a>
+          </div>
         </div>
-        <p class="mt-6 text-center text-sm text-ink/60">
-          <a href="/" class="hover:text-ink transition-colors">← Back to brokztech.com</a>
+
+        <p class="mt-10 text-center text-[11px] tracking-wide text-ink/40">
+          © {year} Brokz Tech · {isTr ? 'Tüm hakları saklıdır' : 'All rights reserved'}
         </p>
-      </div>
-    </main>
+      </main>
+    </div>
   </body>
 </html>

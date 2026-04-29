@@ -6,18 +6,21 @@
  *   2. Zod validate body.
  *   3. requireAdmin(req).
  *   4. Validate org exists + is active, product exists + is active.
- *   5. Insert order row (status='pending', total = quantity*unit_price).
- *   6. Audit log the action.
- *   7. Send order-confirmation email to organization.contact_email (best
- *      effort — email failure does not fail the call).
+ *   5. Validate payment_wallet exists + is_active.
+ *   6. Cross-field validation: fixed_term requires term_months.
+ *   7. Compute total. Insert order row with payment/plan fields.
+ *   8. Materialize subscription invoices via RPC.
+ *   9. Fire-and-forget PDF generation for each new invoice.
+ *  10. Audit log.
+ *  11. Send order-confirmation email to organization.contact_email (best effort).
  *
- * Request  { organization_id, product_id, quantity, unit_price, notes?, locale? }
- * Response { ok: true, data: { order_id } }
+ * Request  {
+ *   organization_id, product_id, quantity, unit_price, notes?, locale?,
+ *   payment_wallet_id, plan_kind?, term_months?, monthly_amount, period_start?
+ * }
+ * Response { ok: true, data: { order, invoices } }
  *
- * Idempotency: creating the same order twice IS legal (a customer may
- * intentionally order the same SKU twice). Admin UI provides an optional
- * `notes` disambiguator — if needed in Phase 2 we can add a client-supplied
- * `idempotency_key` column.
+ * Idempotency: creating the same order twice IS legal.
  */
 
 // deno-lint-ignore-file no-explicit-any
@@ -40,6 +43,12 @@ const BodySchema = z.object({
   unit_price: z.number().nonnegative().max(1_000_000_000),
   notes: z.string().max(2000).optional(),
   locale: z.enum(['tr', 'en']).optional(),
+  // payment / plan fields
+  payment_wallet_id: z.string().uuid(),
+  plan_kind: z.enum(['fixed_term', 'open_ended']).default('fixed_term'),
+  term_months: z.number().int().min(1).max(60).optional(),
+  monthly_amount: z.number().positive(),
+  period_start: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
 });
 type Body = z.infer<typeof BodySchema>;
 
@@ -49,6 +58,48 @@ function logJson(payload: Record<string, unknown>): void {
 
 function round2(n: number): number {
   return Math.round(n * 100) / 100;
+}
+
+/** Today in UTC as YYYY-MM-DD. */
+function todayUtc(): string {
+  return new Date().toISOString().slice(0, 10);
+}
+
+/**
+ * Invoke generate-invoice-pdf for a list of invoice ids.
+ * Uses Promise.allSettled — individual failures are logged but never throw.
+ */
+async function triggerPdfGeneration(invoiceIds: string[], logCtx: (p: Record<string, unknown>) => void): Promise<number> {
+  const projectUrl = Deno.env.get('SUPABASE_URL') ?? Deno.env.get('PUBLIC_SUPABASE_URL');
+  const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
+  if (!projectUrl || !serviceRoleKey || invoiceIds.length === 0) return 0;
+
+  const base = `${projectUrl.replace(/\/$/, '')}/functions/v1/generate-invoice-pdf`;
+  const results = await Promise.allSettled(
+    invoiceIds.map(id =>
+      fetch(base, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${serviceRoleKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ invoice_id: id }),
+      }).then(r => {
+        if (!r.ok) {
+          return r.text().catch(() => '').then(body => {
+            logCtx({ stage: 'pdf_generate_failed', invoice_id: id, status: r.status, body: body.slice(0, 200) });
+          });
+        }
+      }),
+    ),
+  );
+
+  let triggered = 0;
+  for (const result of results) {
+    if (result.status === 'fulfilled') triggered++;
+    else logCtx({ stage: 'pdf_call_rejected', reason: String((result as PromiseRejectedResult).reason) });
+  }
+  return triggered;
 }
 
 // ─── handler ────────────────────────────────────────────────────────
@@ -90,6 +141,16 @@ Deno.serve(async (req: Request) => {
   }
   const body: Body = parsed.data;
 
+  // Cross-field: fixed_term requires term_months
+  if (body.plan_kind === 'fixed_term' && !body.term_months) {
+    logJson({ stage: 'validation_failed', fields: ['term_months'] });
+    return jsonResponse(req, 400, {
+      ok: false,
+      error: 'Validation failed',
+      fields: { term_months: 'term_months is required for fixed_term plan' },
+    });
+  }
+
   // Validate organization
   const { data: org, error: orgErr } = await supabase
     .from('organizations')
@@ -120,7 +181,28 @@ Deno.serve(async (req: Request) => {
     return jsonResponse(req, 400, { ok: false, error: 'Product is not active' });
   }
 
+  // Validate payment wallet
+  const { data: wallet, error: walletErr } = await supabase
+    .from('payment_wallets')
+    .select('id, is_active')
+    .eq('id', body.payment_wallet_id)
+    .maybeSingle();
+  if (walletErr) {
+    logJson({ stage: 'wallet_lookup_failed', error: walletErr.message });
+    return jsonResponse(req, 500, { ok: false, error: 'Could not load payment wallet' });
+  }
+  if (!wallet) return jsonResponse(req, 404, { ok: false, error: 'Payment wallet not found' });
+  if (!wallet.is_active) {
+    return jsonResponse(req, 400, { ok: false, error: 'Payment wallet is not active' });
+  }
+
+  // Compute totals
   const total = round2(body.quantity * body.unit_price);
+  const planTotal = body.plan_kind === 'fixed_term'
+    ? round2(body.monthly_amount * body.term_months!)
+    : round2(body.monthly_amount); // open_ended: monthly_amount is the initial/current amount
+
+  const periodStart = body.period_start ?? todayUtc();
 
   // Insert order
   const { data: order, error: insertErr } = await supabase
@@ -135,13 +217,59 @@ Deno.serve(async (req: Request) => {
       currency: product.currency,
       notes: body.notes ?? null,
       created_by: adminProfile.id,
+      // payment / plan fields
+      payment_wallet_id: body.payment_wallet_id,
+      plan_kind: body.plan_kind,
+      term_months: body.term_months ?? null,
+      monthly_amount: body.monthly_amount,
+      period_start: periodStart,
     })
-    .select('id')
+    .select('id, organization_id, product_id, status, quantity, unit_price, total, currency, plan_kind, term_months, monthly_amount, period_start')
     .single();
 
   if (insertErr || !order) {
     logJson({ stage: 'order_insert_failed', error: insertErr?.message });
     return jsonResponse(req, 500, { ok: false, error: 'Could not create order' });
+  }
+
+  logJson({ stage: 'order_inserted', order_id: order.id, plan_kind: body.plan_kind });
+
+  // Materialize invoices via RPC
+  let invoices: Array<{ id: string }> = [];
+  if (body.plan_kind === 'fixed_term') {
+    const { data: rpcData, error: rpcErr } = await supabase.rpc('materialize_order_schedule', {
+      p_order_id: order.id,
+    });
+    if (rpcErr) {
+      logJson({ stage: 'materialize_schedule_failed', error: rpcErr.message });
+      // Non-fatal — order is already inserted; caller can retry via dedicated endpoint.
+    } else {
+      invoices = (rpcData ?? []) as Array<{ id: string }>;
+      logJson({ stage: 'schedule_materialized', invoice_count: invoices.length });
+    }
+  } else {
+    const { data: rpcData, error: rpcErr } = await supabase.rpc('issue_open_ended_next_invoice', {
+      p_order_id: order.id,
+    });
+    if (rpcErr) {
+      logJson({ stage: 'issue_open_ended_invoice_failed', error: rpcErr.message });
+    } else {
+      // RPC returns a single invoice row or a setof with one row
+      const row = Array.isArray(rpcData) ? rpcData[0] : rpcData;
+      if (row) {
+        invoices = [row as { id: string }];
+        logJson({ stage: 'open_ended_invoice_issued', invoice_id: row.id });
+      }
+    }
+  }
+
+  // Fire-and-forget PDF generation for each invoice
+  const invoiceIds = invoices.map((inv: any) => inv.id).filter(Boolean);
+  if (invoiceIds.length > 0) {
+    // Not awaited in the critical path — run concurrently after response preparation
+    triggerPdfGeneration(invoiceIds, logJson).then(n => {
+      logJson({ stage: 'pdf_triggers_dispatched', count: n });
+    });
   }
 
   // Audit
@@ -157,20 +285,31 @@ Deno.serve(async (req: Request) => {
         quantity: body.quantity,
         unit_price: body.unit_price,
         total,
+        plan_kind: body.plan_kind,
+        term_months: body.term_months ?? null,
+        monthly_amount: body.monthly_amount,
+        plan_total: planTotal,
         currency: product.currency,
+        payment_wallet_id: body.payment_wallet_id,
+        invoices_created: invoiceIds.length,
       },
     });
   } catch (err: any) {
     logJson({ stage: 'audit_insert_failed', error: err?.message ?? 'unknown' });
   }
 
-  // Email confirmation — best effort
+  // Email confirmation — best effort. Include a brief plan summary.
   if (org.contact_email) {
+    const planSummary = body.plan_kind === 'fixed_term'
+      ? `${body.term_months} month(s) × ${body.monthly_amount} ${product.currency}`
+      : `Open-ended · ${body.monthly_amount} ${product.currency}/month`;
+
     const { subject, html, text } = buildOrderConfirmation({
       organizationName: org.name,
       productName: product.name,
       orderId: order.id,
       locale: body.locale ?? 'tr',
+      planSummary,
     });
     const sent = await sendEmail({ to: org.contact_email, subject, html, text });
     if (!sent.ok) {
@@ -187,10 +326,11 @@ Deno.serve(async (req: Request) => {
     order_id: order.id,
     organization_id: org.id,
     product_id: product.id,
+    invoices_count: invoices.length,
   });
 
   return jsonResponse(req, 200, {
     ok: true,
-    data: { order_id: order.id },
+    data: { order, invoices },
   });
 });
